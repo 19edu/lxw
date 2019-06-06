@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="format-detection" content="telephone=no">
+		<meta charset="UTF-8">
+		<meta http-equiv="expires" content="0">
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<link rel="stylesheet" href="css/index.css"/>
+		<title>Skyworth</title>
+		<script>
+			var adjust = function() {
+				if(/Android (\d+\.\d+)/.test(navigator.userAgent)) {
+					var version = parseFloat(RegExp.$1);
+					if(version > 2.3) {
+						var phoneScale = parseInt(window.screen.width) / 1920;
+						document.write('<meta name="viewport" content="width=1920, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+					} else {
+						document.write('<meta name="viewport" content="width=1920, target-densitydpi=device-dpi">');
+					}
+				} else {
+					document.write('<meta name="viewport" content="width=1920, user-scalable=no, target-densitydpi=device-dpi">');
+				}
+			}
+			adjust();
+			var _czc = _czc || [];
+        	_czc.push(["_setAccount", "1274864418"]);
+
+		</script>
+	</head>
+
+	<body>
+		<div id="deviceready">
+			<div id="homePage" class="pagesboxes">
+				<div id="awardInfoCard"></div>
+				<div id="koiNews"><ul id="koiNewsul"></ul></div>
+                <div id="fakeNews"><ul id="fakeNewsul"></ul></div>
+                <div id="ADPart1"></div>
+				<div id="santaClaus">
+					<img id="pullDown" class="fullImg" src="images/santaClaus2.png"/>
+					<img id="raise" class="fullImg" src="images/santaClaus1.png"/>
+				</div>
+				<div id="bulletinBoard"></div>
+				<div id="myAward" class="homeBtns coocaa_btn" leftTarget="#activeRule" downTarget="#activeRule">
+					<img class="imgBlur" src="images/myaward_blur.png"/>
+					<img class="imgFocus" src="images/myaward_focus.png"/>
+				</div>
+				<div id="packList" class="homeBtns coocaa_btn" rightTarget="#packList" upTarget="#myAward">
+					<img class="imgBlur" src="images/packlist_blur.png"/>
+					<img class="imgFocus" src="images/packlist_focus.png"/>
+				</div>
+				<img id="addGif" src=""/>
+				<div id="activeRule" class="homeBtns coocaa_btn" leftTarget="#koiList" rightTarget="#activeRule" downTarget="#goldHome">
+					<img class="imgBlur" src="images/rules_blur.png"/>
+					<img class="imgFocus" src="images/rules_focus.png"/>
+				</div>
+				<div id="restArea" class="homeBtns coocaa_btn" leftTarget="#restArea"  upTarget="#myAward" rightTarget="#goldHome" downTarget="#packHome">
+					<img class="imgBlur" src="images/reset_blur.png"/>
+					<img class="imgFocus" src="images/reset_focus.png"/>
+				</div>
+				<div id="goldHome" class="homeBtns coocaa_btn" rightTarget="#koiList" upTarget="#myAward" downTarget="#packHome">
+					<img class="imgBlur" src="images/gold_blur.png"/>
+					<img class="imgFocus" src="images/gold_focus.png"/>
+				</div>
+				<div id="goldGif"></div>
+				<div id="bellNUmBox"><input type="text" id="bellnum" disabled="disabled"/></div>
+				<div id="packHome" class="homeBtns coocaa_btn" leftTarget="#restArea" upTarget="#goldHome" rightTarget="#purchaseHome" downTarget="#packGoods0">
+					<img class="imgBlur" src="images/pack_blur.png"/>
+					<img class="imgFocus" src="images/pack_focus.png"/>
+				</div>
+				<div id="koiList" class="homeBtns coocaa_btn" leftTarget="#goldHome">
+					<img class="imgBlur" src="images/koi_blur.png"/>
+					<img class="imgFocus" src="images/koi_focus.png"/>
+				</div>
+				<div id="purchaseHome" class="homeBtns coocaa_btn" leftTarget="#packHome" rightTarget="#packHome" upTarget="#koiList">
+					<img class="imgBlur" src="images/purchase_blur.png"/>
+					<img class="imgFocus" src="images/purchase_focus.png"/>
+				</div>
+				
+				<div id="purchaseDialog" class="secondBtns"></div>
+				<div id="goldDialog" canchange="1" class="secondBtns"></div>
+				<div id="restDialog" class="secondBtns"></div>
+				<div id="packGoodsBox" class="secondBtns">
+					<div id="packGoodsDiv">
+						<ul id="packGoodsUl">
+							<li class="coocaa_btn packGoodsItem" id="packGoods0" upTarget="#packHome" downTarget="#packGoods0" leftTarget="#packGoods0" rightTarget="#packGoods1"><img class="goodsImages" src="images/packid/14823.png"></li>
+							<li class="coocaa_btn packGoodsItem" id="packGoods1" upTarget="#packHome" downTarget="#packGoods1" leftTarget="#packGoods0" rightTarget="#packGoods2"><img class="goodsImages" src="images/packid/14822.png"></li>
+							<li class="coocaa_btn packGoodsItem" id="packGoods2" upTarget="#packHome" downTarget="#packGoods2" leftTarget="#packGoods1" rightTarget="#packGoods3"><img class="goodsImages" src="images/packid/14821.png"></li>
+							<li class="coocaa_btn packGoodsItem" id="packGoods3" upTarget="#packHome" downTarget="#packGoods3" leftTarget="#packGoods2" rightTarget="#packGoods4"><img class="goodsImages" src="images/packid/14820.png"></li>
+							<li class="coocaa_btn packGoodsItem" id="packGoods4" upTarget="#packHome" downTarget="#packGoods4" leftTarget="#packGoods3" rightTarget="#packGoods5"><img class="goodsImages" src="images/packid/14819.png"></li>
+						</ul>
+					</div>
+					<img id="hasPackedGif" src=""/>
+				</div>
+				<div id="packGoodsInfo">
+					<div id="packGoodName"></div>
+					<div id="packGoodState">按“确定”完成打包任务</div>
+				</div>
+				<div id="packDialog" class="secondBtns"></div>
+				<div id="packedToast"></div>
+				<div id="koiListBox" class="secondBtns">
+					<div id="koiListDiv"></div>
+				</div>
+			</div>
+			<div id="rulePage">
+	            <div id="ruleInner" class="coocaa_btn3">
+	            	<img src="http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/rule/newrule1.jpg" alt=""/>
+	                <img src="http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/rule/newrule2.jpg" alt=""/>
+	                <img src="http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/rule/newrule3.jpg" alt=""/>
+	                <img src="http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/rule/newrule4.jpg" alt=""/>
+	            </div>
+	        </div>
+			<div id="dialogPage" class="pagesboxes">
+				<!--用户初次进游戏弹窗-->
+				<div id="firstLoadRule" class="secondFloor fullscreen coocaa_btn2"></div>
+				<!--完成任务给锤子弹窗-->
+				<div id="firstLoadDraw" class="secondFloor fullscreen">
+					<div id="drawAward1" class="drawAwards coocaa_btn2">
+						<img class="fixedImg" src="images/dialog/1.png"/>
+						<img class="imgFocus" src="images/dialog/giftborder.png"/>
+					</div>
+					<div id="drawAward2" class="drawAwards coocaa_btn2">
+						<img class="fixedImg" src="images/dialog/2.png"/>
+						<img class="imgFocus" src="images/dialog/giftborder.png"/>
+					</div>
+				</div>
+				<!--三块冰砸破获得奖励弹窗-->
+				<div id="firstLoadAward" class="secondFloor fullscreen">
+					<div id="firstAwardInfo"></div>
+					<div id="redAwardImg">
+						<div id="redAwardNum"></div>
+						<div id="redAwardUnit">元</div>
+					</div>
+					<div id="couponAwardImg"></div>
+					<div id="entityAwardImg"></div>
+					<div id="close" class="coocaa_btn2">
+						<img class="fixedImg" src="images/dialog/close_focus.png"/>
+					</div>
+				</div>
+				<!--三块冰砸破解救任务弹窗-->
+				<div id="firstSendRed" class="secondFloor milubg fullscreen">
+					<div id="redInfo1">目前累计获得红包<span id="allRedNum" style="color: #fffd44;font-size: 46px;">XXX</span>元</div>
+					<div id="redInfo2"></div>
+					<div id="redQrcode" class="coocaa_btn2"></div>
+				</div>
+				<!--最后一关弹窗-->
+				<div id="firstSendEntity" class="secondFloor milubg fullscreen">
+					<div id="firstEnName"></div>
+					<div id="firstEnTime"></div>
+					<div id="entityQrcode" class="coocaa_btn2"></div>
+					<div id="firstEnInfo">请微信扫码完善收货信息，<br/>确保奖品能够送达哦~</div>
+				</div>
+				<!--当天已完成3次任务，继续做任务提示弹窗-->
+				<div id="hasFiveBell" class="secondFloor milubg fullscreen">
+					<div id="fiveBellInfo2">要召唤锦鲤<br/>将消耗<span style="color: #fdff3a;">5个</span>铃铛哦</div>
+					<div id="fiveBellEnsure" class="coocaa_btn2">
+						<img class="imgBlur" src="images/dialog/orange_blur.png"/>
+						<img class="imgFocus" src="images/dialog/orange_focus.png"/>
+						<div class="btnName">确定</div>
+					</div>
+					<div id="fiveBellCancel" class="coocaa_btn2">
+						<img class="imgBlur" src="images/dialog/red_blur.png"/>
+						<img class="imgFocus" src="images/dialog/red_focus.png"/>
+						<div class="btnName">取消</div>
+					</div>
+				</div>
+				<!--做任务弹窗-->
+				<div id="packIsOver" class="secondFloor santanbg fullscreen">
+					<div id="packIsOverBg"></div>
+					<div id="packIsOverBtn1" class="coocaa_btn2">
+						<img class="imgBlur" src="images/dialog/orange_blur.png"/>
+						<img class="imgFocus" src="images/dialog/orange_focus.png"/>
+						<div class="btnName">A选项</div>
+					</div>
+					<div id="packIsOverBtn2" class="coocaa_btn2">
+						<img class="imgBlur" src="images/dialog/red_blur.png"/>
+						<img class="imgFocus" src="images/dialog/red_focus.png"/>
+						<div class="btnName">B选项</div>
+					</div>
+				</div>
+				<!--答题正确（送锤子和已达上限）-->
+				<div id="hasDone" class="secondFloor santanbg fullscreen">
+					<div id="hasDoneBtn" class="coocaa_btn2">
+						<img class="fixedImg" src="images/dialog/hasdone.png"/>
+					</div>
+				</div>
+				<!--答题错误-->
+				<div id="hasDone2" class="secondFloor santanbg fullscreen">
+					<div id="hasDoneBtn2" class="coocaa_btn2">
+						<img class="fixedImg" src="images/dialog/hasdone.png"/>
+					</div>
+				</div>
+				<!--好运锦鲤    红包、优惠券、实体将-->
+				<div id="getKoi" class="secondFloor koibg fullscreen">
+					<div id="koiMouldImg"></div>
+					<!--蒙牛牛奶、平台红包-->
+					<div id="superKoiInfo">不用灰心，离超级锦鲤只差一点点哦</div>
+					<div id="getKoiInfo">获得<span id="koiAwardName" style="color: #ffe82a">蒙牛牛奶</span></div>
+					<div id="awardImgShow">
+						<div id="redImgShow" class="thisDrawAwardImg">
+							<div id="getAwardNum"></div>
+							<div id="getAwardUnit">元</div>
+						</div>
+						<div id="entityImgShow" class="thisDrawAwardImg">
+							<div id="entityImgPart"></div>
+							<!--<div id="entityQrcodePart"></div>-->
+						</div>
+						<div id="couponImgShow" class="thisDrawAwardImg">
+							<div id="couponImgPart"></div>
+						</div>
+					</div>
+					<div id="curAwardInfo">当前抽奖红包总额<span style="color: #ffe82a;">XXX</span>元</div>
+					<div id="koibtn1" class="coocaa_btn2">
+						<img class="imgBlur" src="images/dialog/orange_blur.png"/>
+						<img class="imgFocus" src="images/dialog/orange_focus.png"/>
+						<div class="btnName">继续召唤</div>
+					</div>
+					<div id="koibtn2" class="coocaa_btn2">
+						<img class="imgBlur" src="images/dialog/red_blur.png"/>
+						<img class="imgFocus" src="images/dialog/red_focus.png"/>
+						<div class="btnName">我的礼物</div><!--使用红包-->
+					</div>
+				</div>
+				<div id="getDrawRed" class="secondFloor koibg fullscreen">
+					<div id="getDrawRedBG">
+						<div id="getDrawRedInfo">当前抽奖红包总额<span id="getDrawRedNum" style="color: #ffe82a;"></span>元</div>
+						<div id="line"></div>
+						<div id="getDrawInfo1">微信扫码累计体现~</div>
+						<div id="getDrawRedQrcode" class="coocaa_btn2"></div>
+						<div id="getDrawInfo2">*红包已放入<span style="color:#fff642">[我的礼物]</span>，可前往查看</div>
+					</div>
+				</div>
+				<div id="getDrawEntity" class="secondFloor koibg fullscreen">
+					<div id="getDrawEnBG">
+						<div id="getDrawEnName"></div>
+						<div id="getDrawEnTime"></div>
+						<div id="getDrawEnQrcode" class="coocaa_btn2"></div>
+					</div>
+				</div>
+				<!--超级锦鲤-->
+				<div id="getKoi2" class="secondFloor koi2bg fullscreen">
+					<div id="koi2btn1" class="coocaa_btn2">
+						<img class="imgBlur" src="images/dialog/orange_blur.png"/>
+						<img class="imgFocus" src="images/dialog/orange_focus.png"/>
+						<div class="btnName">继续召唤</div>
+					</div>
+					<div id="koi2btn2" class="coocaa_btn2">
+						<img class="imgBlur" src="images/dialog/red_blur.png"/>
+						<img class="imgFocus" src="images/dialog/red_focus.png"/>
+						<div class="btnName">马上领取</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/coocaamap-1.0.js"></script>
+		<script type="text/javascript" src="js/qrcode.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/framework.js"></script>
+		
+		<script type="text/javascript">
+			setTimeout(otherPageInit,100);
+			function otherPageInit(){
+				$("#awardInfoCard").css("background-image","url(images/marque.png)");
+				$("#bellNUmBox").css("background-image","url(images/bell.png)");
+				$("#packGoodsPage").css("background-image","url(images/packlist/bg.jpg)");
+				$("#packGoodsTitle").css("background-image","url(images/packlist/title-pack.png)");
+				$("#moreGoodsTitle").css("background-image","url(images/packlist/title-more.png)");
+				$("#toastEmpty").css("background-image","url(images/packlist/toast-empty.png)");
+				$("#toastEnd").css("background-image","url(images/packlist/toast-end.png)");
+				$("#santaClaus").css("background-image","url(images/santaClaus2.png)");
+				$("#bulletinBoard").css("background-image","url(images/pop/shengdan1)");
+				$("#packGoodsBox").css("background-image","url(images/packboxbg.png)");
+				$("#packGoodsInfo").css("background-image","url(images/packgoodsinfo.png)");
+				$("#koiListBox").css("background-image","url(images/koilist.png)");
+				$("#firstLoadRule").css("background-image","url(images/dialog/bg1.png)");
+				$("#firstLoadDraw").css("background-image","url(images/dialog/bg2.png)");
+				$("#firstLoadAward").css("background-image","url(images/dialog/bg3.png)");
+				$("#redAwardImg").css("background-image","url(images/dialog/red.png)");
+				$("#redInfo2").css("background-image","url(images/dialog/redqrcode.png)");
+				$("#thanks_giftsBox").css("background-image","url(images/dialog/couponbell1.png)");
+				$("#startDrawBox2").css("background-image","url(images/dialog/bandit2.png)");
+				$("#giftsShowBox").css("background-image","url(images/dialog/dialog2.png)");
+			}
+			
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        	document.write(unescape("%3Cspan  style='display:none' id='cnzz_stat_icon_1274864418'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274864418' type='text/javascript'%3E%3C/script%3E"));
+
+		</script>
+	</body>
+</html>
