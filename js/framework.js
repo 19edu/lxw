@@ -278,7 +278,6 @@ function hasLogin(needQQ, num) {
 			_accessToken = "";
 			_operateTime = 0;
 			actionInit();
-			}
 		} else {
 			coocaaosapi.getUserInfo(function(message) {
 				exterInfo = message.external_info;
