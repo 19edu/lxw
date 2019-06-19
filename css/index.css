@@ -32,8 +32,146 @@ img[src='']{
 	background-size: 100%;
 }
 #homePage{
+	z-index: 0;
 	background-image: url(../images/bg.jpg);
 }
+#bottomBar {
+	position: absolute;
+	width: 1821px;
+	height: 268px;
+	left: 50px;
+	top: 812px;
+}
+.obj {							/* 底部条栏的等待救援的对象 */
+	z-index: 1;
+	width: 8px;
+	height: 8px;
+}
+#obj0 {
+	position: absolute;
+	left: 126px;
+	top: 108px;
+}
+#obj1 {
+	position: absolute;
+	left: 295px;
+	top: 108px;
+	background-color: #00FF00;
+}
+#obj2 {
+	position: absolute;
+	left: 464px;
+	top: 108px;
+}
+#obj3 {
+	position: absolute;
+	left: 633px;
+	top: 108px;
+}
+#obj4 {
+	position: absolute;
+	left: 802px;
+	top: 108px;
+}
+#obj5 {
+	position: absolute;
+	left: 971px;
+	top: 108px;
+}
+
+#obj6 {
+	position: absolute;
+	left: 1140px;
+	top: 108px;
+}
+#obj7 {
+	position: absolute;
+	left: 1309px;
+	top: 108px;
+}
+#obj8 {
+	position: absolute;
+	left: 1478px;
+	top: 108px;
+}
+#obj9 {
+	position: absolute;
+	left: 1647px;
+	top: 108px;
+}
+.objimg {
+	z-index: 2;
+}
+.objice {
+	z-index: 3;
+	position: absolute;
+	left: -64px;
+	top: -72px;
+	display: none;
+}
+.objlock {
+	z-index: 4;
+	position: absolute;
+	left: 36px;
+	top: 54px;
+	display: none;
+}
+#objimg0 {
+	position: absolute;
+	left: -53px;
+	top: -37px;
+}
+#objimg1 {
+	position: absolute;
+	left: -37px;
+	top: -62px;
+}
+#objimg2 {
+	position: absolute;
+	left: -44px;
+	top: -64px;
+}
+#objimg3 {
+	position: absolute;
+	left: -45px;
+	top: -64px;
+}
+#objimg4 {
+	position: absolute;
+	left: -53px;
+	top: -38px;
+}
+#objimg5 {
+	position: absolute;
+	left: -54px;
+	top: -50px;
+}
+#objimg6 {
+	position: absolute;
+	left: -44px;
+	top: -59px;
+}
+#objimg7 {
+	position: absolute;
+	left: -51px;
+	top: -62px;
+}
+#objimg8 {
+	position: absolute;
+	left: -55px;
+	top: -42px;
+}
+#objimg9 {
+	position: absolute;
+	left: -50px;
+	top: -64px;
+}
+
+
+
+
+
+
 #ADPart1{
 	position: absolute;
 	top: 10px;
