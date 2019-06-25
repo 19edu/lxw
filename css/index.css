@@ -192,20 +192,20 @@ img[src='']{
 	text-align: center;
 }
 #mainpageButton1 {
-	left: 30px;
-	top: 30px;
+	left: 86px;
+	top: 35px;
 }
 #mainpageButton2 {
-	left: 800px;
-	top: 400px;
+	left: 1280px;
+	top: 590px;
 }
 #mainpageButton3 {
-	left: 1200px;
-	top: 30px;
+	left: 1430px;
+	top: 35px;
 }
 #mainpageButton4 {
-	left: 150px;
-	top: 30px;
+	left: 1670px;
+	top: 35px;
 }
 .imgBlur, .imgFocus{
 	position: relative;
@@ -221,6 +221,8 @@ img[src='']{
 }
 .btn-focus .imgFocus{
 	display: block;
+	left: 0px;
+	top: -73px;
 }
 
 
