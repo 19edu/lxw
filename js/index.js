@@ -8,6 +8,8 @@ var flag = false;
 var index = 0;
 var TextNum2;
 
+
+
 $(function() {
 	console.log("--------------------loading");
 	
@@ -309,6 +311,8 @@ function buttonInitAfter() {
 		$("#hasPackedGif").css("display","block");
 	});
 }
+
+
 
 //奖品展示列表循环
 function loopAwardList() {

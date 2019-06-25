@@ -39,7 +39,7 @@ img[src='']{
 	position: absolute;
 	width: 1821px;
 	height: 268px;
-	left: 50px;
+	left: 54px;
 	top: 812px;
 }
 .obj {							/* 底部条栏的等待救援的对象 */
@@ -167,7 +167,61 @@ img[src='']{
 	top: -64px;
 }
 
-
+#honorBlock {							/* 勋章背景 */
+	position: absolute;
+	width: 322px;
+	height: 240px;
+	left: 50px;
+	top: 300px;
+	z-index: 1;
+}
+#freezingPeople {
+	/*
+	position: absolute;
+	width: 300px;
+	height: 280px;
+	left: 800px;
+	top: 200px;
+	z-index: 1;
+	*/
+}
+.homeBtns{
+	position: absolute;
+	z-index: 2;
+	display: block;
+	text-align: center;
+}
+#mainpageButton1 {
+	left: 30px;
+	top: 30px;
+}
+#mainpageButton2 {
+	left: 800px;
+	top: 400px;
+}
+#mainpageButton3 {
+	left: 1200px;
+	top: 30px;
+}
+#mainpageButton4 {
+	left: 150px;
+	top: 30px;
+}
+.imgBlur, .imgFocus{
+	position: relative;
+	height: 100%;
+	width: 100%;
+	display: none;
+}
+.imgBlur{
+	display: block;
+}
+.btn-focus .imgBlur{
+	display: block;
+}
+.btn-focus .imgFocus{
+	display: block;
+}
 
 
 
@@ -292,14 +346,7 @@ img[src='']{
 	height: 97px;
 	width: 75px;
 }
-.homeBtns{
-	position: absolute;
-	display: block;
-	height: 300px;
-    width: 300px;
-	font-size: 40px;
-	text-align: center;
-}
+
 #myAward,#packList{
 	top: 25px;
     left: 1412px;
@@ -572,21 +619,7 @@ img[src='']{
     font-size: 34px;
     text-align: center;
 }
-.imgBlur,.imgFocus{
-	position: relative;
-	height: 100%;
-	width: 100%;
-	display: none;
-}
-.imgBlur{
-	display: block;
-}
-.btn-focus .imgBlur{
-	display: none;
-}
-.btn-focus .imgFocus{
-	display: block;
-}
+
 
 #rulePage{
     width:1920px;
@@ -972,17 +1005,6 @@ img[src='']{
 #thanks_btn2{
 	left: 945px;
 	width: 210px;
-}
-.btnName{
-	position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    line-height: 68px;
-    text-align: center;
-    color: #FFFFFF;
-    font-size: 25px;
 }
 #koiMouldImg{
 	position: absolute;
