@@ -6,13 +6,14 @@ function updateMainPage()					// 刷新主界面
 {
 	var i;
 	// 底部的条栏
-	$("#bottomBar").css("display","block");
-	if (_curLevel < 10) {
-		for (i = _curLevel; i < 10; i++) {
-			$("#objice" + i).css("display", "block");
-			$("#objlock" + i).css("display", "block");
-		}
-	}
+	
+	for (i = 0; i < _curLevel; i++)
+		$("#objimg" + i).css("display", "block");
+	for (i = _curLevel; i < 10; i++)
+		$("#objice" + i).css("display", "block");
+		
+
+	
 	//$("#objlck4").removeClass("noshow");
 	//$("#objlck4").addClass("show");
 	
