@@ -1599,6 +1599,179 @@ img[src='']{
     background-repeat: no-repeat;
     background-size: 100%;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*奖励页面*/
+.none {
+	display: none
+}
+img[src=''] {
+	visibility: hidden;
+}
+.fullChild {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+.imgstyle {
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+#myawardPage{
+	background-image: url(../images/award/bg2.png);
+}
+#myAwardBox {
+	position: absolute;
+    top: 230px;
+    left: 200px;
+    height: 700px;
+    width: 1520px;
+    overflow: hidden;
+    font-size: 0;
+    display: block;
+}
+.awardTabBox {
+	position: relative;
+	width: 100%;
+	display: inline-block;
+	display: none;
+}
+.awardTabName {
+	display: inline-block;
+	float: left;
+	margin-top: 35px;
+    margin-left: 80px;
+	width: 100px;
+	height: 256px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+#couponTitle {
+	background-image: url(../images/award/coupon.png);
+}
+#redTitle {
+	background-image: url(../images/award/red.png);
+}
+#entityTitle{
+	background-image: url(../images/award/entity.png);
+}
+#cardTitle{
+	background-image: url(../images/award/vip.png);
+}
+#errorInfo{
+	position: fixed;
+    top: 800px;
+    left: 460px;
+    height: 120px;
+    width: 1000px;
+    line-height: 120px;
+    text-align: center;
+    color: white;
+    font-size: 56px;
+    background-color: rgba(0,0,0,0.5);
+	display: none;
+}
+.awardTabs {
+	display: inline-block;
+	width: 1300px;
+	float: right;
+	overflow: hidden;
+}
+.myAwards {
+    position: relative;
+    display: inline-block;
+    width: 300px;
+    height: 410px;
+    margin: 0px 5px 0px 5px;
+}
+.myawardsImg {
+	position: absolute;
+	margin-top: 30px;
+    margin-left: 15px;
+	width: 260px;
+	height: 264px;
+	background-image: url(../images/award/boxbg.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+.myawardsBorder,.myawardsBtn{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	display: none;
+}
+.myawardsBtn{
+	display: block;
+}
+.btn-focus .myawardsBorder {
+	display: block;
+}
+#noAwardBox{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1080px;
+    width: 1920px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.awardbtns{
+    position: absolute;
+    margin-left: 20px;
+    margin-top: 310px;
+    height: 98px;
+    width: 254px;
+    font-size: 32px;
+    color: #FFFFFF;
+    line-height: 98px;
+    text-align: center;
+}
+.notgetBtn{
+	color: #e95a7f;
+}
+.hasgotBtn{
+	color: #FFFFFF;
+}
+.awardbgFocus{
+    display: none;
+}
+.btn-focus .awardbgFocus{
+	display: block;
+}
+.btnName{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    -webkit-text-shadow:#6a3e0a 2px 0 0,#6a3e0a 0 2px 0,#6a3e0a -2px 0 0,#6a3e0a 0 -2px 0;
+	-moz-text-shadow:#6a3e0a 2px 0 0,#6a3e0a 0 2px 0,#6a3e0a -2px 0 0,#6a3e0a 0 -2px 0;
+	text-shadow:#6a3e0a 2px 0 0,#6a3e0a 0 2px 0,#6a3e0a -2px 0 0,#6a3e0a 0 -2px 0; 
+}
+
+
+
 ::-webkit-scrollbar {
 	width: 0px;
 	height: 0px;

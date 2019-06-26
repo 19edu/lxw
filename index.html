@@ -177,7 +177,115 @@
 				
 				
 			</div>
-		
+			<!--我的奖励页面-->
+			<div id="myawardPage" class="imgstyle fullChild none">
+				<div id="myAwardBox">
+					<!--优惠券-->
+					<div id="couponBox" class="awardTabBox">
+						<div class="awardTabName" id="couponTitle"></div>
+						<div class="awardTabs" id="couponTabs">
+							<div id="couponAward0" class="myAwards coocaa_btn2">
+								<div class="myawardsImg myawardsStyle2 entity">
+									<img class="couponImg" src=""/>
+								</div>
+								<div class="awardbtns notgetBtn">
+									<img class="myawardsBtn" src="images/award/notget.png"/>
+									<img class="myawardsBorder" src="images/award/border.png"/>
+					                <div class="btnName">待领取</div>
+					            </div>
+							</div>
+							<div id="couponAward1" class="myAwards coocaa_btn2">
+								<div class="myawardsImg myawardsStyle2 entity">
+									<img class="couponImg" src=""/>
+								</div>
+								<div class="awardbtns hasgotBtn">
+									<img class="myawardsBtn" src="images/award/hasgot.png"/>
+									<img class="myawardsBorder" src="images/award/border.png"/>
+					                <div class="btnName">去使用</div>
+					            </div>
+							</div>
+							<div id="couponAward2" class="myAwards coocaa_btn2">
+								<div class="myawardsImg myawardsStyle2 entity">
+									<img class="couponImg" src=""/>
+								</div>
+								<div class="awardbtns hasgotBtn">
+									<img class="myawardsBtn" src="images/award/hasgot.png"/>
+									<img class="myawardsBorder" src="images/award/border.png"/>
+					                <div class="btnName">去使用</div>
+					            </div>
+							</div>
+							<div id="couponAward3" class="myAwards coocaa_btn2">
+								<div class="myawardsImg myawardsStyle2 entity">
+									<img class="couponImg" src=""/>
+								</div>
+								<div class="awardbtns hasgotBtn">
+									<img class="myawardsBtn" src="images/award/hasgot.png"/>
+									<img class="myawardsBorder" src="images/award/border.png"/>
+					                <div class="btnName">去使用</div>
+					            </div>
+							</div>
+						</div>
+					</div>
+					<!--现金红包-->
+					<div id="redBox" class="awardTabBox">
+						<div class="awardTabName" id="redTitle"></div>
+						<div class="awardTabs" id="redTabs">
+							<div id="redAward0" class="myAwards coocaa_btn2">
+								<div class="myawardsImg myawardsStyle2 entity">
+									<img class="redImg" src=""/>
+								</div>
+								<div class="awardbtns">
+									<img class="myawardsBtn" src="images/award/notget.png"/>
+									<img class="myawardsBorder" src="images/award/border.png"/>
+					                <div class="btnName">待领取</div>
+					            </div>
+							</div>
+							<div id="redAward1" class="myAwards coocaa_btn2">
+								<div class="myawardsImg myawardsStyle2 entity">
+									<img class="redImg" src=""/>
+								</div>
+								<div class="awardbtns">
+									<img class="myawardsBtn" src="images/award/hasgot.png"/>
+									<img class="myawardsBorder" src="images/award/border.png"/>
+					                <div class="btnName">去使用</div>
+					            </div>
+							</div>
+							<div id="redAward2" class="myAwards coocaa_btn2">
+								<div class="myawardsImg myawardsStyle2 entity">
+									<img class="redImg" src=""/>
+								</div>
+								<div class="awardbtns">
+									<img class="myawardsBtn" src="images/award/hasgot.png"/>
+									<img class="myawardsBorder" src="images/award/border.png"/>
+					                <div class="btnName">去使用</div>
+					            </div>
+							</div>
+							<div id="redAwardHasGot" class="myAwards coocaa_btn2">
+								<div class="myawardsImg myawardsStyle2 entity">
+									<img class="redImg" src=""/>
+								</div>
+								<div class="awardbtns">
+									<img class="myawardsBtn" src="images/award/hasgot.png"/>
+									<img class="myawardsBorder" src="images/award/border.png"/>
+					                <div class="btnName">已领取</div>
+					            </div>
+							</div>
+						</div>
+					</div>
+					<!--实物-->
+					<div id="entityBox" class="awardTabBox">
+						<div class="awardTabName" id="entityTitle"></div>
+						<div class="awardTabs" id="entityTabs"></div>
+					</div>
+					<!--卡券-->
+					<div id="cardBox" class="awardTabBox">
+						<div class="awardTabName" id="cardTitle"></div>
+						<div class="awardTabs" id="cardTabs"></div>
+					</div>
+					<div id="errorInfo">奖品获取异常，请稍后再试~</div>
+				</div>
+				<div id="noAwardBox" class="coocaa_btn2 none imgstyle"></div>
+			</div>
 		</div>
 		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="js/coocaamap-1.0.js"></script>
@@ -188,38 +296,16 @@
 		<script type="text/javascript">
 			setTimeout(pageInit,100);
 			function pageInit(){
-				//$("#bottomBar").css("background-image","url(images/bar.png)");
 				$("#mainpageSinker").css("background-image","url(images/sinker.png)");
 				//$("#honorBlock").css("background-image","url(images/honor_bg.png)");
-				
 				//$("#freezingPeople").css("background-image","url(images/freezing_0_0.png)");
-				
 				updateMainPage();
 				/*
 				$("#awardInfoCard").css("background-image","url(images/marque.png)");
 				$("#bellNUmBox").css("background-image","url(images/bell.png)");
-				$("#packGoodsPage").css("background-image","url(images/packlist/bg.jpg)");
-				$("#packGoodsTitle").css("background-image","url(images/packlist/title-pack.png)");
-				$("#moreGoodsTitle").css("background-image","url(images/packlist/title-more.png)");
-				$("#toastEmpty").css("background-image","url(images/packlist/toast-empty.png)");
-				$("#toastEnd").css("background-image","url(images/packlist/toast-end.png)");
-				$("#santaClaus").css("background-image","url(images/santaClaus2.png)");
-				$("#bulletinBoard").css("background-image","url(images/pop/shengdan1)");
-				$("#packGoodsBox").css("background-image","url(images/packboxbg.png)");
-				$("#packGoodsInfo").css("background-image","url(images/packgoodsinfo.png)");
-				$("#koiListBox").css("background-image","url(images/koilist.png)");
-				$("#firstLoadRule").css("background-image","url(images/dialog/bg1.png)");
-				$("#firstLoadDraw").css("background-image","url(images/dialog/bg2.png)");
-				$("#firstLoadAward").css("background-image","url(images/dialog/bg3.png)");
-				$("#redAwardImg").css("background-image","url(images/dialog/red.png)");
-				$("#redInfo2").css("background-image","url(images/dialog/redqrcode.png)");
-				$("#thanks_giftsBox").css("background-image","url(images/dialog/couponbell1.png)");
-				$("#startDrawBox2").css("background-image","url(images/dialog/bandit2.png)");
 				$("#giftsShowBox").css("background-image","url(images/dialog/dialog2.png)");
 				*/
 			}
-			
-			
 			////////
 			////var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
         	////document.write(unescape("%3Cspan  style='display:none' id='cnzz_stat_icon_1274864418'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274864418' type='text/javascript'%3E%3C/script%3E"));
