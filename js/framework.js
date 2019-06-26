@@ -20,7 +20,7 @@ var _accessToken = null;
 var needQQ = false;
 var _tencentWay = "";
 
-var _actionId = null;//主活动的id
+var _actionId = 149;	//主活动的id
 var _curFocusId = null;
 var startLoginFlag = false;
 var changeLoginFlag = false;
@@ -39,7 +39,7 @@ var dialogTime = null;
 var adressIp = "http://beta.restful.lottery.coocaatv.com";
 var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
 
-var dataObj = {};我的奖励数据
+var dataObj = {};//我的奖励数据
 var _arr1 = new Array(); //红包
 var _arr2 = new Array(); //实体将
 var _arr3 = new Array(); //优惠券
@@ -467,8 +467,10 @@ function webPageInit(num){
 			"activity_name": "618活动"
 		};
 		webDataLog("okr_web_page_show", _dateObj);
+		summerVacationActionInit();
 	}else{
 		console.log("刷新页面");
+		updateMainPage();
 	}
 }
 //我的奖品
