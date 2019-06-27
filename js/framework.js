@@ -1,3 +1,4 @@
+var accountVersion = "";
 var _model = "";
 var _chip = "";
 var _mac = "";
@@ -45,6 +46,7 @@ var _arr2 = new Array(); //实体将
 var _arr3 = new Array(); //优惠券
 var _arr4 = new Array(); //实物奖
 
+/*
 var app = {
 	canonical_uri: function(src, base_path) {
 		var root_page = /^[^?#]*\//.exec(location.href)[0],
@@ -111,6 +113,34 @@ var app = {
 	}
 };
 app.initialize();
+*/
+
+coocaaApp.bindEvents("menubutton", function() {
+    console.log("this menuButton>>>>>>>>>new>>>>>>>>>")
+});
+
+coocaaApp.bindEvents("backbuttondown", function() {
+    console.log("this backbuttondown>>>>>>>>>new>>>>>>>>>");
+    handleBackButtonFunc();
+    //navigator.app.exitApp();
+});
+
+coocaaApp.bindEvents("homebutton", function() {
+    console.log("this homebutton>>>>>>>>>new>>>>>>>>>");
+    
+    navigator.app.exitApp();
+});
+
+coocaaApp.ready(function() {
+    
+});
+
+coocaaApp.triggleButton(function() {
+    _appversion = accountVersion;
+    listenUserChange();
+    buttonInitBefore();
+    getDeviceInfo();
+});
 
 function buttonInitBefore() {
 	
