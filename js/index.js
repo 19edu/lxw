@@ -9,7 +9,6 @@ var index = 0;
 var TextNum2;
 
 
-
 $(function() {
 	console.log("--------------------loading");
 	

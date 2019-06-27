@@ -765,14 +765,6 @@ img[src='']{
 	color: #FFFFFF;
 	font-weight: 100;
 }
-#entityQrcode{
-	position: absolute;
-    top: 550px;
-    left: 743px;
-    height: 190px;
-    width: 190px;
-    border: 5px solid white;
-}
 #firstEnInfo{
 	position: absolute;
     top: 614px;
@@ -1644,7 +1636,7 @@ img[src=''] {
 	background-size: 100%;
 }
 #myawardPage{
-	background-image: url(../images/award/bg2.png);
+	background-image: url(../images/award/bg.jpg);
 }
 #myAwardBox {
 	position: absolute;
@@ -1777,6 +1769,94 @@ img[src=''] {
 	-moz-text-shadow:#6a3e0a 2px 0 0,#6a3e0a 0 2px 0,#6a3e0a -2px 0 0,#6a3e0a 0 -2px 0;
 	text-shadow:#6a3e0a 2px 0 0,#6a3e0a 0 2px 0,#6a3e0a -2px 0 0,#6a3e0a 0 -2px 0; 
 }
+/*弹窗部分*/
+#dialogPage{
+	background-color: rgba(0,0,0,0.6);
+	display: none;
+	/*background-image:url(../images/award/dialogbg1.png);*/
+}
+.awardbg{
+	position: absolute;
+	top: 215px;
+    left: 555px;
+	height: 637px;
+	width: 876px;
+	background-image:url(../images/award/dialogbg.png);
+}
+.secondDialog{
+	display: none;
+}
+#entityQrcode{
+	position: absolute;
+    top: 315px;
+    left: 485px;
+    height: 190px;
+    width: 190px;
+    border: 5px solid white;
+}
+
+#entityInfo1,#hasGotInfo1,#entityInfo2,#hasGotInfo2{
+    position: absolute;
+    height: 40px;
+    width: 580px;
+    top: 205px;
+    left: 177px;
+    font-size: 34px;
+    line-height: 40px;
+    color: #ffffff;
+}
+#entityInfo2,#hasGotInfo2{
+    top: 250px;
+    font-size: 30px;
+}
+.awardLine{
+	position: absolute;
+    top: 300px;
+    color: white;
+    height: 2px;
+    left: 180px;
+    width: 505px;
+    font-size: 55px;
+    overflow: hidden;
+    border-bottom: 2px solid #964c00;
+}
+#entityInfo3{
+	position: absolute;
+    top: 367px;
+    left: 183px;
+    height: 90px;
+    width: 290px;
+    line-height: 46px;
+    font-size: 22px;
+    color: #d9eaff;
+}
+#hasGotInfo3,#hasGotInfo4,#hasGotInfo5{
+	position: absolute;
+    height: 36px;
+    width: 580px;
+    top: 337px;
+    left: 180px;
+    font-size: 34px;
+    line-height: 36px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 1px;
+}
+#hasGotInfo4{
+    top: 390px;
+}
+#hasGotInfo5{
+    top: 445px;
+    height: 82px;
+    line-height: 38px;
+    overflow: hidden;
+}
+
+
+
+
+
+
 
 
 
