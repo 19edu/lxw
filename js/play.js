@@ -16,16 +16,25 @@ function refreshActionData() {
 
 function updateMainPage()					// 刷新主界面 
 {
+	console.log("updateMainPage()");
+	
 	var i;
+	var honorBackgroundId;
+	
+	// 主页背景
 	$(".pagesboxes").css("display","block");
 	
 	// 底部的条栏
-	
 	for (i = 0; i < curLevel; i++)
 		$("#objimg" + i).css("display", "block");
 	for (i = curLevel; i < 10; i++)
 		$("#objice" + i).css("display", "block");
 		
+	// 勋章背景
+	honorBackgroundId = curLevel;
+	if (honorBackgroundId > 9)
+		honorBackgroundId = 9;
+	$("#honorBlock").css("background-image", "url(images/honor" + honorBackgroundId + ".png)");
 
 	
 	//$("#objlck4").removeClass("noshow");

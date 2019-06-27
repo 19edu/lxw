@@ -35,7 +35,7 @@ img[src='']{
 	z-index: 0;
 	background-image: url(../images/bg.jpg);
 }
-#bottomBar {
+#bottomBar {					/* 等待救援的对象列表 */
 	position: absolute;
 	width: 1920px;
 	height: 254px;
@@ -118,10 +118,10 @@ img[src='']{
 }
 #honorBlock {							/* 勋章背景 */
 	position: absolute;
-	width: 322px;
-	height: 240px;
-	left: 50px;
-	top: 300px;
+	width: 259px;
+	height: 243px;
+	left: 67px;
+	top: 119px;
 	z-index: 1;
 }
 #freezingPeople {
