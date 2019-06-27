@@ -85,7 +85,7 @@
 				
 				
 				
-				<div id="mainpageButton1" class="homeBtns coocaa_btn" downTarget="#mainpageButton2">
+				<div id="mainpageButton1" class="homeBtns coocaa_btn" downTarget="#mainpageButton2" rightTarget="#mainpageButton3">
 					<img class="imgBlur" src="images/button1.png"/>
 					<img class="imgFocus" src="images/buttonLight.png"/>
 				</div>
@@ -93,7 +93,7 @@
 					<img class="imgBlur" src="images/button2.png"/>
 					<img class="imgFocus" src="images/buttonLight.png"/>
 				</div>
-				<div id="mainpageButton3" class="homeBtns coocaa_btn" downTarget="#mainpageButton2">
+				<div id="mainpageButton3" class="homeBtns coocaa_btn" downTarget="#mainpageButton2" leftTarget="#mainpageButton1">
 					<img class="imgBlur" src="images/button3.png"/>
 					<img class="imgFocus" src="images/buttonLight.png"/>
 				</div>
@@ -181,6 +181,18 @@
 			</div>
 			<!-- 游戏规则页面  -->
 			<div id="gamerole"></div>			<!-- 游戏规则  -->
+			
+			<!-- 我的任务页面 -->
+			<div id="tasksPage">
+				<div id="tasksBackground">
+				</div>
+			</dev>
+			
+			<!-- 对话框列表 -->
+			<div id="dialogsPage">
+				<div id="di">
+			</div>
+			
 			<!--我的奖励页面-->
 			<div id="myawardPage" class="imgstyle fullChild none">
 				<div id="myAwardBox">
@@ -334,7 +346,7 @@
 		<script type="text/javascript">
 			setTimeout(pageInit,100);
 			function pageInit(){
-				
+				$("#tasksBackground").css("background-image", "url(images/task/taskBg.png)");
 				$("#mainpageHammer").css("background-image","url(images/hammer.png)");
 				$("#gamerole").css("background-image","url(images/rule.jpg)");
 				

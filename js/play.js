@@ -120,6 +120,14 @@ function summerVacationActionInit() {
 	});
 }
 
+// 游戏规则页面是否在显示
+function isRolePageShow() {
+	if ($("#gamerole").css("display") == "block")
+		return true;
+	else
+		return false;
+}
+
 function showRolePage() {
 	$("#gamerole").css("display", "block");
 }
@@ -128,7 +136,21 @@ function disappearRolePage() {
 	$("#gamerole").css("display", "none");
 }
 
+// 任务页面是否在显示
+function isTasksPageShow() {
+	if ($("#tasksPage").css("display") == "block")
+		return true;
+	else
+		return false;
+}
 
+function showTasksPage() {
+	$("#tasksPage").css("display", "block");
+}
+
+function disappearTasksPage() {
+	$("#tasksPage").css("display", "none");
+}
 
 
 

@@ -148,6 +148,10 @@ coocaaApp.triggleButton(function() {
 });
 
 function buttonInitBefore() {
+	
+	$("#mainpageButton1").unbind("itemClick").bind("itemClick", function() {
+		showTasksPage();
+	});
 	$("#mainpageButton3").unbind("itemClick").bind("itemClick", function() {
 		//_actionId = getUrlParam("actionid");//主活动的id
 		$("#myawardPage").css("display","block");
@@ -468,13 +472,19 @@ function handleBackButtonFunc() {
 		webPageInit(1);
 		console.log(_curFocusId);
 		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
-	}else if ($("#gamerole").css("display") == "block") {
-		disappearRolePage();
-		webPageInit(1);
 	}else if ($("#myawardPage").css("display") == "block") {
 		$("#myawardPage").css("display", "none");
 		webPageInit(1);
-	}else {
+	}
+	else if (isRolePageShow()) {		// 如果游戏规则页面显示中
+		disappearRolePage();
+		webPageInit(1);
+	}
+	else if (isTasksPageShow()) {		// 如果做任务页面显示中
+		disappearTasksPage();
+		webPageInit(1);
+	}
+	else {
 		navigator.app.exitApp();
 	}
 }

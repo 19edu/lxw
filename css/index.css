@@ -109,7 +109,7 @@ img[src='']{
 }
 
 
-#mainpageSinker {
+#mainpageHammer {
 	position: absolute;
 	width: 190px;
 	height: 207px;
@@ -182,7 +182,34 @@ img[src='']{
 	display: none;
 	z-index: 1000000;
 }
+#tasksPage {
+	position: absolute;
+	width: 1920px;
+	height: 1080px;
+	left: 0px;
+	top: 0px;
+	display: none;
+	z-index: 100;
+	background-color: #00538C;
+}
+#tasksBackground {
+	position: absolute;
+	width: 1920px;
+	height: 1080px;
+	left: 0px;
+	top: 0px;
+	z-index: 101;
+}
 
+#dialogsPage {
+	position: absolute;
+	width: 1920px;
+	height: 1080px;
+	left: 0px;
+	top: 0px;
+	display: none;
+	z-index: 200;
+}
 
 
 #ADPart1{
