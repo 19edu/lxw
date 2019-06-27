@@ -173,7 +173,15 @@ img[src='']{
 	left: 0px;
 	top: -73px;
 }
-
+#gamerole {
+	position: absolute;
+	width: 1920px;
+	height: 1080px;
+	left: 0px;
+	top: 0px;
+	display: none;
+	z-index: 1000000;
+}
 
 
 

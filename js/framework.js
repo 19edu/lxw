@@ -154,6 +154,9 @@ function buttonInitBefore() {
 		$("#myawardPage").css("display","block");
 		getMyAwards(_actionId);
 	});
+	$("#mainpageButton4").unbind("itemClick").bind("itemClick", function() {
+		showRolePage();
+	});
 	$("#redHasGetBtn").unbind("itemClick").bind("itemClick", function() {
 		console.log("点击了继续参与");
 		$("#redHasGet").css("display","none");
@@ -488,7 +491,12 @@ function handleBackButtonFunc() {
 		webPageInit(1);
 		console.log(_curFocusId);
 		map = new coocaakeymap($(".coocaa_btn2"), document.getElementById(_curFocusId), "btn-focus", function() {}, function(val) {}, function(obj) {});
-	} else {
+	} 
+	else if ($("#gamerole").css("display") == "block") {
+		disappearRolePage();
+		webPageInit(1);
+	}
+	else {
 		navigator.app.exitApp();
 	}
 }

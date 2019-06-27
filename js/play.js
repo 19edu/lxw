@@ -7,6 +7,7 @@ var addNumber = 0;					// 完成任务后，或者购买了产品包之后，增
 var taskFinished = false;			// 当天的任务是否完成 (当天最多只能获取3个锤子的任务，不允许再多了)
 var sysTime = 1561535614086;		// 当前的系统时间 毫秒数
 		
+
 var curLevel = 5;					// 当前解锁了第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...    
 
 // 刷新活动数据
@@ -118,5 +119,21 @@ function summerVacationActionInit() {
 		}
 	});
 }
+
+function showRolePage() {
+	$("#gamerole").css("display", "block");
+}
+
+function disappearRolePage() {
+	$("#gamerole").css("display", "none");
+}
+
+
+
+
+
+
+
+
 
 
