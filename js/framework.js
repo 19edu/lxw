@@ -148,7 +148,38 @@ coocaaApp.triggleButton(function() {
 });
 
 function buttonInitBefore() {
-	
+	$("#redHasGetBtn").unbind("itemClick").bind("itemClick", function() {
+		console.log("点击了继续参与");
+		$("#redHasGet").css("display","none");
+		$("#dialogPage").css("display","none");
+		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
+	});
+	$("#noAwardBox").unbind("itemClick").bind("itemClick", function() {
+		console.log("点击了去玩游戏");
+		$("#noAwardBox").css("display","none");
+		map = new coocaakeymap($(".coocaa_btn2"), "#mainpageButton2", "btn-focus", function() {}, function(val) {}, function(obj) {});
+	});
+	$("#redQrcode").unbind("itemClick").bind("itemClick", function() {
+		console.log("点击了红包奖励的二维码");
+		$("#redNotGet").css("display","none");
+		$("#dialogPage").css("display","none");
+		console.log(_curFocusId);
+		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
+	});
+	$("#entityQrcode").unbind("itemClick").bind("itemClick", function() {
+		console.log("点击了实物奖励的二维码");
+		$("#entityNotGet").css("display","none");
+		$("#dialogPage").css("display","none");
+		$("#myawardPage").css("display","block");
+		console.log(_curFocusId);
+		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
+	});
+	$("#hasGotInfo4").unbind("itemClick").bind("itemClick", function() {
+		console.log("点击了实物奖励的领奖地址");
+		$("#entityHasGet").css("display","none");
+		$("#dialogPage").css("display","none");
+		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
+	});
 	$("#mainpageButton1").unbind("itemClick").bind("itemClick", function() {
 		showTasksPage();
 	});

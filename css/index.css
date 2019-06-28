@@ -1879,6 +1879,122 @@ img[src=''] {
     overflow: hidden;
 }
 
+#redHasGetInfo{
+	position: absolute;
+    top: 210px;
+    left: 100px;
+    height: 70px;
+    width: 655px;
+    text-align: center;
+    line-height: 50px;
+    color: #ffffff;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 60px;
+}
+#redHasGetNum{
+	height: 60px;
+	line-height: 60px;
+	font-size: 72px;
+	color: #fffaaf;
+}
+#redLine{
+	position: absolute;
+	top: 300px;
+    color: white;
+    height: 2px;
+    left: 135px;
+    width: 580px;
+    font-size: 55px;
+    overflow: hidden;
+    border-bottom: 2px solid #964c00;
+}
+#redHasGetInfo2{
+	position: absolute;
+    top: 330px;
+    left: 150px;
+    height: 140px;
+    width: 550px;
+    text-align: center;
+    line-height: 43px;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 0px;
+}
+#redHasGetBtn{
+	position: absolute;
+    top: 468px;
+    left: 300px;
+    height: 98px;
+    width: 252px;
+    background-image: url(../images/award/dialogbtn2.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+#redInfo1{
+    position: absolute;
+    height: 46px;
+    line-height: 46px;
+    width: 410px;
+    top: 193px;
+    left: 75px;
+    font-size: 34px;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+#redStrongPart{
+    display: inline-block;
+    width: 207px;
+    height: 40px;
+    line-height: 40px;
+    color: #de3049;
+    border-radius: 5px;
+    background-color: #FFFAAF;
+    margin: 0 3px;
+}
+#redContent{
+    position: absolute;
+    height: 90px;
+    width: 344px;
+    top: 330px;
+    left: 70px;
+    line-height: 90px;
+    text-align: center;
+    font-size: 42px;
+    bottom: 0px;
+    color: #FDFAA8;
+    font-weight: 900;
+}
+#redInfo2{
+    position: absolute;
+    height: 36px;
+    width: 330px;
+    top: 460px;
+    left: 85px;
+    line-height: 36px;
+    font-weight: 900;
+    font-size: 34px;
+    color: #ffffff;
+    text-align: center;
+}
+#redQrcode{
+    position: absolute;
+    height: 270px;
+    width: 270px;
+    top: 234px;
+    left: 483px;
+    font-size: 24px;
+    line-height: 190px;
+    text-align: center;
+    border: 5px solid white;
+}
+
+
+
 
 
 
