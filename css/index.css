@@ -32,7 +32,6 @@ img[src='']{
 	background-size: 100%;
 }
 #homePage{
-	z-index: 0;
 	background-image: url(../images/bg.jpg);
 }
 #bottomBar {					/* 等待救援的对象列表 */
@@ -44,7 +43,6 @@ img[src='']{
 	display: block;
 }
 .obj {							/* 底部条栏的等待救援的对象 */
-	z-index: 1;
 	width: 8px;
 	height: 8px;
 	/*background-color: #00FF00;*/
@@ -101,7 +99,6 @@ img[src='']{
 	top: 0px;
 }
 .objimg, .objice{
-	z-index: 3;
 	position: absolute;
 	left: 0px;
 	top: 0px;
@@ -122,7 +119,6 @@ img[src='']{
 	height: 243px;
 	left: 67px;
 	top: 119px;
-	z-index: 1;
 }
 #freezingPeople {
 	/*
@@ -131,12 +127,10 @@ img[src='']{
 	height: 280px;
 	left: 800px;
 	top: 200px;
-	z-index: 1;
 	*/
 }
 .homeBtns{
 	position: absolute;
-	z-index: 2;
 	display: block;
 	text-align: center;
 }
@@ -189,7 +183,6 @@ img[src='']{
 	left: 0px;
 	top: 0px;
 	display: none;
-	z-index: 100;
 	background-color: #00538C;
 }
 #tasksBackground {
@@ -198,18 +191,248 @@ img[src='']{
 	height: 1080px;
 	left: 0px;
 	top: 0px;
-	z-index: 101;
 }
-
-#dialogsPage {
+#taskHint{
 	position: absolute;
 	width: 1920px;
-	height: 1080px;
+	height: 80px;
+	left: 0px;
+	top: 218px;
+	font-size: 50px;
+	color: #ffffff;
+	text-align: center;
+}
+#taskFrame0 {
+	position: absolute;
+	width: 320px;
+	height: 728px;
+	left: 400px;
+	top: 352px;
+	/*background-color: #DC443D;*/
+}
+#taskFrame1 {
+	position: absolute;
+	width: 320px;
+	height: 728px;
+	left: 800px;
+	top: 352px;
+	/*background-color: #DC443D;*/
+}
+#taskFrame2 {
+	position: absolute;
+	width: 320px;
+	height: 728px;
+	left: 1200px;
+	top: 352px;
+	/*background-color: #DC443D;*/
+}
+.taskName {
+	position: absolute;
+	width: 320px;
+	height: 30px;
+	left: 0px;
+	top: 22px;
+	font-size: 26px;
+	line-height: 30px;
+	color: #ffffff;
+	text-align: center;
+}
+#taskimg0, #taskimg1, #taskimg2 {
+	position: absolute;
 	left: 0px;
 	top: 0px;
 	display: none;
-	z-index: 200;
 }
+#taskgo0, #taskgo1, #taskgo2 {
+	position: absolute;
+	left: 110px;
+	top: 110px;
+	display: none;
+}
+#taskdone0, #taskdone1, #taskdone2 {
+	position: absolute;
+	left: 110px;
+	top: 110px;
+	display: none;
+}
+#taskHammer0, #taskHammer1, #taskHammer2 {
+	position: absolute;
+	left: 100px;
+	top: 357px;
+	display: none;
+}
+#taskHammerLock0, #taskHammerLock1, #taskHammerLock2 {
+	position: absolute;
+	left: 100px;
+	top: 357px;
+	display: none;
+}
+#taskState0, #taskState1, #taskState2 {
+	position: absolute;
+	width: 320px;
+	height: 30px;
+	left: 0px;
+	top: 226px;
+	font-size: 26px;
+	line-height: 30px;
+	color: #ffffff;
+	text-align: center;
+}
+#taskGotText0, #taskGotText1, #taskGotText2 {
+	position: absolute;
+	width: 320px;
+	height: 30px;
+	left: 0px;
+	top: 524px;
+	font-size: 26px;
+	line-height: 30px;
+	color: #ffffff;
+	text-align: center;
+	display: none;
+}
+
+	
+#FirstInInfo1 {
+	position: absolute;
+	left: 0px;
+	top: 200px;
+	width: 876px;
+	height: 36px;
+	font-size: 34px;
+	line-height: 34px;
+	text-align: center;
+	font-weight: bold;
+	color: #ffffff;
+}
+#FirstInFrame1 {
+	position: absolute;
+	left: 306px;
+	top: 267px;
+	width: 251px;
+	height: 251px;
+	background-image: url(../images/dialog/dialogAward.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+#FirstInImg1 {
+	width: 251px;
+	height: 251px;
+}
+#FirstInOKBtn{
+	position: absolute;
+	left: 315px;
+	top: 655px;
+	width: 252px;
+	height: 98px;
+}
+#haveGot3HammerText1 {
+	position: absolute;
+	left: 0px;
+	top: 255px;
+	width: 876px;
+	height: 36px;
+	font-size: 34px;
+	line-height: 34px;
+	text-align: center;
+	font-weight: bold;
+	color: #ffffff;
+}
+#haveGot3HammerText2 {
+	position: absolute;
+	left: 0px;
+	top: 338px;
+	width: 876px;
+	height: 36px;
+	font-size: 34px;
+	line-height: 34px;
+	text-align: center;
+	font-weight: bold;
+	color: #ffffff;
+}
+#haveGot3HammerText3 {
+	position: absolute;
+	left: 0px;
+	top: 465px;
+	width: 876px;
+	height: 36px;
+	font-size: 22px;
+	line-height: 34px;
+	text-align: center;
+	font-weight: bold;
+	color: #d9eaff;
+}
+#tuchu3 {
+	font-size: 50px;
+	color: #ffec00;
+}
+.dialogBtn, .dialogBtnL {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 0px;
+	top: 0px;
+	display: none;
+}
+.dialogBtn{
+	display: block;
+}
+.btn-focus .dialogBtn{
+	display: block;
+}
+.btn-focus .dialogBtnL{
+	display: block;
+}
+.dialogText {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 252px;
+	height: 98px;
+	font-size: 26px;
+	line-height: 90px;
+	font-weight: 600;
+	color: #E95A7F;
+	text-align: center;
+}
+#haveGot3HammerBtn1, #quitDialogBtn1 {
+	position: absolute;
+	left: 131px;
+	top: 655px;
+	width: 252px;
+	height: 98px;
+}
+#haveGot3HammerBtn2, #quitDialogBtn2 {
+	position: absolute;
+	left: 477px;
+	top: 655px;
+	width: 252px;
+	height: 98px;
+}
+#quitDialogText1 {
+	position: absolute;
+	left: 0px;
+	top: 302px;
+	width: 876px;
+	height: 36px;
+	font-size: 34px;
+	line-height: 34px;
+	text-align: center;
+	font-weight: bold;
+	color: #ffffff;
+}
+#quitDialogText2 {
+	position: absolute;
+	left: 0px;
+	top: 376px;
+	width: 876px;
+	height: 36px;
+	font-size: 34px;
+	line-height: 34px;
+	text-align: center;
+	font-weight: bold;
+	color: #ffffff;
+}
+
 
 
 #ADPart1{

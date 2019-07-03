@@ -1,0 +1,135 @@
+<!doctype html><!--声明当前文档为html文档-->
+<html lang="en"><!--语言为英语-->
+	<head><!--头部-->
+		<meta charset="UTF-8"><!--字符编码：utf-8国际编码  gb2312中文编码-->
+		<meta name="Keywords" content="关键词">
+		<meta name="Description" content="描述">
+		<title>Document</title>
+		<script>
+			var adjust = function() {
+				if(/Android (\d+\.\d+)/.test(navigator.userAgent)) {
+					var version = parseFloat(RegExp.$1);
+					if(version > 2.3) {
+						var phoneScale = parseInt(window.screen.width) / 1920;
+						document.write('<meta name="viewport" content="width=1920, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+					} else {
+						document.write('<meta name="viewport" content="width=1920, target-densitydpi=device-dpi">');
+					}
+				} else {
+					document.write('<meta name="viewport" content="width=1920, user-scalable=no, target-densitydpi=device-dpi">');
+				}
+			}
+			adjust();
+			var _czc = _czc || [];
+        	_czc.push(["_setAccount", "1274864418"]);
+
+		</script>
+		<style>/*css样式表的衣柜*/
+		*{
+			margin:0px;
+			padding:0px;
+		}
+		body{
+			background-color: #000000;
+		}
+		#onceagainBtn{
+			position: absolute;
+			top: 300px;
+		    left: 800px;
+		    height: 100px;
+		    width: 300px;
+		    background-color: white;
+		    color: red;
+		    text-align: center;
+		    line-height: 100px;
+		    font-size: 64px;
+		}
+		.box{
+			position: absolute;
+			top:50px;
+			left: 100px;
+			width:650px;
+			height:621px;
+			background:url(images/ice.png);
+		}
+		.box1{
+			-webkit-animation:mov 6000ms steps(5,start) 0ms 1 normal forwards;
+			animation:mov 6000ms steps(5,start) 0ms 1 normal forwards;
+			
+			/*animation-name: mov;
+			animation-duration: 500ms;
+			animation-timing-function: steps(6, end);
+			animation-delay: 0ms;
+			animation-iteration-count: 1;
+			animation-direction: normal;
+			animation-fill-mode: forwards;
+			
+			animation-name: mov;
+			animation-duration: 500ms;
+			animation-timing-function: steps(6, end);
+			animation-delay: 0ms;
+			animation-iteration-count: 1;
+			animation-direction: normal;
+			animation-fill-mode: forwards;*/
+		}
+		@keyframes mov{
+			0%{
+				background-position:0 0px;
+			}
+			100%{
+				background-position:-3250px 0px;
+			}
+		}
+		@-webkit-keyframes mov {
+			0%{
+				background-position:0 0px;
+			}
+			100%{
+				background-position:-3250px 0px;
+			}
+		}
+		.box2{
+			-webkit-animation:mov2 6000ms steps(5,start) 0ms 1 normal forwards;
+			animation:mov2 6000ms steps(5,start) 0ms 1 normal forwards;
+		}
+		@keyframes mov2{
+			0%{
+				background-position:0 0px;
+			}
+			100%{
+				background-position:-3250px 0px;
+			}
+		}
+		@-webkit-keyframes mov2 {
+			0%{
+				background-position:0 0px;
+			}
+			100%{
+				background-position:-3250px 0px;
+			}
+		}
+		</style>
+	</head>
+	<body><!--身体-->
+		<div id="showBox" class="box"></div>
+		<div id="onceagainBtn" class="coocaa_btn">再来一次</div>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/coocaamap-1.0.js"></script>
+		<script type="text/javascript">
+			map = new coocaakeymap($(".coocaa_btn"), document.getElementById("onceagainBtn"), "btn-focus", function() {}, function(val) {}, function(obj) {});
+			var ani_status = 1;
+			$("#onceagainBtn").unbind("itemClick").bind("itemClick", function() {
+//				$("#showBox").removeClass("box");
+//				$("#showBox").addClass("box");
+				console.log(ani_status);
+				if(ani_status == 1) {
+					$("#showBox").attr("class","box box1");
+					ani_status = 2;
+				} else {
+					$("#showBox").attr("class","box box2");
+					ani_status = 1;
+				}
+			});
+		</script>
+	</body>
+</html>

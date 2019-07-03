@@ -183,6 +183,8 @@ function buttonInitBefore() {
 	$("#mainpageButton1").unbind("itemClick").bind("itemClick", function() {
 		showTasksPage();
 	});
+	$("#mainpageButton2").unbind("itemClick").bind("itemClick", function() {
+	});
 	$("#mainpageButton3").unbind("itemClick").bind("itemClick", function() {
 		//_actionId = getUrlParam("actionid");//主活动的id
 		$("#myawardPage").css("display","block");
@@ -190,6 +192,13 @@ function buttonInitBefore() {
 	});
 	$("#mainpageButton4").unbind("itemClick").bind("itemClick", function() {
 		showRolePage();
+	});
+	$("#FirstInOKBtn").unbind("itemClick").bind("itemClick", function() {
+		entryType = 0;
+		updateMainPage();
+	});
+	$("#taskEnter").unbind("itemClick").bind("itemClick", function() {
+		gotoDoTask();
 	});
 	$("#redHasGetBtn").unbind("itemClick").bind("itemClick", function() {
 		console.log("点击了继续参与");
