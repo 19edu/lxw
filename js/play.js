@@ -565,6 +565,36 @@ function addChance(taskType, taskId, askResult) {
     });
 }
 
+// 购买产品包
+function gotoBuyPackage() {
+	var param1 = "action";
+	var param2 = "coocaa.intent.vip.center";
+	var param3 = "com.tianci.movieplatform";
+	var str = "[{\"business_type\":\"1\"}, {\"source_id\":\"57\"}]";
+		
+	setTimeout(function () {
+		coocaaosapi.startCommonNormalAction(param1, param2, param3, "", "", 
+				str, function() { }, function() {});
+	}, 100);
+}
+
+// 随便逛逛
+function strollAround() {
+	var param1 = "action";
+	var param2 = "coocaa.intent.action.HOME_COMMON_LIST";
+	var param3 = "com.tianci.movieplatform";
+	var str;
+	if (_qsource == "tencent")
+		str = "[{\"id\":\"103177\"}]";
+	else
+		str = "[{\"id\":\"103178\"}]";
+		
+	setTimeout(function () {
+		coocaaosapi.startCommonNormalAction(param1, param2, param3, "", "", 
+				str, function() { }, function() {});
+	}, 100);
+}
+
 // 所有弹窗消失
 function disappearAllDialog() {
 	$("#dialogPage").css("display", "none");
@@ -587,7 +617,7 @@ function disappearFirstInDialog() {
 function showHaveGot3Dialog() {
 	$("#dialogPage").css("display", "block");
 	$("#haveGot3HammerDialog").css("display", "block");
-	map = new coocaakeymap($(".coocaa_btn3"), "#haveGot3HammerBtn1", "btn-focus", empty0, empty1, empty1);
+	map = new coocaakeymap($(".coocaa_btn3"), "#haveGot3HammerBtn2", "btn-focus", empty0, empty1, empty1);
 }
 
 

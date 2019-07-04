@@ -198,7 +198,15 @@ function buttonInitBefore() {
 		updateMainPage();
 	});
 	$("#taskEnter").unbind("itemClick").bind("itemClick", function() {
-		gotoDoTask();
+		gotoDoTask();				// 做任务
+	});
+	$("#haveGot3HammerBtn1").unbind("itemClick").bind("itemClick", function() {
+		// 获取更多锤子
+		gotoBuyPackage();
+	});
+	$("#haveGot3HammerBtn2").unbind("itemClick").bind("itemClick", function() {
+		// 随便逛逛
+		strollAround();
 	});
 	$("#redHasGetBtn").unbind("itemClick").bind("itemClick", function() {
 		console.log("点击了继续参与");
