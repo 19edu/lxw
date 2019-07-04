@@ -104,8 +104,12 @@ function summerVacationActionInit() {
 					overNum = data.data.overNum;
 				if (data.data.allNumber != undefined && data.data.allNumber != null)
 					allNumber = data.data.allNumber;
+				if (allNumber > 30)
+					allNumber = 0;
 				if (data.data.allUsedNumber != undefined && data.data.allUsedNumber != null)
 					allUsedNumber = data.data.allUsedNumber;
+				if (allUsedNumber > 30)
+					allUsedNumber = 0;
 				if (data.data.entryType != undefined && data.data.entryType != null)
 					entryType = data.data.entryType;
 				if (data.data.startDayNum != undefined && data.data.startDayNum != null)
@@ -226,11 +230,23 @@ function isTasksPageShow() {
 }
 
 function showTasksPage() {
+	// 如果当天已经获得了3把锤子，也就是当天任务已经做完，则不能再进入任务界面了，这时，就要弹出提示框
+	if (taskFinished) {
+		console.log("当天已经获得了3把锤子");
+		showHaveGot3Dialog();
+	}
+	else {
+		showTasksPageInt();
+	}
+}
+		
+function showTasksPageInt() {
 	// 拥有的锤子数，除以3，得到当前需要做第几关的任务
 	var gate = parseInt(allNumber / 3);
 	var task0Idx = gate * 3 + 0;
 	var task1Idx = gate * 3 + 1;
 	var task2Idx = gate * 3 + 2;
+	console.log("gate = " + gate + ", task0Idx = " + task0Idx + ", task1Idx = " + task1Idx + ", task2Idx = " + task2Idx);
 	
 	if (task0Idx < alltasks.length) {
 		document.getElementById("taskName0").innerHTML = alltasks[task0Idx].taskName;
@@ -311,18 +327,249 @@ function disappearTasksPage() {
 	$("#tasksPage").css("display", "none");
 }
 
+// 去做任务 
 function gotoDoTask(){
 	console.log("gotoDoTask()");
+	// 拥有的锤子数，除以3，得到当前需要做第几关的任务
+	var gate = parseInt(allNumber / 3);
+	var task0Idx = gate * 3 + 0;
+	var task1Idx = gate * 3 + 1;
+	var task2Idx = gate * 3 + 2;
+	var curIdx;
+	if (alltasks[task0Idx].remainingNumber != 0)
+		curIdx = task0Idx;
+	else if (alltasks[task1Idx].remainingNumber != 0)
+		curIdx = task1Idx;
+	else 
+		curIdx = task2Idx;
+	console.log("gate = " + gate + ", task0Idx = " + task0Idx + ", task1Idx = " 
+				+ task1Idx + ", task2Idx = " + task2Idx + ", curIdx = " + curIdx);
+	
+	console.log("task = " + JSON.stringify(alltasks[curIdx]));
+	
+	var needCheckVersion = true;
+	
+	var param = alltasks[curIdx].param;					// 启动任务的json参数字符串
+	var taskType = alltasks[curIdx].taskType;			// 任务类型,jump,videoAndAsk,buy,download
+	var problem = alltasks[curIdx].problem;				// 问答任务时的问题
+	var goBackOnclick = alltasks[curIdx].goBackOnclick;	//
+	var videoSource = alltasks[curIdx].videoSource;		// onclick
+
+	var hasversioncode ="";								// 系统存在APP的版本
+	var pkgname = "";
+	var bywhat = ""; 
+	var byvalue = "";
+	var needversioncode = "";
+	var param1, param2, param3, param4, param5;
+	param1 = param2 = param3 = param4 = param5 = "";
+	var str = "[]";										// 附加字符串
+	var needAddChance = true;
+	
+	if (taskType == "jump")								// 跳转任务
+	{
+		pkgname = JSON.parse(param).packagename || JSON.parse(param).packageName;
+		bywhat = JSON.parse(param).bywhat;
+		byvalue = JSON.parse(param).byvalue;
+		needversioncode = JSON.parse(param).versioncode || JSON.parse(param).versionCode;
+	
+		var str1 = '{ "pkgList": ["' + pkgname + '"] }';
+		coocaaosapi.getAppInfo(str1, function(message) {
+			if (JSON.parse(message)[pkgname].status == -1) {
+				coocaaosapi.startAppStoreDetail(pkgname, function() {}, function() {});
+			} else {
+				hasversioncode = JSON.parse(message)[pkgname].versionCode;
+				if (bywhat == "activity" || bywhat == "class") {
+					param1 = pkgname;
+					param2 = byvalue;
+				} else if (bywhat == "uri") {
+					param1 = pkgname;
+					param5 = byvalue
+				} else if (bywhat == "pkg") {
+					param1 = pkgname;
+				} else if (bywhat == "action") {
+					param1 = "action";
+					param2 = byvalue;
+					param3 = pkgname;
+				}
+				if (JSON.stringify(JSON.parse(param).params) != "{}") {
+					str = '[' + JSON.stringify(JSON.parse(param).params).replace(/,/g, "},{") + ']';
+				}
+				
+				if (hasversioncode < needversioncode) {
+					if (pkgname == "com.tianci.movieplatform") {
+						////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/movieupdate.png",3000,"","");
+						return;
+					
+					}  else if (pkgname == "com.coocaa.mall") {
+						////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/mallupdate.png",3000,"","");
+						return;
+					}
+					console.log("当前版本过低，请前往应用圈搜索进行升级");
+				} else {
+					if(needCheckVersion){
+						var apkVersion = [];
+						var apkArry = ["com.coocaa.activecenter","com.coocaa.app_browser","com.coocaa.mall","com.tianci.movieplatform"];
+						var app = '{ "pkgList": ["com.coocaa.activecenter","com.coocaa.app_browser","com.coocaa.mall","com.tianci.movieplatform"] }';
+						coocaaosapi.getAppInfo(app, function(message) {
+							console.log("getAppInfo====" + message);
+							for(var i=0; i < 4; i++){
+								apkVersion.push(JSON.parse(message)[apkArry[i]].versionCode);
+							}
+							activityCenterVersion = apkVersion[0];
+							browserVersion = apkVersion[1];
+							mallVersion = apkVersion[2];
+							cAppVersion = apkVersion[3];
+							console.log("===activityCenterVersion=="+activityCenterVersion+"===browserVersion=="+browserVersion+"==mallVersion=="+mallVersion+"==cAppVersion=="+cAppVersion);
+							if((activityCenterVersion < 103015) || (browserVersion < 104039)) {
+								console.log("活动中心或浏览器版本太低，需要后台升级，显示弹窗");
+								////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/newmokuaijiazai.png",3000);
+								return;
+							} else {//版本满足需求，才真正执行按键判断:
+								console.log("剩余可完成次数: " + alltasks[curIdx].remainingNumber);
+								if(alltasks[curIdx].remainingNumber != undefined && alltasks[curIdx].remainingNumber > 0) 
+									needAddChance = true;
+								else
+									needAddChance = false;
+									
+								if (pkgname == "com.tianci.movieplatform") {
+									if(cAppVersion<7020028){
+										//lowVersion----自身加机会【仍需判断】
+										startLowVersion(needAddChance);
+									}else{
+										if(needAddChance){
+											startNewVersion("false");
+										}else{
+											// startLowVersion(needAddChance);
+											startNewVersion("true");
+										}
+									}
+								}  else if (pkgname == "com.coocaa.mall") {
+									if(mallVersion<31100003){
+										startLowVersion(needAddChance);
+									}else{
+										if(needAddChance){
+											startNewVersion("false");
+										}else{
+											// startLowVersion(needAddChance);
+											startNewVersion("true");
+										}
+									}
+								}
+								
+								function startLowVersion(needAddChance) {
+									console.log("startLowVersion() " + needAddChance);
+									if(needAddChance){
+										addChance("1", alltasks[curIdx].taskId, 0);
+										////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/jijiangtiaozhuan.png",3000);
+										needFresh = true;
+										needRememberFocus = true;
+										rememberBtn = ".mission:eq("+$('.mission').index($(obj))+")";
+									}else{
+										////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/bujiajihui.png",3000);
+									}
+									setTimeout(function () {
+										coocaaosapi.startCommonNormalAction(param1, param2, param3, param4, param5, 
+												str, function() { }, function() {});
+									}, 100);
+								}
+								
+								function startNewVersion(isFinish) {
+									console.log("startNewVersion() isFinish = " + isFinish);
+									if(isFinish == "true"){
+										////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/bujiajihui.png",3000);
+									}else{
+										////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/jijiangtiaozhuan.png",3000);
+									}
+
+									str = JSON.parse(str);
+									var external = {
+										"taskId": alltasks[curIdx].taskId,
+										"id": alltasks[curIdx].activeId,
+										"userKeyId": userKeyId, 
+										"countDownTime": alltasks[curIdx].countdown, 
+										"verify_key": new Date().getTime(), 
+										"subTask": "0",
+										"isFinish": isFinish,
+										"jumpBgImgUrl": alltasks[curIdx].jumpBgImgUrl,
+										"jumpImgUrl": alltasks[curIdx].jumpImgUrl,
+										"jumpRemindImgUrl": alltasks[curIdx].jumpRemindImgUrl,
+										"serverUrl": adressIp + "/building"
+									};
+									var doubleEggs_Active = {"doubleEggs_Active":external};
+									str.push(doubleEggs_Active);
+									str = JSON.stringify(str);
+									setTimeout(function () {
+										coocaaosapi.startCommonNormalAction(param1, param2, param3, param4, param5, str, function() { needSentADLog = false; }, function() {});
+									}, 100);
+								}
+							}
+						}, function(error) {
+							console.log("getAppInfo----error" + JSON.stringify(error));
+						});
+					}
+					else{
+						coocaaosapi.startCommonNormalAction(param1, param2, param3, param4, param5, str, function() { needSentADLog = false; }, function() {});
+					}
+				}
+				
+			}
+		},
+		function(error) {
+			console.log("getAppInfo error" + JSON.stringify(error));
+			coocaaosapi.startAppStoreDetail(pkgname, function() {}, function() {});
+		});
+	}
+	else if (taskType == "videoAndAsk")					// 视频答题任务
+	{
+		
+	}
+	
+}
+
+//完成任务时，增加机会接口:
+function addChance(taskType, taskId, askResult) {
+    console.log("taskType:"+taskType+",taskId:"+taskId);
+    $.ajax({
+        type: "post",
+        async: true,
+        timeout: 10000,
+        url: adressIp+"/building/task/finish-task",
+        data: {
+            taskId:taskId
+            ,activeId:actionId
+            ,userKeyId:userKeyId
+            ,askResult: askResult
+            ,"cOpenId": cOpenId
+            ,"cNickName": nick_name
+        },//,chanceSource:2,subTask:0,cOpenId:_openId},
+        dataType: "json",
+        success: function(data) {
+            console.log("------------addChanceWhenFinishTask----result-------------"+JSON.stringify(data));
+            if(data.code == 50100){
+                if(taskType == "1"){
+                    //刷新页面状态:
+                    getMyTasksList(false);
+                }else if(taskType == "0"){
+                    showPage(false, false);
+                }
+            }else if(data.code == 91009){
+                console.log("任务已过期");
+                if (askResult == 1){ //如果是问答任务，且回答正确，因为任务已过期，所以不显示加机会。
+                    $("#interlucationAnswerToastId .interlucationTitleClass").html("恭喜回答正确!");
+                }
+            }
+        },
+        error: function(error) {
+            console.log("--------访问失败" + JSON.stringify(error));
+        }
+    });
 }
 
 // 所有弹窗消失
 function disappearAllDialog() {
 	$("#dialogPage").css("display", "none");
 	////////////////////////////////////////////////
-	$("#firstInDialog").css("display", "none");
-	$("#haveGot3HammerDialog").css("display", "none");
-	$("#quitDialog").css("display", "none");
-	$("#quitDialog").css("display", "none");
+	 $(".secondDialog").css("display", "none");
 }
 
 // 显示首次进入的弹窗
@@ -337,7 +584,11 @@ function disappearFirstInDialog() {
 	$("#firstInDialog").css("display", "none");
 }
 
-
+function showHaveGot3Dialog() {
+	$("#dialogPage").css("display", "block");
+	$("#haveGot3HammerDialog").css("display", "block");
+	map = new coocaakeymap($(".coocaa_btn3"), "#haveGot3HammerBtn1", "btn-focus", empty0, empty1, empty1);
+}
 
 
 

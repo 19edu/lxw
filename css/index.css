@@ -291,7 +291,9 @@ img[src='']{
 	display: none;
 }
 
-	
+#firstInDialog {
+	display: none;
+}
 #FirstInInfo1 {
 	position: absolute;
 	left: 0px;
