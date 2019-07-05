@@ -618,7 +618,7 @@ function icebreak() {
 			data: {
 				"id": _actionId,
 				"source": _qsource,
-				"MAC": _mac
+				"MAC": _mac,
 				"cModel": _model,
 				"cChip": _chip,
 				"token": lotteryToken,
