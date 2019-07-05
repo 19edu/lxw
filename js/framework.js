@@ -225,16 +225,18 @@ function buttonInitBefore() {
 		$("#redNotGet").css("display","none");
 		$("#dialogPage").css("display","none");
 		$("#myawardPage").css("display","block");
-		console.log(_curFocusId);
-		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
+		getMyAwards(_actionId);
+//		console.log(_curFocusId);
+//		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
 	});
 	$("#entityQrcode").unbind("itemClick").bind("itemClick", function() {
 		console.log("点击了实物奖励的二维码");
 		$("#entityNotGet").css("display","none");
 		$("#dialogPage").css("display","none");
 		$("#myawardPage").css("display","block");
-		console.log(_curFocusId);
-		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
+		getMyAwards(_actionId);
+//		console.log(_curFocusId);
+//		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
 	});
 	$("#hasGotInfo4").unbind("itemClick").bind("itemClick", function() {
 		console.log("点击了实物奖励的领奖地址");
@@ -518,9 +520,10 @@ function handleBackButtonFunc() {
 	if($("#dialogPage").css("display") == "block") {
 		$("#dialogPage").css("display", "none");
 		$("#myawardPage").css("display", "block");
-		webPageInit(1);
-		console.log(_curFocusId);
-		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
+		getMyAwards(_actionId);
+//		webPageInit(1);
+//		console.log(_curFocusId);
+//		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
 	}else if ($("#myawardPage").css("display") == "block") {
 		$("#myawardPage").css("display", "none");
 		webPageInit(1);
@@ -555,7 +558,7 @@ function webPageInit(num){
 }
 //我的奖品
 function getMyAwards(curActionid) {
-	console.log(_mac+"--"+_model+"--"+_emmcCID+"--"+_udid+"--"+curActionid);
+	console.log(_mac+"--"+_model+"--"+_chip+"--"+_udid+"--"+curActionid);
 	var ajaxTimeoutOne = $.ajax({
 		type: "get",
 		async: true,
@@ -636,7 +639,8 @@ function dealAfterGetAward(obj) {
                     _arr2.push(objItem);
                 }
                 if (obj.data[i].awardTypeId == "5") {
-                	objItem.bonus = JSON.parse(obj.data[i].awardInfo).bonus;
+                	console.log(JSON.parse(obj.data[i].awardInfo));
+                	objItem.awardInfo = obj.data[i].awardInfo;
                     _arr3.push(objItem);
                 }
                 if (obj.data[i].awardTypeId == "1") {
@@ -660,6 +664,7 @@ function dealAllData(oArr1,oArr2,oArr3,oArr4){
 	if (oArr1.length+oArr2.length+oArr3.length+oArr4.length == 0) {
 		console.log("没有奖励");
 		$("#noAwardBox").css("display", "block");
+		map = new coocaakeymap($(".coocaa_btn2"), "#noAwardBox", "btn-focus", function() {}, function(val) {}, function(obj) {});
 	}else{
 		console.log("有奖励");
 		document.getElementById("couponTabs").innerHTML = '';
@@ -667,20 +672,20 @@ function dealAllData(oArr1,oArr2,oArr3,oArr4){
         document.getElementById("entityTabs").innerHTML = '';
         document.getElementById("cardTabs").innerHTML = '';
 		$("#myAwardBox").css("display","block");
-		showMyAward(_arr1,_arr2,_arr3,_arr4);
+		showMyAward(oArr1,oArr2,oArr3,oArr4);
+		console.log(_curFocusId);
+		if (_curFocusId==""||_curFocusId==null) {
+			$(".myAwards:eq(0)").trigger("focus");
+		} else{
+			if ($("#"+_curFocusId).length == 0) {
+				_curFocusId = "redAwardHasGot";
+			}
+	    	console.log(_curFocusId);
+			$("#"+_curFocusId).trigger("focus");
+		}
+		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
 	}
 	buttonInitAfter();
-	console.log(_curFocusId);
-	if (_curFocusId==""||_curFocusId==null) {
-		$(".myAwards:eq(0)").trigger("focus");
-	} else{
-		if ($("#"+_curFocusId).length == 0) {
-			_curFocusId = "redAwardHasGot";
-		}
-    	console.log(_curFocusId);
-		$("#"+_curFocusId).trigger("focus");
-	}
-	map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
 }
 
 function showMyAward(arr1,arr2,arr3,arr4){
@@ -698,110 +703,131 @@ function showMyAward(arr1,arr2,arr3,arr4){
             	console.log(typeof(toDecimal(arr1[i].redNumber)));
                 _cardRedNum += toDecimal(arr1[i].redNumber);
             } else if (arr1[i].state == 0) {
-                var redDiv = document.createElement("div");
-                redDiv.setAttribute('id', 'redAward' + i);
-                redDiv.setAttribute('awardType', arr1[i].awardType);
-                redDiv.setAttribute('awardState', arr1[i].state);
-                redDiv.setAttribute('rememberId', arr1[i].rememberId);
-                redDiv.setAttribute('awardId', arr1[i].awardId);
-                redDiv.setAttribute('userkeyId', arr1[i].userkeyId);
-                redDiv.setAttribute('awardName', arr1[i].awardName);
-                redDiv.setAttribute('awardTime', arr1[i].awardTime);
-                redDiv.setAttribute('redNumber', arr1[i].redNumber);
-                redDiv.setAttribute('lotteryActiveId', arr1[i].lotteryActiveId);
-                redDiv.setAttribute('class', 'myAwards redAwardNotGot coocaa_btn2');
-                
-                redDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="redImg" src=""/></div><div class="awardbtns"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div>';
-                $("#redTabs").append(redDiv);
+//              var redDiv = document.createElement("div");
+//              redDiv.setAttribute('id', 'redAward' + i);
+//              redDiv.setAttribute('awardType', arr1[i].awardType);
+//              redDiv.setAttribute('awardState', arr1[i].state);
+//              redDiv.setAttribute('rememberId', arr1[i].rememberId);
+//              redDiv.setAttribute('awardId', arr1[i].awardId);
+//              redDiv.setAttribute('userkeyId', arr1[i].userkeyId);
+//              redDiv.setAttribute('awardName', arr1[i].awardName);
+//              redDiv.setAttribute('awardTime', arr1[i].awardTime);
+//              redDiv.setAttribute('redNumber', arr1[i].redNumber);
+//              redDiv.setAttribute('lotteryActiveId', arr1[i].lotteryActiveId);
+//              redDiv.setAttribute('class', 'myAwards redAwardNotGot coocaa_btn2');
+                //redDiv.innerHTML ='<div class="myawardsImg myawardsStyle2 entity"><img class="redImg" src=""/></div><div class="awardbtns"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div>';
+                //$("#redTabs").append(redDiv);
+                var redDivBox = '<div id="redAward'+i+'" awardType="'+arr1[i].awardType+'" awardState="'+arr1[i].state+'" rememberId="'+arr1[i].rememberId+'" awardId="'+arr1[i].awardId+'" userkeyId="'+arr1[i].userkeyId+'" awardName="'+arr1[i].awardName+'" awardTime="'+arr1[i].awardTime+'" redNumber="'+arr1[i].redNumber+'" lotteryActiveId="'+arr1[i].lotteryActiveId+'" class="myAwards redAwardNotGot coocaa_btn2"><div class="myawardsImg myawardsStyle2"><img class="redImg" src="images/award/rednotget.png"/><span class="redNumber">'+arr1[i].redNumber+'</span></div><div class="awardbtns"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div></div>';
+                document.getElementById("redTabs").innerHTML += redDivBox;
             }
         }
         console.log(_cardRedNum);
         _cardRedNum = toDecimal(_cardRedNum);
         if (_cardRedNum != 0) {
-            var redDiv = document.createElement("div");
-            redDiv.setAttribute('id', 'redAwardHasGot');
-            redDiv.setAttribute('awardType', 7);
-            redDiv.setAttribute('awardState', 1);
-            redDiv.setAttribute('class', 'myAwards coocaa_btn2');
-            redDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="redImg" src=""/></div><div class="awardbtns"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">已领取</div></div>';
-            $("#redTabs").append(redDiv);
+//          var redDiv = document.createElement("div");
+//          redDiv.setAttribute('id', 'redAwardHasGot');
+//          redDiv.setAttribute('awardType', 7);
+//          redDiv.setAttribute('awardState', 1);
+//          redDiv.setAttribute('class', 'myAwards coocaa_btn2');
+//          redDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="redImg" src=""/></div><div class="awardbtns"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">已领取</div></div>';
+//          $("#redTabs").append(redDiv);
+//          $("#redHasGetNum").html(_cardRedNum);
+            
+            var redDivBox2 = '<div id="redAwardHasGot" awardType="7" awardState="1" class="myAwards coocaa_btn2"><div class="myawardsImg myawardsStyle2"><img class="redImg" src="images/award/redhasgot.png"/><span class="redNumber">'+_cardRedNum+'</span></div><div class="awardbtns"><img class="myawardsBtn" src="images/award/hasgot.png"/><img class="myawardsBorder" src="images/award/border.png" /><div class="btnName">已领取</div></div></div>';
+            document.getElementById("redTabs").innerHTML += redDivBox2;
             $("#redHasGetNum").html(_cardRedNum);
         }		
 	}
 	if (arr2.length != 0) {
 		$("#entityBox").css("display", "inline-block");
         for (var i = 0; i < arr2.length; i++) {
-            var entityDiv = document.createElement("div");
-            entityDiv.setAttribute('id', 'entityAward' + i);
-            entityDiv.setAttribute('awardState', arr2[i].state);
-            entityDiv.setAttribute('awardId', arr2[i].awardId);
-            entityDiv.setAttribute('awardType', arr2[i].awardType);
-            entityDiv.setAttribute('rememberId', arr2[i].rememberId);
-            entityDiv.setAttribute('userkeyId', arr2[i].userkeyId);
-            entityDiv.setAttribute('awardName', arr2[i].awardName);
-            entityDiv.setAttribute('awardTime', arr2[i].awardTime);
-            entityDiv.setAttribute('lotteryActiveId', arr2[i].lotteryActiveId);
-            entityDiv.setAttribute('class', 'myAwards coocaa_btn2');
+              //var entityDiv = document.createElement("div");
+              //entityDiv.setAttribute('id', 'entityAward' + i);
+              //entityDiv.setAttribute('awardState', arr2[i].state);
+              //entityDiv.setAttribute('awardId', arr2[i].awardId);
+              //entityDiv.setAttribute('awardType', arr2[i].awardType);
+              //entityDiv.setAttribute('rememberId', arr2[i].rememberId);
+              //entityDiv.setAttribute('userkeyId', arr2[i].userkeyId);
+              //entityDiv.setAttribute('awardName', arr2[i].awardName);
+              //entityDiv.setAttribute('awardTime', arr2[i].awardTime);
+              //entityDiv.setAttribute('lotteryActiveId', arr2[i].lotteryActiveId);
+              //entityDiv.setAttribute('class', 'myAwards coocaa_btn2');
 			
             if (arr2[i].state == 0) {
-            	entityDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns notgetBtn"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div>';
+            	//entityDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns notgetBtn"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div>';
+            	var entityDivBox = '<div id="entityAward'+i+'" awardType="'+arr2[i].awardType+'" awardState="'+arr2[i].state+'" rememberId="'+arr2[i].rememberId+'" awardId="'+arr2[i].awardId+'" userkeyId="'+arr2[i].userkeyId+'" awardName="'+arr2[i].awardName+'" awardTime="'+arr2[i].awardTime+'" lotteryActiveId="'+arr2[i].lotteryActiveId+'" class="myAwards redAwardNotGot coocaa_btn2"><div class="myawardsImg myawardsStyle2"><img class="entityImg" src="images/award/entitybg.png"/><span class="entityName">'+arr2[i].awardName+'</span></div><div class="awardbtns"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div></div>';
             } else {
-                entityDiv.setAttribute('awardAddress', arr2[i].awardAddress);
-                entityDiv.setAttribute('userPhone', arr2[i].userPhone);
-                entityDiv.setAttribute('userName', arr2[i].userName);
-                entityDiv.setAttribute('receiveTime', arr2[i].receiveTime);
-                entityDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns hasgotBtn"><img class="myawardsBtn" src="images/award/hasgot.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">已领取</div></div>';
+                //entityDiv.setAttribute('awardAddress', arr2[i].awardAddress);
+                //entityDiv.setAttribute('userPhone', arr2[i].userPhone);
+                //entityDiv.setAttribute('userName', arr2[i].userName);
+                //entityDiv.setAttribute('receiveTime', arr2[i].receiveTime);
+                //entityDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns hasgotBtn"><img class="myawardsBtn" src="images/award/hasgot.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">已领取</div></div>';
+            	
+            	var entityDivBox = '<div id="entityAward'+i+'" awardType="'+arr2[i].awardType+'" awardState="'+arr2[i].state+'" rememberId="'+arr2[i].rememberId+'" awardId="'+arr2[i].awardId+'" userkeyId="'+arr2[i].userkeyId+'" awardName="'+arr2[i].awardName+'" awardTime="'+arr2[i].awardTime+'" lotteryActiveId="'+arr2[i].lotteryActiveId+'" awardAddress="'+arr2[i].awardAddress+'" userPhone="'+arr2[i].userPhone+'" userName="'+arr2[i].userName+'" receiveTime="'+arr2[i].receiveTime+'" class="myAwards redAwardNotGot coocaa_btn2"><div class="myawardsImg myawardsStyle2"><img class="entityImg" src="images/award/entitybg.png"/><span class="entityName">'+arr2[i].awardName+'</span></div><div class="awardbtns"><img class="myawardsBtn" src="images/award/hasgot.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">已领取</div></div></div>';
             }
-            $("#entityTabs").append(entityDiv);
+            //$("#entityTabs").append(entityDiv);
+            document.getElementById("entityTabs").innerHTML += entityDivBox;
         }
 	}
 	if (arr3.length != 0) {
 		console.log("优惠券");
 		$("#couponBox").css("display", "inline-block");
         for (var i = 0; i < arr3.length; i++) {
-            var couponDiv = document.createElement("div");
-            couponDiv.setAttribute('id', 'couponAward' + i);
-            couponDiv.setAttribute('awardType', arr3[i].awardType);
-            couponDiv.setAttribute('awardState', arr3[i].state);
-            couponDiv.setAttribute('awardId', arr3[i].awardId);
-            couponDiv.setAttribute('rememberId', arr3[i].rememberId);
-            couponDiv.setAttribute('userkeyId', arr3[i].userkeyId);
-            couponDiv.setAttribute('awardName', arr3[i].awardName);
-            couponDiv.setAttribute('awardTime', arr3[i].awardTime);
-            couponDiv.setAttribute('awardUrl', arr3[i].awardUrl);
-            couponDiv.setAttribute('lotteryActiveId', arr3[i].lotteryActiveId);
-            couponDiv.setAttribute('class', 'myAwards coocaa_btn2');
+            //var couponDiv = document.createElement("div");
+            //couponDiv.setAttribute('id', 'couponAward' + i);
+            //couponDiv.setAttribute('awardType', arr3[i].awardType);
+            //couponDiv.setAttribute('awardState', arr3[i].state);
+            //couponDiv.setAttribute('awardId', arr3[i].awardId);
+            //couponDiv.setAttribute('rememberId', arr3[i].rememberId);
+            //couponDiv.setAttribute('userkeyId', arr3[i].userkeyId);
+            //couponDiv.setAttribute('awardName', arr3[i].awardName);
+            //couponDiv.setAttribute('awardTime', arr3[i].awardTime);
+            //couponDiv.setAttribute('awardUrl', arr3[i].awardUrl);
+            //couponDiv.setAttribute('lotteryActiveId', arr3[i].lotteryActiveId);
+            //couponDiv.setAttribute('class', 'myAwards coocaa_btn2');
             if(arr3[i].state == 1){
-            	couponDiv.setAttribute('awardInfo', JSON.stringify(arr3[i].awardInfo));
-            	couponDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns hasgotBtn"><img class="myawardsBtn" src="images/award/hasgot.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">去使用</div></div>';
+            	//couponDiv.setAttribute('awardInfo', JSON.stringify(arr3[i].awardInfo));
+            	//couponDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns hasgotBtn"><img class="myawardsBtn" src="images/award/hasgot.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">去使用</div></div>';
+            	                                                                                                                                                                                                                                                                                                                                                                                   
+            	var couponDivBox = '<div id="couponAward'+i+'" awardType="'+arr3[i].awardType+'" awardState="'+arr3[i].state+'" rememberId="'+arr3[i].rememberId+'" awardId="'+arr3[i].awardId+'" userkeyId="'+arr3[i].userkeyId+'" awardName="'+arr3[i].awardName+'" awardTime='+arr3[i].awardTime+' lotteryActiveId="'+arr3[i].lotteryActiveId+'"  awardUrl="'+arr3[i].awardUrl+'" awardInfo='+arr3[i].awardInfo+' class="myAwards coocaa_btn2"><div class="myawardsImg myawardsStyle2"><img class="couponImg" src="'+arr3[i].awardUrl+'"/></div><div class="awardbtns hasgotBtn"><img class="myawardsBtn" src="images/award/hasgot.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">去使用</div></div></div>';
+            
             }else{
-            	couponDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns notgetBtn"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div>';
+            	//couponDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns notgetBtn"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div>';
+            	var couponDivBox = '<div id="couponAward'+i+'" awardType="'+arr3[i].awardType+'" awardState="'+arr3[i].state+'" rememberId="'+arr3[i].rememberId+'" awardId="'+arr3[i].awardId+'" userkeyId="'+arr3[i].userkeyId+'" awardName="'+arr3[i].awardName+'" awardTime="'+arr3[i].awardTime+'" lotteryActiveId="'+arr3[i].lotteryActiveId+'"  awardUrl="'+arr3[i].awardUrl+'" class="myAwards coocaa_btn2"><div class="myawardsImg myawardsStyle2"><img class="couponImg" src="'+arr3[i].awardUrl+'"/></div><div class="awardbtns notgetBtn"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div></div>';
+            
             }
-            $("#couponTabs").append(couponDiv);
+            //$("#couponTabs").append(couponDiv);
+            document.getElementById("couponTabs").innerHTML += couponDivBox;
         }
 	}
 	if (arr4.length != 0) {
 		console.log("体验权");
 		$("#cardBox").css("display", "inline-block");
         for (var i = 0; i < arr4.length; i++) {
-            var cardDiv = document.createElement("div");
-            cardDiv.setAttribute('id', 'cardAward' + i);
-            cardDiv.setAttribute('awardType', arr4[i].awardType);
-            cardDiv.setAttribute('awardState', arr4[i].state);
-            cardDiv.setAttribute('awardId', arr4[i].awardId);
-            cardDiv.setAttribute('rememberId', arr4[i].rememberId);
-            cardDiv.setAttribute('userkeyId', arr4[i].userkeyId);
-            cardDiv.setAttribute('awardName', arr4[i].awardName);
-            cardDiv.setAttribute('awardTime', arr4[i].awardTime);
-            cardDiv.setAttribute('awardUrl', arr4[i].awardUrl);
-            cardDiv.setAttribute('lotteryActiveId', arr4[i].lotteryActiveId);
-            cardDiv.setAttribute('class', 'myAwards coocaa_btn2');
+            //var cardDiv = document.createElement("div");
+            //cardDiv.setAttribute('id', 'cardAward' + i);
+            //cardDiv.setAttribute('awardType', arr4[i].awardType);
+            //cardDiv.setAttribute('awardState', arr4[i].state);
+            //cardDiv.setAttribute('awardId', arr4[i].awardId);
+            //cardDiv.setAttribute('rememberId', arr4[i].rememberId);
+            //cardDiv.setAttribute('userkeyId', arr4[i].userkeyId);
+            //cardDiv.setAttribute('awardName', arr4[i].awardName);
+            //cardDiv.setAttribute('awardTime', arr4[i].awardTime);
+            //cardDiv.setAttribute('awardUrl', arr4[i].awardUrl);
+            //cardDiv.setAttribute('lotteryActiveId', arr4[i].lotteryActiveId);
+            //cardDiv.setAttribute('class', 'myAwards coocaa_btn2');
             if(arr4[i].state == 1){
-            	cardDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns hasgotBtn"><img class="myawardsBtn" src="images/award/hasgot.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">去使用</div></div>';
+            	//cardDiv.setAttribute('awardInfo', arr4[i].awardInfo);
+            	//cardDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns hasgotBtn"><img class="myawardsBtn" src="images/award/hasgot.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">去使用</div></div>';
+            	var cardDivBox = '<div id="cardAward'+i+'" awardType="'+arr4[i].awardType+'" awardState="'+arr4[i].state+'" rememberId="'+arr4[i].rememberId+'" awardId="'+arr4[i].awardId+'" userkeyId="'+arr4[i].userkeyId+'" awardName="'+arr4[i].awardName+'" awardTime="'+arr3[i].awardTime+'" lotteryActiveId="'+arr4[i].lotteryActiveId+'"  awardUrl="'+arr4[i].awardUrl+'" awardInfo="'+JSON.stringify(arr4[i].awardInfo)+'" class="myAwards coocaa_btn2"><div class="myawardsImg myawardsStyle2"><img class="cardImg" src="'+arr4[i].awardUrl+'"/><span class="cardName">'+arr4[i].awardName+'</span></div><div class="awardbtns"><img class="myawardsBtn" src="images/award/hasgot.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">去使用</div></div></div>';
+            
             }else{
-            	cardDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns notgetBtn"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div>';
+            	//cardDiv.innerHTML = '<div class="myawardsImg myawardsStyle2 entity"><img class="couponImg" src=""/></div><div class="awardbtns notgetBtn"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div>';
+            	var cardDivBox = '<div id="cardAward'+i+'" awardType="'+arr4[i].awardType+'" awardState="'+arr4[i].state+'" rememberId="'+arr4[i].rememberId+'" awardId="'+arr4[i].awardId+'" userkeyId="'+arr4[i].userkeyId+'" awardName="'+arr4[i].awardName+'" awardTime="'+arr3[i].awardTime+'" lotteryActiveId="'+arr4[i].lotteryActiveId+'"  awardUrl="'+arr4[i].awardUrl+'" awardInfo="'+JSON.stringify(arr4[i].awardInfo)+'" class="myAwards coocaa_btn2"><div class="myawardsImg myawardsStyle2"><img class="cardImg" src="'+arr4[i].awardUrl+'"/><span class="cardName">'+arr4[i].awardName+'</span></div><div class="awardbtns"><img class="myawardsBtn" src="images/award/notget.png"/><img class="myawardsBorder" src="images/award/border.png"/><div class="btnName">待领取</div></div></div>';
+            
             }
-            $("#cardTabs").append(cardDiv);
+            //$("#cardTabs").append(cardDiv);
+            document.getElementById("cardTabs").innerHTML += cardDivBox;
         }
 	}
 	buttonInitAfter();
@@ -815,13 +841,12 @@ function toDecimal(x) {
     val = Number(val);
     return  val;
 }
-//领取优惠券并跳转津贴页面
+//优惠券的领取并跳转
 function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsource) {
 	console.log(oAwardId + "--" + oRememberId + "--" + oUserKeyId + "--" + oType + "--" + oActiveId);
 	if(oQsource != "tencent") {
 		oQsource = "iqiyi";
 	}
-	console.log(oQsource);
 	var ajaxTimeoutFive = $.ajax({
 		type: "GET",
 		async: true,
@@ -843,30 +868,44 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 		success: function(data) {
 			console.log(JSON.stringify(data));
 			if(data.code == "50100") {
-				console.log("领取成功"+oType);
-				if(oType == "3"){
-					console.log(JSON.stringify(data));
-					showTheCardInfo(data.data.cardInfo[0]);
-				}
-				if(oType == "21"||oType == "5"){
-					webPageInit(1);
+				var couponDetail = data.data.couponInfo.couponDetail;
+				console.log(couponDetail);
+				if(couponDetail == 1) { //已配置
+					var data_a = data.data.couponInfo.onclickData;
+					var packageName = JSON.parse(data_a).packageName;
+					var byvalue = JSON.parse(data_a).byvalue;
+					var bywhat = JSON.parse(data_a).bywhat;
+					var obj = JSON.parse(data_a).param;
+					var sources = new Array();
+					for(var key in obj) {
+						var px = {};
+						px[key] = obj[key];
+						sources.push(px);
+					}
+					sources = JSON.stringify(sources);
+					console.log(packageName + "--" + byvalue + "--" + bywhat + "--" + sources);
+					console.log("跳转使用页面");
+					coocaaosapi.startParamAction2(bywhat, byvalue, sources, function(message) {}, function(error) {
+						console.log(error);
+					});
+				} else {
+					console.log("未配置");
 				}
 			} else {
-				console.log("领取失败");
-				dialogInfo(oType);
+				console.log("优惠券激活失败,需要给出激活失败的提示.");
 			}
 		},
 		error: function() {
-			console.log("领取失败");
-			dialogInfo(oType);
+			console.log("获取失败");
 		},
-		complete: function(XMLHttpRequest, status) {
+		complete: function(XMLHttpRequest, status) {　　　　
 			console.log("-------------complete------------------" + status);
-			if(status == 'timeout') {
-				ajaxTimeoutFive.abort();
+			if(status == 'timeout') {　　　　　
+				ajaxTimeoutFive.abort();　　　　
 			}
 		}
 	});
+
 }
 function buttonInitAfter() {
 	$("#myawardPage .myAwards").unbind("itemFocus").bind("itemFocus", function() {
@@ -903,29 +942,6 @@ function buttonInitAfter() {
         var _rememberId = $(this).attr("rememberId");
         var _userkeyId = $(this).attr("userkeyId");
         console.log(_loginstatus);
-        var _dateObj = {
-			"page_name": "我的奖励页面",
-			"activity_name": "618活动",
-			"button_name": ""
-		};
-		var _dateObj2 = {
-			"page_name": "我的奖励奖品点击弹窗",
-			"page_type": "activityWindow",
-			"activity_name": "618活动",
-			"award_type": "",
-			"award_name": _awardName,
-		};
-        if (_awardType == 17) {
-            if (_loginstatus == "false") {
-                console.log("点击了购物津贴+启登录");
-                startAndSendLog();
-            } else {
-                console.log("点击了购物津贴+跳转页面");
-                _dateObj.button_name="津贴";
-                webDataLog("okr_web_button_click", _dateObj);
-                coocaaosapi.startAppShopZone3("235", function() {}, function() {});
-            }
-        }
         if (_awardType == 7) {
             var _redNumber = $(this).attr("redNumber");
             console.log("点击了红包");
@@ -934,10 +950,6 @@ function buttonInitAfter() {
                 startAndSendLog();
             } else {
             	console.log("点击了红包+展示信息");
-            	_dateObj.button_name="现金红包";
-            	webDataLog("okr_web_button_click", _dateObj);
-            	_dateObj2.award_type="现金红包";
-                webDataLog("okr_web_page_show", _dateObj2);
                 $("#dialogPage").css("display", "block");
                 $("#dialogPage .secondDialog").css("display","none");
                 if (_awardState == 0) {
@@ -964,10 +976,6 @@ function buttonInitAfter() {
                 startAndSendLog();
             } else {
             	console.log("点击了实物奖+展示奖品");
-            	_dateObj.button_name="实物奖励";
-            	webDataLog("okr_web_button_click", _dateObj);
-            	_dateObj2.award_type="实物奖励";
-                webDataLog("okr_web_page_show", _dateObj2);
                 $("#dialogPage").css("display", "block");
                 if (_awardState == 0) {
                     console.log("点击了实物奖+显示二维码");
@@ -1001,22 +1009,51 @@ function buttonInitAfter() {
                 console.log("点击了优惠券奖+启登录");
                 startAndSendLog();
             } else {
-            	var oName = $(this).attr("couponName");
-            	console.log(oName);
-        		console.log("点击了免单券奖+领取奖励+跳转免单页面");
-        		_dateObj.button_name="免单券";
-        		_dateObj2.award_type="免单券";
-        		var _bonus = $(this).attr("bonus");
-        		console.log(_bonus);
         		if(_awardState == 0){
-                	console.log("未领取的免单券+领取免单券");
+                	console.log("未领取的优惠券+领取优惠券");
                 	sendPrizes(_awardId, _rememberId, _awardType, _userkeyId,_lotteryActiveId, _qsource);
                 }else{
-                	var _curUrl =  freePageUrl +"actionid="+actionId2+"&money="+_bonus;
-        			coocaaosapi.startNewBrowser2(_curUrl, function() {}, function() {});
+                	console.log("已领取的优惠券+跳转指定页面");
+                	var _awardInfo = $(this).attr("awardInfo");
+                	console.log(_awardInfo);
+                	console.log(typeof _awardInfo);
+              	 	var couponDetail = JSON.parse(_awardInfo).couponDetail;
+					console.log(couponDetail);
+					if(couponDetail == 1) { //已配置
+						var data_a = JSON.parse(_awardInfo).onclickData;
+						var packageName = JSON.parse(data_a).packageName;
+						var byvalue = JSON.parse(data_a).byvalue;
+						var bywhat = JSON.parse(data_a).bywhat;
+						var obj = JSON.parse(data_a).param;
+						var sources = new Array();
+						for(var key in obj) {
+							var px = {};
+							px[key] = obj[key];
+							sources.push(px);
+						}
+						sources = JSON.stringify(sources);
+						console.log(packageName + "--" + byvalue + "--" + bywhat + "--" + sources);
+						console.log("跳转使用页面");
+						coocaaosapi.startParamAction2(bywhat, byvalue, sources, function(message) {}, function(error) {
+							console.log(error);
+						});
+					} else {
+						console.log("未配置");
+					}
                 }
-            	webDataLog("okr_web_button_click", _dateObj);
-            	webDataLog("okr_web_page_show", _dateObj2);
+        	}
+        }
+        if (_awardType == 1){
+        	if (_loginstatus == "false") {
+                console.log("点击了体验券+启登录");
+                startAndSendLog();
+            } else {
+        		if(_awardState == 0){
+                	console.log("未领取的体验券+领取体验券");
+                	sendPrizes(_awardId, _rememberId, _awardType, _userkeyId,_lotteryActiveId, _qsource);
+                }else{
+                	console.log("已领取的体验券+跳转指定页面");
+                }
         	}
         }
 	});
@@ -1042,9 +1079,9 @@ function getRedPacketsQrcode(activityId, rememberId, userKeyId, id, width, heigh
             "cNickName": _nickName,
             "rememberId": rememberId,
             "userKeyId": userKeyId,
-            "luckyDrawCode": "19618act",
+            "luckyDrawCode": "SPEC_MONEY_SHUJIA",
             "channel": "coocaa",
-            "type": 27
+            "type": 28
         },
         success: function(data) {
             console.log(JSON.stringify(data));

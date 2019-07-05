@@ -44,33 +44,18 @@
 		    line-height: 100px;
 		    font-size: 64px;
 		}
-		.box{
+		#showBox{
 			position: absolute;
 			top:50px;
 			left: 100px;
 			width:650px;
 			height:621px;
 			background:url(images/ice.png);
+			display: none;
 		}
 		.box1{
-			-webkit-animation:mov 6000ms steps(5,start) 0ms 1 normal forwards;
-			animation:mov 6000ms steps(5,start) 0ms 1 normal forwards;
-			
-			/*animation-name: mov;
-			animation-duration: 500ms;
-			animation-timing-function: steps(6, end);
-			animation-delay: 0ms;
-			animation-iteration-count: 1;
-			animation-direction: normal;
-			animation-fill-mode: forwards;
-			
-			animation-name: mov;
-			animation-duration: 500ms;
-			animation-timing-function: steps(6, end);
-			animation-delay: 0ms;
-			animation-iteration-count: 1;
-			animation-direction: normal;
-			animation-fill-mode: forwards;*/
+			-webkit-animation:mov 750ms steps(5,end) 0ms 1 normal forwards;
+			animation:mov 750ms steps(5,end) 0ms 1 normal forwards;
 		}
 		@keyframes mov{
 			0%{
@@ -89,8 +74,8 @@
 			}
 		}
 		.box2{
-			-webkit-animation:mov2 6000ms steps(5,start) 0ms 1 normal forwards;
-			animation:mov2 6000ms steps(5,start) 0ms 1 normal forwards;
+			-webkit-animation:mov2 750ms steps(5,end) 0ms 1 normal forwards;
+			animation:mov2 750ms steps(5,end) 0ms 1 normal forwards;
 		}
 		@keyframes mov2{
 			0%{
@@ -119,8 +104,7 @@
 			map = new coocaakeymap($(".coocaa_btn"), document.getElementById("onceagainBtn"), "btn-focus", function() {}, function(val) {}, function(obj) {});
 			var ani_status = 1;
 			$("#onceagainBtn").unbind("itemClick").bind("itemClick", function() {
-//				$("#showBox").removeClass("box");
-//				$("#showBox").addClass("box");
+				$("#showBox").css("display","block");
 				console.log(ani_status);
 				if(ani_status == 1) {
 					$("#showBox").attr("class","box box1");
@@ -129,6 +113,7 @@
 					$("#showBox").attr("class","box box2");
 					ani_status = 1;
 				}
+				setTimeout(function(){$("#showBox").css("display","none");}, 750);
 			});
 		</script>
 	</body>
