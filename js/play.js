@@ -7,6 +7,7 @@ var addNumber = 0;					// 完成任务后，或者购买了产品包之后，增
 var taskFinished = false;			// 当天的任务是否完成 (当天最多只能获取3个锤子的任务，不允许再多了)
 var sysTime = 1561535614086;		// 当前的系统时间 毫秒数
 var userKeyId = "0";				// 用户唯一标识,init接口返回
+var lotteryToken = "";				// 抽奖用的token
 var alltasks = new Array();			// 任务数组
 
 var curLevel = 5;					// 当前解锁了第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...    
@@ -122,6 +123,8 @@ function summerVacationActionInit() {
 					sysTime = data.data.sysTime;
 				if (data.data.userKeyId != undefined && data.data.userKeyId != null)
 					userKeyId = data.data.userKeyId;
+				if (data.data.token != undefined && data.data.token != null)
+					lotteryToken = data.data.token;
 				
 				// 获取任务列表
 				getUserTaskList();
@@ -599,9 +602,56 @@ function strollAround() {
 function icebreak() {
 	console.log("icebreak() ");
 	console.log("allNumber = " + allNumber + ", allUsedNumber = " + allUsedNumber);
+	
 	var hammerNum = allNumber - allUsedNumber;			// 有效锤子数，等于总获得锤子数，减去已用锤子数
-	if (hammerNum >= 1) {
+	var urlInterface1 = "/building/v2/web/start";
+	
+	if (hammerNum >= 1) 	// 如果还有锤子,直接砸冰块
+	{
+		// 调用抽奖接口进行砸冰块 
+		var ajaxTimeoutOne = $.ajax({
+			type: "POST",
+			async: true,
+			timeout: 5000,
+			dataType: 'json',
+			url: adressIp + urlInterface1,
+			data: {
+				"id": _actionId,
+				"source": _qsource,
+				"MAC": _mac
+				"cModel": _model,
+				"cChip": _chip,
+				"token": lotteryToken,
+				"cUDID": _udid,
+				"cOpenId": _openId,
+				"cNickName": _nickName
+			},
+			success: function(data) {
+				console.log(JSON.stringify(data));
 		
+				if(data.code == 50001) {
+					console.log("该活动不存在");
+				} else if(data.code == 50002) {
+					console.log("该活动未开始");
+				} else if(data.code == 50003) {
+					console.log("该活动已结束");
+				} else if(data.code == 50042) {
+					console.log("该活动已下架");
+				} else if(data.code == 50100) {
+					console.log(urlInterface1 + " 获取数据成功");
+					
+				}
+			},
+			error: function() {
+				console.log(urlInterface1 + " 获取数据失败");
+			},
+			complete: function(XMLHttpRequest, status) {　　　　
+				console.log(urlInterface1 + " complete, status = " + status);
+				if(status == 'timeout') {　　　　　
+					ajaxTimeoutOne.abort();　　　　
+				}
+			}
+		});
 	}
 	else {					// 没有锤子了的话，提示去做任务 
 		
