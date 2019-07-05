@@ -640,6 +640,13 @@ function icebreak() {
 				} else if(data.code == 50100) {
 					console.log(urlInterface1 + " 获取数据成功");
 					
+					// 如果没有奖品
+					if (data.data == undefined || data.data == null)
+					{
+						// 执行破冰动效
+						return;
+					}
+					
 				}
 			},
 			error: function() {
