@@ -595,6 +595,19 @@ function strollAround() {
 	}, 100);
 }
 
+// 点击“砸冰块”
+function icebreak() {
+	console.log("icebreak() ");
+	console.log("allNumber = " + allNumber + ", allUsedNumber = " + allUsedNumber);
+	var hammerNum = allNumber - allUsedNumber;			// 有效锤子数，等于总获得锤子数，减去已用锤子数
+	if (hammerNum >= 1) {
+		
+	}
+	else {					// 没有锤子了的话，提示去做任务 
+		
+	}
+}
+
 // 所有弹窗消失
 function disappearAllDialog() {
 	$("#dialogPage").css("display", "none");

@@ -120,15 +120,19 @@ img[src='']{
 	left: 67px;
 	top: 119px;
 }
-#freezingPeople {
-	/*
+#icepeople {
 	position: absolute;
-	width: 300px;
-	height: 280px;
-	left: 800px;
-	top: 200px;
-	*/
+	left: 0px;
+	top: 0px;
 }
+#peopleimg {
+	position: absolute;
+	width: 500px;
+	height: 500px;
+	left: 768px;
+	top: 322px;
+}
+
 .homeBtns{
 	position: absolute;
 	display: block;

@@ -184,6 +184,7 @@ function buttonInitBefore() {
 		showTasksPage();
 	});
 	$("#mainpageButton2").unbind("itemClick").bind("itemClick", function() {
+		icebreak();
 	});
 	$("#mainpageButton3").unbind("itemClick").bind("itemClick", function() {
 		//_actionId = getUrlParam("actionid");//主活动的id
