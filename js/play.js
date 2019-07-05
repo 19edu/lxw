@@ -37,6 +37,16 @@ function updateMainPage()					// 刷新主界面
 	for (i = curLevel; i < 10; i++)
 		$("#objice" + i).css("display", "block");
 		
+	// 砸冰块按钮文字
+	var num = allNumber - allUsedNumber;
+	var button2Text = "";
+	if (num <= 0) {
+		button2Text = "获得破冰锤";
+	} else {
+		button2Text = "砸冰块x" + num;
+	}
+	document.getElementById("mainbutton2").innerHTML = button2Text;
+	
 	// 勋章背景
 	honorBackgroundId = curLevel;
 	if (honorBackgroundId > 9)
@@ -644,6 +654,8 @@ function icebreak() {
 					if (data.data == undefined || data.data == null)
 					{
 						// 执行破冰动效
+						
+						//
 						return;
 					}
 					
@@ -661,7 +673,7 @@ function icebreak() {
 		});
 	}
 	else {					// 没有锤子了的话，提示去做任务 
-		
+		showTasksPage();
 	}
 }
 

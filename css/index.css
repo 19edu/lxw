@@ -156,8 +156,8 @@ img[src='']{
 }
 .imgBlur, .imgFocus{
 	position: relative;
-	height: 100%;
-	width: 100%;
+	width: 217px;
+	height: 57px;
 	display: none;
 }
 .imgBlur{
@@ -171,6 +171,31 @@ img[src='']{
 	left: 0px;
 	top: -57px;
 }
+#mainbutton1 {
+	position: absolute;
+	width: 217px;
+	height: 57px;
+	left: 0px;
+	top: 0px;
+	font-size: 27px;
+	line-height: 57px;
+	color: #be5c00;
+	font-weight: bold;
+	text-align: center;
+}
+#mainbutton2, #mainbutton3, #mainbutton4 {
+	position: absolute;
+	width: 217px;
+	height: 57px;
+	left: 0px;
+	top: 0px;
+	font-size: 32px;
+	line-height: 57px;
+	color: #be5c00;
+	font-weight: bold;
+	text-align: center;
+}
+
 #gamerole {
 	position: absolute;
 	width: 1920px;
