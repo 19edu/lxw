@@ -30,19 +30,59 @@
 			padding:0px;
 		}
 		body{
-			background-color: #000000;
+			background-color: deepskyblue;
+		}
+		#eggBox{
+			position: absolute;
+		    width: 500px;
+		    height: 500px;
+		    left: 768px;
+		    top: 322px;
+		}
+		#egg{
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+		}
+		.fanzt-chuizi {
+			position: absolute;
+		    width: 190px;
+		    height: 207px;
+		    left: 1230px;
+		    top: 360px;
+		    "-webkit-transform": "rotate(0deg)",
+			"-moz-transform": "rotate(0deg)",
+			"-o-transform": "rotate(0deg)",
+			"transform": "rotate(0deg)",
+			"-webkit-transition": "all 0s ease",
+			"-moz-transition": "all 0s ease",
+			"-o-transition": "all 0s ease",
+			"transition": "all 0s ease"
+		}
+		.fanzt-message {
+			position: absolute;
+			z-index: 9995;
+			display: none;
+			width: 140px;
+			padding: 10px;
+			color: red;
+			text-align: center;
+			-webkit-transition: : all 0.8s ease;
+			-moz-transition: : all 0.8s ease;
+			-o-transition: : all 0.8s ease;
+			transition: all 0.8s ease;
 		}
 		#onceagainBtn{
 			position: absolute;
-			top: 300px;
-		    left: 800px;
-		    height: 100px;
-		    width: 300px;
-		    background-color: white;
-		    color: red;
-		    text-align: center;
-		    line-height: 100px;
-		    font-size: 64px;
+			left: 1280px;
+    		top: 590px;
+    		height: 57px;
+    		width: 217px;
+    		background-image: url(images/button2.png);
+    		background-size: 100%;
+    		background-repeat: no-repeat;
 		}
 		#showBox{
 			position: absolute;
@@ -50,8 +90,8 @@
 			left: 100px;
 			width:650px;
 			height:621px;
-			background:url(images/ice.png);
-			display: none;
+			background:url(ice.png);
+			/*display: none;*/
 		}
 		.box1{
 			-webkit-animation:mov 750ms steps(5,end) 0ms 1 normal forwards;
@@ -97,13 +137,76 @@
 	</head>
 	<body><!--身体-->
 		<div id="showBox" class="box"></div>
-		<div id="onceagainBtn" class="coocaa_btn">再来一次</div>
+		<div id="eggBox">
+			<img src="images/ice/obj01.png" id="egg">
+		</div>
+		<div class="fanzt-chuizi"><img src="images/hammer.png"></div>
+		<div id="onceagainBtn" class="coocaa_btn" data-flag="0" ></div>
+		<div class="fanzt-message"><b>中奖了</b></div>
 		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="js/coocaamap-1.0.js"></script>
 		<script type="text/javascript">
 			map = new coocaakeymap($(".coocaa_btn"), document.getElementById("onceagainBtn"), "btn-focus", function() {}, function(val) {}, function(obj) {});
 			var ani_status = 1;
 			$("#onceagainBtn").unbind("itemClick").bind("itemClick", function() {
+				console.log("-------2-------");
+				console.log($("#onceagainBtn").attr("data-flag"));
+				$("#onceagainBtn").attr("data-flag","0");
+				if($("#onceagainBtn").attr("data-flag") == "0") {
+					var data = "一等奖";
+					if(data != null) {
+						$(".fanzt-chuizi").show();
+						var ctop = $(".fanzt-chuizi").position().top - 35;
+						var cleft = $(".fanzt-chuizi").position().left + 50;
+						//1.锤子抬起的动作
+						$(".fanzt-chuizi").animate({
+							"top": ctop + "px",
+							"left": cleft + "px"
+						}, 1500, function() {
+							//2.锤子抬起达到最顶点的动作
+							$(".fanzt-chuizi").css({
+								"-webkit-transform": "rotate(55deg)",
+								"-moz-transform": "rotate(55deg)",
+								"-o-transform": "rotate(55deg)",
+								"transform": "rotate(55deg)",
+								"-webkit-transition": "all 0.4s ease",
+								"-moz-transition": "all 0.4s ease",
+								"-o-transition": "all 0.4s ease",
+								"transition": "all 0.4s ease"
+							});
+							//3.锤子落下的动作
+							$(".fanzt-chuizi").animate({
+								"top": (ctop + 35) + "px",
+								"left": (cleft - 50) + "px"
+							}, 400, function() {
+								//4.锤子落下到达最低点
+								$(".fanzt-chuizi").css({
+									"width":"190px",
+									"height":"207px",
+									"left":"1230px",
+									"top":"360px",
+									"-webkit-transform": "rotate(0deg)",
+									"-moz-transform": "rotate(0deg)",
+									"-o-transform": "rotate(0deg)",
+									"transform": "rotate(0deg)",
+									"-webkit-transition": "all 0s ease",
+									"-moz-transition": "all 0s ease",
+									"-o-transition": "all 0s ease",
+									"transition": "all 0s ease"
+								});
+								//5.金蛋破碎
+								$("#egg").attr("src", "images/ice/obj02.png");
+								//6.金花溅出
+								console.log("冰块碎掉的动效");
+								//7.中奖结果
+								console.log("中奖结果显示");
+								//8.程序处理
+								$("#onceagainBtn").attr("data-flag", "1"); //已砸蛋，不能再砸
+							});
+						});
+					}
+				}
+			
 				$("#showBox").css("display","block");
 				console.log(ani_status);
 				if(ani_status == 1) {

@@ -9,7 +9,7 @@ var sysTime = 1561535614086;		// 当前的系统时间 毫秒数
 var userKeyId = "0";				// 用户唯一标识,init接口返回
 var lotteryToken = "";				// 抽奖用的token
 var alltasks = new Array();			// 任务数组
-
+var ani_status = 1;
 var curLevel = 5;					// 当前解锁了第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...    
 
 
@@ -111,16 +111,17 @@ function summerVacationActionInit() {
 				console.log("该活动已下架");
 			} else if(data.code == 50100) {
 				console.log("该活动进行中+获取数据成功");
+				console.log(JSON.stringify(data));
 				if (data.data.overNum != undefined && data.data.overNum != null)
 					overNum = data.data.overNum;
 				if (data.data.allNumber != undefined && data.data.allNumber != null)
 					allNumber = data.data.allNumber;
-				if (allNumber > 30)
-					allNumber = 0;
+				//if (allNumber > 30)
+					//allNumber = 0;
 				if (data.data.allUsedNumber != undefined && data.data.allUsedNumber != null)
 					allUsedNumber = data.data.allUsedNumber;
-				if (allUsedNumber > 30)
-					allUsedNumber = 0;
+				//if (allUsedNumber > 30)
+					//allUsedNumber = 0;
 				if (data.data.entryType != undefined && data.data.entryType != null)
 					entryType = data.data.entryType;
 				if (data.data.startDayNum != undefined && data.data.startDayNum != null)
@@ -645,7 +646,6 @@ function icebreak() {
 			},
 			success: function(data) {
 				console.log(JSON.stringify(data));
-		
 				if(data.code == 50001) {
 					console.log("该活动不存在");
 				} else if(data.code == 50002) {
@@ -656,7 +656,8 @@ function icebreak() {
 					console.log("该活动已下架");
 				} else if(data.code == 50100) {
 					console.log(urlInterface1 + " 获取数据成功");
-					
+					// 执行破冰动效
+						crushIceFunc(data);
 					// 如果没有奖品
 					if (data.data == undefined || data.data == null)
 					{
@@ -665,7 +666,6 @@ function icebreak() {
 						//
 						return;
 					}
-					
 				}
 			},
 			error: function() {
@@ -683,7 +683,117 @@ function icebreak() {
 		showTasksPage();
 	}
 }
-
+function crushIceFunc(obj){
+	console.log("-------2-------");
+	var ctop = $("#mainpageHammer").position().top - 35;
+	var cleft = $("#mainpageHammer").position().left + 50;
+	//1.锤子抬起的动作
+	$("#mainpageHammer").animate({
+		"top": ctop + "px",
+		"left": cleft + "px"
+	}, 500, function() {
+		//2.锤子抬起达到最顶点的动作
+		$("#mainpageHammer").css({
+			"-webkit-transform-origin": "200px 150px",
+			"-moz-transform-origin": "200px 150px",
+			"-o-transform-origin": "200px 150px",
+			"-webkit-transform": "rotate(55deg)",
+			"-moz-transform": "rotate(55deg)",
+			"-o-transform": "rotate(55deg)",
+			"transform": "rotate(55deg)",
+			"-webkit-transition": "all 0.4s ease",
+			"-moz-transition": "all 0.4s ease",
+			"-o-transition": "all 0.4s ease",
+			"transition": "all 0.4s ease"
+		});
+		setTimeout(function(){
+			//3.锤子落下的动作
+			$("#mainpageHammer").css({
+				"width":"190px",
+				"height":"207px",
+				"left":"1180px",
+				"top":"340px",
+				"-webkit-transform": "rotate(-20deg)",
+				"-moz-transform": "rotate(-20deg)",
+				"-o-transform": "rotate(-20deg)",
+				"transform": "rotate(-20deg)",
+				"-webkit-transition": "all 0.4s ease",
+				"-moz-transition": "all 0.4s ease",
+				"-o-transition": "all 0.4s ease",
+				"transition": "all 0.4s ease"
+			});
+			setTimeout(function(){
+				//4.锤子落下到达最低点
+				$("#mainpageHammer").css({
+					"width":"190px",
+					"height":"207px",
+					"left":"1230px",
+					"top":"360px",
+					"-webkit-transform": "rotate(0deg)",
+					"-moz-transform": "rotate(0deg)",
+					"-o-transform": "rotate(0deg)",
+					"transform": "rotate(0deg)",
+					"-webkit-transition": "all 0.4s ease",
+					"-moz-transition": "all 0.4s ease",
+					"-o-transition": "all 0.4s ease",
+					"transition": "all 0.4s ease"									
+				});
+				//5.金蛋破碎
+				console.log("金蛋破碎");
+				$("#peopleimg").attr("src", "images/ice/obj02.png");
+				$("#icepeople").css({
+					"width":"500px",
+					"height":"500px",
+					"left":"768px",
+					"top":"322px",
+					"-webkit-transform": "rotate(-5deg)",
+					"-moz-transform": "rotate(-5deg)",
+					"-o-transform": "rotate(-5deg)",
+					"transform": "rotate(-5deg)",
+					"-webkit-transition": "all 0.3s ease",
+					"-moz-transition": "all 0.3s ease",
+					"-o-transition": "all 0.3s ease",
+					"transition": "all 0.3s ease"									
+				});
+				setTimeout(function(){
+					$("#icepeople").css({
+						"width":"500px",
+						"height":"500px",
+						"left":"768px",
+						"top":"322px",
+						"-webkit-transform": "rotate(0deg)",
+						"-moz-transform": "rotate(0deg)",
+						"-o-transform": "rotate(0deg)",
+						"transform": "rotate(0deg)",
+						"-webkit-transition": "all 0.3s ease",
+						"-moz-transition": "all 0.3s ease",
+						"-o-transition": "all 0.3s ease",
+						"transition": "all 0.3s ease"									
+					});
+				}, 300);
+				//6.冰块碎裂
+				console.log("冰块碎掉的动效");
+				$("#showBox").css("display","block");
+				console.log(ani_status);
+				if(ani_status == 1) {
+					$("#showBox").attr("class","box box1");
+					ani_status = 2;
+				} else {
+					$("#showBox").attr("class","box box2");
+					ani_status = 1;
+				}
+				setTimeout(function(){
+					$("#showBox").css("display","none");
+					showDrawResule(obj);
+				}, 750);
+			},400);
+		},400);
+	});
+}
+function showDrawResule(obj){
+	console.log("展示抽奖结果"+obj);
+	
+}
 // 所有弹窗消失
 function disappearAllDialog() {
 	$("#dialogPage").css("display", "none");
