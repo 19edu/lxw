@@ -378,14 +378,21 @@ function gotoDoTask(){
 	var str = "[]";										// 附加字符串
 	var needAddChance = true;
 	
-	if (taskType == "jump")								// 跳转任务
+	if (taskType == "jump" || taskType == "videoAndAsk")								// 跳转任务
 	{
-		pkgname = JSON.parse(param).packagename || JSON.parse(param).packageName;
-		bywhat = JSON.parse(param).bywhat;
-		byvalue = JSON.parse(param).byvalue;
-		needversioncode = JSON.parse(param).versioncode || JSON.parse(param).versionCode;
+		if (taskType == "jump") {
+			pkgname = JSON.parse(param).packagename || JSON.parse(param).packageName;
+			bywhat = JSON.parse(param).bywhat;
+			byvalue = JSON.parse(param).byvalue;
+			needversioncode = JSON.parse(param).versioncode || JSON.parse(param).versionCode;
+		} else if (taskType == "videoAndAsk") {
+			pkgname = "com.coocaa.app_browser";
+			bywhat = "uri";
+			byvalue = "";
+		}
 	
 		var str1 = '{ "pkgList": ["' + pkgname + '"] }';
+		
 		coocaaosapi.getAppInfo(str1, function(message) {
 			if (JSON.parse(message)[pkgname].status == -1) {
 				coocaaosapi.startAppStoreDetail(pkgname, function() {}, function() {});
@@ -531,11 +538,11 @@ function gotoDoTask(){
 			console.log("getAppInfo error" + JSON.stringify(error));
 			coocaaosapi.startAppStoreDetail(pkgname, function() {}, function() {});
 		});
-	}
+	}/*
 	else if (taskType == "videoAndAsk")					// 视频答题任务
 	{
 		
-	}
+	}*/
 	
 }
 
