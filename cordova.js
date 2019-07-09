@@ -3187,6 +3187,31 @@
             var trackUrl = JSON.parse(url);
             exec(success, error, 'CoocaaOSApi', 'callAdBusiness', [{ 'action': 'submitThirdData' }, { 'scheduleId': scheduleId, 'orderId': orderId, 'adSpaceId': adSpaceId }, { 'trackUrl': trackUrl }]);
         }
+		
+		/*
+		 * 启动小程序
+		 */
+		CoocaaOSApi.prototype.startAppX2 = function(uri, preload, success, error) {
+			argscheck.checkArgs('ssff', 'CoocaaOSApi.startAppX2', arguments);
+			if (preload == "true") {
+				startapp.start([
+					["action", "appx.intent.launcher.Start"],
+					[{
+						'uri': uri,
+						'pre_load': true
+					}]
+				], success, error);
+			}
+			else {
+				startapp.start([
+					["action", "appx.intent.launcher.Start"],
+					[{
+						'uri': uri,
+						'pre_load': false
+					}]
+				], success, error);
+			}
+		}
 
         module.exports = new CoocaaOSApi();
     });

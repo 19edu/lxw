@@ -209,6 +209,18 @@ function buttonInitBefore() {
 		// 随便逛逛
 		strollAround();
 	});
+	$("#gotHammerOKBtn").unbind("itemClick").bind("itemClick", function() {
+		// 继续破冰
+		disappearGotHammerDialog();
+	});
+	$("#giveHammerBtn1").unbind("itemClick").bind("itemClick", function() {
+		// 去破冰
+		disappearGiveHammerDialog();
+	});
+	$("#giveHammerBtn2").unbind("itemClick").bind("itemClick", function() {
+		// 继续寻找锤子 -- 若已完成当前级的所有任务，则显示主界面，未完成的则跳到做任务界面
+		findMoreHammer();
+	});
 	$("#redHasGetBtn").unbind("itemClick").bind("itemClick", function() {
 		console.log("点击了继续参与");
 		$("#redHasGet").css("display","none");
@@ -518,9 +530,11 @@ function startLogin(needQQ) {
 
 function handleBackButtonFunc() {
 	if($("#dialogPage").css("display") == "block") {
-		$("#dialogPage").css("display", "none");
-		$("#myawardPage").css("display", "block");
-		getMyAwards(_actionId);
+		if (checkMainPagePopUpOnBackKey() == false) {
+			$("#dialogPage").css("display", "none");
+			$("#myawardPage").css("display", "block");
+			getMyAwards(_actionId);
+		}
 //		webPageInit(1);
 //		console.log(_curFocusId);
 //		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});

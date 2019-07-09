@@ -3,7 +3,8 @@ var allNumber = 0;					// 所有获得锤子的个数
 var allUsedNumber = 0;				// 已经使用的锤子的个数
 var entryType = 0;					// 进入次数  0表示非首次/非每天首次进入 1表示首次进入  2表示每天首次进入
 var startDayNum = 1;				// 活动的第几天 从1开始计算
-var addNumber = 0;					// 完成任务后，或者购买了产品包之后，增加的锤子数
+var addNumber = 0;					// 完成任务后，增加的锤子数
+var buyNumber = 0;					// 购买了产品包之后，增加的锤子数
 var taskFinished = false;			// 当天的任务是否完成 (当天最多只能获取3个锤子的任务，不允许再多了)
 var sysTime = 1561535614086;		// 当前的系统时间 毫秒数
 var userKeyId = "0";				// 用户唯一标识,init接口返回
@@ -32,6 +33,8 @@ function updateMainPage()					// 刷新主界面
 	$(".pagesboxes").css("display","block");
 	
 	// 底部的条栏
+	$(".objimg").css("display", "none");
+	$(".objice").css("display", "none");
 	for (i = 0; i < curLevel; i++)
 		$("#objimg" + i).css("display", "block");
 	for (i = curLevel; i < 10; i++)
@@ -61,7 +64,17 @@ function updateMainPage()					// 刷新主界面
 		return;
 	}
 	
+	if (addNumber > 0) 
+	{
+		showGotHammerDialog();
+		return;
+	}
 	
+	if (buyNumber > 0 ) 
+	{
+		showGiveHammerDialog();
+		return;
+	}
 	
 	/*
 	map = new coocaakeymap($(".coocaa_btn"), 
@@ -72,12 +85,15 @@ function updateMainPage()					// 刷新主界面
 		function(obj) {}
 	);
 	*/
-   map = new coocaakeymap($(".coocaa_btn"), "#mainpageButton2", "btn-focus", empty0, empty1, empty1);
+   
+   focusOnMainPage(null);
    
    
 }
 
-
+function focusOnMainPage(button) {
+	map = new coocaakeymap($(".coocaa_btn"), "#mainpageButton2", "btn-focus", empty0, empty1, empty1);
+}
 
 //暑假活动初始化 
 function summerVacationActionInit() {
@@ -127,7 +143,10 @@ function summerVacationActionInit() {
 				if (data.data.startDayNum != undefined && data.data.startDayNum != null)
 					startDayNum = data.data.startDayNum;
 				if (data.data.addNumber != undefined && data.data.addNumber != null)
-					addNumber = data.data.addNumber;
+					addNumber = data.data.addNumber; 
+				addNumber = 1;
+				if (data.data.buyNumber != undefined && data.data.buyNumber != null)
+					buyNumber = data.data.buyNumber;
 				if (data.data.taskFinished != undefined && data.data.taskFinished != null)
 					taskFinished = data.data.taskFinished;
 				if (data.data.sysTime != undefined && data.data.sysTime != null)
@@ -359,15 +378,47 @@ function gotoDoTask(){
 	console.log("gate = " + gate + ", task0Idx = " + task0Idx + ", task1Idx = " 
 				+ task1Idx + ", task2Idx = " + task2Idx + ", curIdx = " + curIdx);
 	
-	console.log("task = " + JSON.stringify(alltasks[curIdx]));
+	var taskinfo = alltasks[curIdx];
+	/*
+	{
+		"taskId": 4141,
+		"activeId": 149,
+		"taskName": "跳转参数类视频答题任务",
+		"taskType": "videoAndAsk",
+		"imgUrl": "http://172.20.155.51/uploads/img/20190610/20190610142928639650.png",
+		"maxNumber": 1,
+		"addNumber": 1,
+		"timeType": "allTime",
+		"timeKey": "2019-06-26",
+		"source": "all",
+		"countdown": 15,
+		"jumpBgImgUrl": "http://172.20.155.51/uploads/20190525/20190525151952451944.webp",
+		"jumpImgUrl": "http://172.20.155.51/uploads/img/20190525/20190525152018753766.png",
+		"jumpRemindImgUrl": "http://172.20.155.51/uploads/img/20190525/20190525152039706513.png",
+		"askRightUrl": "http://172.20.155.51/uploads/img/20190522/20190522101452365755.png",
+		"askErrorUrl": "http://172.20.155.51/uploads/img/20190522/20190522101504498439.png",
+		"goBackOnclick": "{\"packageName\":\"com.coocaa.app_browser\",\"versionCode\":\"1\",\"dowhat\":\"startActivity\",\"bywhat\":\"action\",\"byvalue\":\"appx.intent.launcher.Start\",\"params\":{\"uri\":\"appx://com.coocaa.appx.x618/main?activityId=145&isDebug=true\"}}",
+		"remark": "",
+		"state": 0,
+		"param": "{\"packageName\":\"com.coocaa.mall\",\"versionCode\":\"30700012\",\"dowhat\":\"startActivity\",\"bywhat\":\"action\",\"byvalue\":\"coocaa.intent.action.MALL_DETAIL\",\"business\":\"mall\",\"params\":{\"id\":\"14969\"}}",
+		"problem": "{\"problem\":\"《流浪地球》中吴京饰演的刘培强，和吴孟达饰演的韩子昂，是什么关系？\",\"rightAnswer\":\"A\",\"answerA\":\"刘培强是韩子昂女婿\",\"answerB\":\"两人是普通朋友\"}",
+		"videoSource": "onclick",
+		"seq": 0,
+		"createTime": "2019-07-03 15:10:52",
+		"updateTime": "2019-07-03 15:10:52",
+		"version": 0,
+		"remainingNumber": 1
+	};
+	*/
+	console.log("task = " + JSON.stringify(taskinfo));
 	
 	var needCheckVersion = true;
 	
-	var param = alltasks[curIdx].param;					// 启动任务的json参数字符串
-	var taskType = alltasks[curIdx].taskType;			// 任务类型,jump,videoAndAsk,buy,download
-	var problem = alltasks[curIdx].problem;				// 问答任务时的问题
-	var goBackOnclick = alltasks[curIdx].goBackOnclick;	//
-	var videoSource = alltasks[curIdx].videoSource;		// onclick
+	var param = taskinfo.param;							// 启动任务的json参数字符串
+	var taskType = taskinfo.taskType;					// 任务类型,jump,videoAndAsk,buy,download
+	var problem = taskinfo.problem;						// 问答任务时的问题
+	var goBackOnclick = taskinfo.goBackOnclick;			//
+	var videoSource = taskinfo.videoSource;				// onclick
 
 	var hasversioncode ="";								// 系统存在APP的版本
 	var pkgname = "";
@@ -378,23 +429,18 @@ function gotoDoTask(){
 	param1 = param2 = param3 = param4 = param5 = "";
 	var str = "[]";										// 附加字符串
 	var needAddChance = true;
+	var appx_url = "";
 	
-	if (taskType == "jump" || taskType == "videoAndAsk")								// 跳转任务
+	if (taskType == "jump")								// 跳转任务
 	{
-		if (taskType == "jump") {
 			pkgname = JSON.parse(param).packagename || JSON.parse(param).packageName;
 			bywhat = JSON.parse(param).bywhat;
 			byvalue = JSON.parse(param).byvalue;
 			needversioncode = JSON.parse(param).versioncode || JSON.parse(param).versionCode;
-		} else if (taskType == "videoAndAsk") {
-			pkgname = "com.coocaa.app_browser";
-			bywhat = "uri";
-			byvalue = "";
-		}
 	
-		var str1 = '{ "pkgList": ["' + pkgname + '"] }';
+		var pkglist_s = '{ "pkgList": ["' + pkgname + '"] }';
 		
-		coocaaosapi.getAppInfo(str1, function(message) {
+		coocaaosapi.getAppInfo(pkglist_s, function(message) {
 			if (JSON.parse(message)[pkgname].status == -1) {
 				coocaaosapi.startAppStoreDetail(pkgname, function() {}, function() {});
 			} else {
@@ -412,6 +458,7 @@ function gotoDoTask(){
 					param2 = byvalue;
 					param3 = pkgname;
 				}
+				
 				if (JSON.stringify(JSON.parse(param).params) != "{}") {
 					str = '[' + JSON.stringify(JSON.parse(param).params).replace(/,/g, "},{") + ']';
 				}
@@ -441,13 +488,13 @@ function gotoDoTask(){
 							mallVersion = apkVersion[2];
 							cAppVersion = apkVersion[3];
 							console.log("===activityCenterVersion=="+activityCenterVersion+"===browserVersion=="+browserVersion+"==mallVersion=="+mallVersion+"==cAppVersion=="+cAppVersion);
-							if((activityCenterVersion < 103015) || (browserVersion < 104039)) {
+							if((activityCenterVersion < 103015) || (browserVersion < 200000)) {
 								console.log("活动中心或浏览器版本太低，需要后台升级，显示弹窗");
 								////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/newmokuaijiazai.png",3000);
 								return;
 							} else {//版本满足需求，才真正执行按键判断:
-								console.log("剩余可完成次数: " + alltasks[curIdx].remainingNumber);
-								if(alltasks[curIdx].remainingNumber != undefined && alltasks[curIdx].remainingNumber > 0) 
+								console.log("剩余可完成次数: " + taskinfo.remainingNumber);
+								if(taskinfo.remainingNumber != undefined && taskinfo.remainingNumber > 0) 
 									needAddChance = true;
 								else
 									needAddChance = false;
@@ -480,7 +527,7 @@ function gotoDoTask(){
 								function startLowVersion(needAddChance) {
 									console.log("startLowVersion() " + needAddChance);
 									if(needAddChance){
-										addChance("1", alltasks[curIdx].taskId, 0);
+										addChance("1", taskinfo.taskId, 0);
 										////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/jijiangtiaozhuan.png",3000);
 										needFresh = true;
 										needRememberFocus = true;
@@ -504,16 +551,16 @@ function gotoDoTask(){
 
 									str = JSON.parse(str);
 									var external = {
-										"taskId": alltasks[curIdx].taskId,
-										"id": alltasks[curIdx].activeId,
+										"taskId": taskinfo.taskId,
+										"id": taskinfo.activeId,
 										"userKeyId": userKeyId, 
-										"countDownTime": alltasks[curIdx].countdown, 
+										"countDownTime": taskinfo.countdown, 
 										"verify_key": new Date().getTime(), 
 										"subTask": "0",
 										"isFinish": isFinish,
-										"jumpBgImgUrl": alltasks[curIdx].jumpBgImgUrl,
-										"jumpImgUrl": alltasks[curIdx].jumpImgUrl,
-										"jumpRemindImgUrl": alltasks[curIdx].jumpRemindImgUrl,
+										"jumpBgImgUrl": taskinfo.jumpBgImgUrl,
+										"jumpImgUrl": taskinfo.jumpImgUrl,
+										"jumpRemindImgUrl": taskinfo.jumpRemindImgUrl,
 										"serverUrl": adressIp + "/building"
 									};
 									var doubleEggs_Active = {"doubleEggs_Active":external};
@@ -539,11 +586,82 @@ function gotoDoTask(){
 			console.log("getAppInfo error" + JSON.stringify(error));
 			coocaaosapi.startAppStoreDetail(pkgname, function() {}, function() {});
 		});
-	}/*
+	}
 	else if (taskType == "videoAndAsk")					// 视频答题任务
 	{
-		
-	}*/
+		pkgname = "com.coocaa.app_browser";		
+		var pkglist_s = '{ "pkgList": ["' + pkgname + '"] }';
+		coocaaosapi.getAppInfo(pkglist_s, function(message) {
+			var appmsg = JSON.parse(message);
+			var browserVersion = appmsg[pkgname].versionCode;
+			if (browserVersion < 200000) {
+				console.log("活动中心或浏览器版本太低，需要后台升级，显示弹窗");
+				////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/newmokuaijiazai.png",3000);
+				return;
+			} else {
+				// am start -d appx://com.coocaa.videoask?taskParams="11"&videoAskParams="222"
+				var taskParamsStr = JSON.stringify(param);				// 任务的参数 
+				var timestampms = Date.parse(new Date());
+				var timestamp = parseInt(timestampms / 1000);			// 当前时间戳(秒)
+				var myProblem = {
+					"rightAns": "",
+					"answerA": "",
+					"answerB": "",
+					"question": ""
+				};
+				
+				if (taskinfo.problem != undefined && taskinfo.problem != null) {
+					if (taskinfo.problem.problem != undefined && taskinfo.problem.problem != null)
+						myProblem.question = taskinfo.problem.problem;
+					if (taskinfo.problem.answerA != undefined && taskinfo.problem.answerA != null)
+						myProblem.answerA = taskinfo.problem.answerA;
+					if (taskinfo.problem.answerB != undefined && taskinfo.problem.answerB != null)
+						myProblem.answerB = taskinfo.problem.answerB;
+					if (taskinfo.problem.rightAnswer != undefined && taskinfo.problem.rightAnswer != null)
+						myProblem.rightAns = taskinfo.problem.rightAnswer;
+				}
+				
+				console.log("myProblem = " + JSON.stringify(myProblem));
+				
+				var videoAskParams = {
+					"countDownTime" : taskinfo.countdown,
+					"verify_key" : timestamp,
+					"isFinish" : false,
+					"serverUrl" : adressIp + "/building/v2/app/",
+					"id" : taskinfo.activeId,
+					"jumpImgUrl" : taskinfo.jumpImgUrl,
+					"jumpBgImgUrl" : taskinfo.jumpBgImgUrl,
+					"taskId" : taskinfo.taskId,
+					"jumpRemindImgUrl" : taskinfo.jumpRemindImgUrl,
+					"userKeyId" : userKeyId,
+					"needExitDialog" : "true",
+					"problem" : myProblem,
+					"dataerParams" : {}
+				};
+				var videoAskParamStr = JSON.stringify(videoAskParams);
+				var taskParamStr = taskinfo.param;
+				
+				appx_url = 'appx://com.coocaa.videoask?taskParams=\"';
+				appx_url += taskParamStr + '\"&videoAskParams=\"';
+				appx_url += videoAskParamStr + '\"';
+				
+				console.log("appx_url = " + appx_url);
+				
+				var cmdParam = {
+					"uri": appx_url,
+                    "pre_load": false
+				};
+				var cmdParamStr = JSON.stringify(cmdParam);
+				
+				setTimeout(function () {
+					coocaaosapi.startAppX2(appx_url, "false", function(){}, function(){});
+				}, 100);
+			}
+		}, function(error) {
+			console.log("getAppInfo error: " + JSON.stringify(error));
+		});
+
+	}
 	
 }
 
@@ -740,7 +858,7 @@ function crushIceFunc(obj){
 				});
 				//5.金蛋破碎
 				console.log("金蛋破碎");
-				$("#peopleimg").attr("src", "images/ice/obj02.png");
+				$("#peopleimg").attr("src", "images/ice/obj02.png");			// TO-DO 这里替换为图片名变量
 				$("#icepeople").css({
 					"width":"500px",
 					"height":"500px",
@@ -793,12 +911,38 @@ function crushIceFunc(obj){
 function showDrawResule(obj){
 	console.log("展示抽奖结果"+obj);
 	
+	// TO-DO ： 展示抽奖结果
+	
+	
 }
+
+function findMoreHammer() {
+	console.log("findMoreHammer() ");
+}
+
+// 按Back键的时候,检查主页面的弹窗是否弹出
+function checkMainPagePopUpOnBackKey() {
+	if($("#firstInDialog").css("display") == "block") {				// 首次进入的弹窗
+		disappearFirstInDialog();
+		return true;
+	}
+	if($("#gotHammerDialog").css("display") == "block") {			// 获得锤子的弹窗
+		disappearGotHammerDialog();
+		return true;
+	}
+	if($("#giveHammerDialog").css("display") == "block") {			// 赠送锤子的弹窗
+		disappearGiveHammerDialog();
+		return true;
+	}
+	
+	return false;
+}
+
 // 所有弹窗消失
 function disappearAllDialog() {
 	$("#dialogPage").css("display", "none");
 	////////////////////////////////////////////////
-	 $(".secondDialog").css("display", "none");
+	$(".secondDialog").css("display", "none");
 }
 
 // 显示首次进入的弹窗
@@ -811,6 +955,9 @@ function showFirstInDialog() {
 // 
 function disappearFirstInDialog() {
 	$("#firstInDialog").css("display", "none");
+	$(".secondDialog").css("display", "none");
+	$("#dialogPage").css("display", "none");
+	focusOnMainPage(null);
 }
 
 function showHaveGot3Dialog() {
@@ -818,6 +965,54 @@ function showHaveGot3Dialog() {
 	$("#haveGot3HammerDialog").css("display", "block");
 	map = new coocaakeymap($(".coocaa_btn3"), "#haveGot3HammerBtn2", "btn-focus", empty0, empty1, empty1);
 }
+
+function showGotHammerDialog() {
+	var text = "x" + addNumber;
+	document.getElementById("hammerNum1").innerHTML = text;
+	$("#dialogPage").css("display", "block");
+	$("#gotHammerDialog").css("display", "block");
+	map = new coocaakeymap($(".coocaa_btn3"), "#gotHammerOKBtn", "btn-focus", empty0, empty1, empty1);
+}
+
+function disappearGotHammerDialog() {
+	$("#gotHammerDialog").css("display", "none");
+	$(".secondDialog").css("display", "none");
+	$("#dialogPage").css("display", "none");
+	focusOnMainPage(null);
+}
+
+function showGiveHammerDialog() {
+	var text = "x" + buyNumber;
+	document.getElementById("hammerNum2").innerHTML = text;
+	$("#dialogPage").css("display", "block");
+	$("#giveHammerDialog").css("display", "block");
+	map = new coocaakeymap($(".coocaa_btn3"), "#giveHammerBtn1", "btn-focus", empty0, empty1, empty1);
+}
+
+function disappearGiveHammerDialog() {
+	$("#giveHammerDialog").css("display", "none");
+	$(".secondDialog").css("display", "none");
+	$("#dialogPage").css("display", "none");
+	focusOnMainPage(null);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

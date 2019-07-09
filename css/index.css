@@ -379,10 +379,10 @@ img[src='']{
 	display: none;
 }
 
-#firstInDialog {
+#firstInDialog, #gotHammerDialog, #giveHammerDialog {
 	display: none;
 }
-#FirstInInfo1 {
+#FirstInInfo1, #gotHammerInfo1, #giveHammerInfo {
 	position: absolute;
 	left: 0px;
 	top: 200px;
@@ -394,7 +394,7 @@ img[src='']{
 	font-weight: bold;
 	color: #ffffff;
 }
-#FirstInFrame1 {
+#FirstInFrame1, #gotHammerFrame1, #giveHammerFrame1 {
 	position: absolute;
 	left: 306px;
 	top: 267px;
@@ -408,7 +408,7 @@ img[src='']{
 	width: 251px;
 	height: 251px;
 }
-#FirstInOKBtn{
+#FirstInOKBtn, #gotHammerOKBtn{
 	position: absolute;
 	left: 315px;
 	top: 655px;
@@ -484,14 +484,14 @@ img[src='']{
 	color: #E95A7F;
 	text-align: center;
 }
-#haveGot3HammerBtn1, #quitDialogBtn1 {
+#haveGot3HammerBtn1, #quitDialogBtn1, #giveHammerBtn1 {
 	position: absolute;
 	left: 131px;
 	top: 655px;
 	width: 252px;
 	height: 98px;
 }
-#haveGot3HammerBtn2, #quitDialogBtn2 {
+#haveGot3HammerBtn2, #quitDialogBtn2, #giveHammerBtn2 {
 	position: absolute;
 	left: 477px;
 	top: 655px;
@@ -522,8 +522,32 @@ img[src='']{
 	font-weight: bold;
 	color: #ffffff;
 }
-
-
+#gotHammerImg1, #giveHammerImg1 {
+	position: absolute;
+	width: 190px;
+	height: 207px;
+	left: 30px;
+	top: 25px;
+}
+#giveHammerInfoName {
+	color: yellow;
+}
+.gotHammerNum {
+	position: absolute;
+	width: 77px;
+	height: 77px;
+	left: 512px;
+	top: 245px;
+	background-color: #f9f174;
+	border-radius: 154px; 
+	border:#f9f174 1px solid;
+	line-height: 77px;
+	text-align: center;
+	color: #3c7ac9;
+	font-size: 38px;
+	font-weight: bold;
+	font-family: 'Courier New', Courier, monospace;
+}
 
 #ADPart1{
 	position: absolute;
