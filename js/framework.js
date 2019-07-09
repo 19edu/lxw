@@ -136,6 +136,11 @@ coocaaApp.bindEvents("homebutton", function() {
     navigator.app.exitApp();
 });
 
+coocaaApp.bindEvents("resume", function() {
+	console.log("on resume");
+	pageResume();
+});
+
 coocaaApp.ready(function() {
     
 });
@@ -274,6 +279,11 @@ function buttonInitBefore() {
 	});
 		
 }
+
+function pageResume() {
+	
+}
+
 function getDeviceInfo() {
 	coocaaosapi.getDeviceInfo(function(message) {
 		console.log(JSON.stringify(message));
