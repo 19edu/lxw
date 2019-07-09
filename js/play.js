@@ -17,6 +17,10 @@ var curLevel = 5;					// 当前解锁了第几关，0为都没有解锁，1为�
 function empty0() {}
 function empty1(value) {}
 
+function pageResume() {
+	actionInit();
+}
+
 // 刷新活动数据
 function refreshActionData() {
 	curLevel = parseInt(allUsedNumber / 3);
@@ -96,8 +100,8 @@ function focusOnMainPage(button) {
 }
 
 //暑假活动初始化 
-function summerVacationActionInit() {
-	console.log("summerVacationActionInit()");
+function actionInit() {
+	console.log("actionInit()");
 	var ajaxTimeoutOne = $.ajax({
 		type: "POST",
 		async: true,
@@ -144,7 +148,6 @@ function summerVacationActionInit() {
 					startDayNum = data.data.startDayNum;
 				if (data.data.addNumber != undefined && data.data.addNumber != null)
 					addNumber = data.data.addNumber; 
-				addNumber = 1;
 				if (data.data.buyNumber != undefined && data.data.buyNumber != null)
 					buyNumber = data.data.buyNumber;
 				if (data.data.taskFinished != undefined && data.data.taskFinished != null)
@@ -934,6 +937,10 @@ function checkMainPagePopUpOnBackKey() {
 		disappearGiveHammerDialog();
 		return true;
 	}
+	if($("#haveGot3HammerDialog").css("display") == "block") {		// 当天已经获得3把锤子的弹窗
+		disappearHaveGot3Dialog();
+		return true;
+	}
 	
 	return false;
 }
@@ -964,6 +971,13 @@ function showHaveGot3Dialog() {
 	$("#dialogPage").css("display", "block");
 	$("#haveGot3HammerDialog").css("display", "block");
 	map = new coocaakeymap($(".coocaa_btn3"), "#haveGot3HammerBtn2", "btn-focus", empty0, empty1, empty1);
+}
+
+function disappearHaveGot3Dialog() {
+	$("#haveGot3HammerDialog").css("display", "none");
+	$(".secondDialog").css("display", "none");
+	$("#dialogPage").css("display", "none");
+	focusOnMainPage(null);
 }
 
 function showGotHammerDialog() {

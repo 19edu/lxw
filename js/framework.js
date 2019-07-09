@@ -280,10 +280,6 @@ function buttonInitBefore() {
 		
 }
 
-function pageResume() {
-	
-}
-
 function getDeviceInfo() {
 	coocaaosapi.getDeviceInfo(function(message) {
 		console.log(JSON.stringify(message));
@@ -574,7 +570,7 @@ function webPageInit(num){
 			"activity_name": "618活动"
 		};
 		webDataLog("okr_web_page_show", _dateObj);
-		summerVacationActionInit();
+		actionInit();
 	}else{
 		console.log("刷新页面");
 		updateMainPage();
