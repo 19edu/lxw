@@ -34,6 +34,30 @@ img[src='']{
 #homePage{
 	background-image: url(../images/bg.jpg);
 }
+#people1 {
+	position: absolute;
+	left: 1380px;
+	top: 276px;
+	width: 141px;
+	height: 214px;
+	display: none;
+}
+#people2 {
+	position: absolute;
+	left: 352px;
+	top: 636px;
+	width: 219px;
+	height: 212px;
+	display: none;
+}
+#people3 {
+	position: absolute;
+	left: 1660px;
+	top: 604px;
+	width: 231px;
+	height: 291px;
+	display: none;
+}
 #bottomBar {					/* 等待救援的对象列表 */
 	position: absolute;
 	width: 1920px;

@@ -11,14 +11,15 @@ var userKeyId = "0";				// 用户唯一标识,init接口返回
 var lotteryToken = "";				// 抽奖用的token
 var alltasks = new Array();			// 任务数组
 var ani_status = 1;
-var curLevel = 5;					// 当前解锁了第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...    
+var taskLevel = 5;					// 当前任务是第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...    
+var unlockLevel = 5;				// 当前解锁了第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...
 
 
 function empty0() {}
 function empty1(value) {}
 
 function pageResume() {
-	actionInit();
+	actionInit(true);
 }
 
 // 刷新活动数据
@@ -26,12 +27,15 @@ function refreshActionData() {
 	curLevel = parseInt(allUsedNumber / 3);
 }
 
-function updateMainPage()					// 刷新主界面 
+function updateMainPage(resumeFlag)						// 刷新主界面 
 {
-	console.log("updateMainPage()");
+	console.log("updateMainPage() " + resumeFlag);
 	
 	var i;
 	var honorBackgroundId;
+	
+	taskLevel = parseInt(allNumber / 3);				// 当前任务是第几关
+	unlockLevel = parseInt(allUsedNumber / 3);			// 当前解锁了第几关(救出了第几个人物)
 	
 	// 主页背景
 	$(".pagesboxes").css("display","block");
@@ -39,10 +43,26 @@ function updateMainPage()					// 刷新主界面
 	// 底部的条栏
 	$(".objimg").css("display", "none");
 	$(".objice").css("display", "none");
-	for (i = 0; i < curLevel; i++)
+	for (i = 0; i < unlockLevel; i++)
 		$("#objimg" + i).css("display", "block");
-	for (i = curLevel; i < 10; i++)
+	for (i = unlockLevel; i < 10; i++)
 		$("#objice" + i).css("display", "block");
+		
+	// 被救出的人物
+	if (unlockLevel >= 4)
+		$("#people1").css("display", "block");
+	else
+		$("#people1").css("display", "none");
+		
+	if (unlockLevel >= 6)
+		$("#people2").css("display", "block");
+	else
+		$("#people2").css("display", "none");
+		
+	if (unlockLevel >= 8)
+		$("#people3").css("display", "block");
+	else
+		$("#people3").css("display", "none");
 		
 	// 砸冰块按钮文字
 	var num = allNumber - allUsedNumber;
@@ -55,12 +75,25 @@ function updateMainPage()					// 刷新主界面
 	document.getElementById("mainbutton2").innerHTML = button2Text;
 	
 	// 勋章背景
-	honorBackgroundId = curLevel;
+	honorBackgroundId = unlockLevel;
 	if (honorBackgroundId > 9)
 		honorBackgroundId = 9;
 	$("#honorBlock").css("background-image", "url(images/honor" + honorBackgroundId + ".png)");
 
 	disappearAllDialog();
+	
+	// 如果之前是在做任务的页面
+	if (resumeFlag) {
+		if(isTasksPageShow()) {
+			if (taskFinished) {
+				disappearTasksPage();
+				focusOnMainPage(null);
+			}
+			else {
+				getUserTaskList();				// 刷新任务列表
+			}
+		}
+	}
 	
 	if (entryType == 1)				// 如果是用户第一次进入该活动,则弹出提示框，然后退出
 	{
@@ -100,7 +133,7 @@ function focusOnMainPage(button) {
 }
 
 //暑假活动初始化 
-function actionInit() {
+function actionInit(resumeFlag) {
 	console.log("actionInit()");
 	var ajaxTimeoutOne = $.ajax({
 		type: "POST",
@@ -159,8 +192,7 @@ function actionInit() {
 				if (data.data.token != undefined && data.data.token != null)
 					lotteryToken = data.data.token;
 				
-				// 获取任务列表
-				getUserTaskList();
+				updateMainPage(resumeFlag);				// 显示主页面 
 			}
 		},
 		error: function() {
@@ -221,9 +253,7 @@ function getUserTaskList() {
 					
 				}
 				
-				refreshActionData();
-				updateMainPage();
-				//
+				showTasksPageInt();
 			}
 		},
 		error: function() {
@@ -272,17 +302,18 @@ function showTasksPage() {
 		showHaveGot3Dialog();
 	}
 	else {
-		showTasksPageInt();
+		getUserTaskList();
+		//showTasksPageInt();
 	}
 }
 		
 function showTasksPageInt() {
 	// 拥有的锤子数，除以3，得到当前需要做第几关的任务
-	var gate = parseInt(allNumber / 3);
-	var task0Idx = gate * 3 + 0;
-	var task1Idx = gate * 3 + 1;
-	var task2Idx = gate * 3 + 2;
-	console.log("gate = " + gate + ", task0Idx = " + task0Idx + ", task1Idx = " + task1Idx + ", task2Idx = " + task2Idx);
+	var taskLevel = parseInt(allNumber / 3);
+	var task0Idx = taskLevel * 3 + 0;
+	var task1Idx = taskLevel * 3 + 1;
+	var task2Idx = taskLevel * 3 + 2;
+	console.log("taskLevel = " + taskLevel + ", task0Idx = " + task0Idx + ", task1Idx = " + task1Idx + ", task2Idx = " + task2Idx);
 	
 	if (task0Idx < alltasks.length) {
 		document.getElementById("taskName0").innerHTML = alltasks[task0Idx].taskName;
@@ -367,10 +398,10 @@ function disappearTasksPage() {
 function gotoDoTask(){
 	console.log("gotoDoTask()");
 	// 拥有的锤子数，除以3，得到当前需要做第几关的任务
-	var gate = parseInt(allNumber / 3);
-	var task0Idx = gate * 3 + 0;
-	var task1Idx = gate * 3 + 1;
-	var task2Idx = gate * 3 + 2;
+	var taskLevel = parseInt(allNumber / 3);
+	var task0Idx = taskLevel * 3 + 0;
+	var task1Idx = taskLevel * 3 + 1;
+	var task2Idx = taskLevel * 3 + 2;
 	var curIdx;
 	if (alltasks[task0Idx].remainingNumber != 0)
 		curIdx = task0Idx;
@@ -378,7 +409,7 @@ function gotoDoTask(){
 		curIdx = task1Idx;
 	else 
 		curIdx = task2Idx;
-	console.log("gate = " + gate + ", task0Idx = " + task0Idx + ", task1Idx = " 
+	console.log("taskLevel = " + taskLevel + ", task0Idx = " + task0Idx + ", task1Idx = " 
 				+ task1Idx + ", task2Idx = " + task2Idx + ", curIdx = " + curIdx);
 	
 	var taskinfo = alltasks[curIdx];
@@ -715,6 +746,7 @@ function gotoBuyPackage() {
 	var str = "[{\"business_type\":\"1\"}, {\"source_id\":\"57\"}]";
 		
 	setTimeout(function () {
+		disappearHaveGot3Dialog();
 		coocaaosapi.startCommonNormalAction(param1, param2, param3, "", "", 
 				str, function() { }, function() {});
 	}, 100);
@@ -730,8 +762,9 @@ function strollAround() {
 		str = "[{\"id\":\"103177\"}]";
 	else
 		str = "[{\"id\":\"103178\"}]";
-		
+
 	setTimeout(function () {
+		disappearHaveGot3Dialog();
 		coocaaosapi.startCommonNormalAction(param1, param2, param3, "", "", 
 				str, function() { }, function() {});
 	}, 100);

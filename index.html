@@ -32,6 +32,9 @@
 	<body>
 		<div id="deviceready">
 			<div id="homePage" class="pagesboxes">
+				<div id="people1"></div>	<!-- 获救的人物 佩奇妈妈 -->
+				<div id="people2"></div>	<!-- 获救的人物 小猪乔治 -->
+				<div id="people3"></div>	<!-- 获救的人物 佩奇爸爸 -->
 				<div id="bottomBar">									<!--  底层的一条栏目  -->
 					<div id="obj0" class="obj">
 						<img class="objimg"  id="objimg0"  src="images/object0.png" />
@@ -455,6 +458,9 @@
 		<script type="text/javascript">
 			setTimeout(pageInit,100);
 			function pageInit(){
+				$("#people1").css("background-image", "url(images/people1.png)");
+				$("#people2").css("background-image", "url(images/people2.png)");
+				$("#people3").css("background-image", "url(images/people3.png)");
 				$("#tasksBackground").css("background-image", "url(images/task/taskBg.png)");
 				$("#mainpageHammer").css("background-image","url(images/hammer.png)");
 				$("#gamerole").css("background-image","url(images/rule.jpg)");

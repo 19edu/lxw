@@ -132,7 +132,7 @@ function buttonInitBefore() {
 	});
 	$("#FirstInOKBtn").unbind("itemClick").bind("itemClick", function() {
 		entryType = 0;
-		updateMainPage();
+		updateMainPage(false);
 	});
 	$("#taskEnter").unbind("itemClick").bind("itemClick", function() {
 		gotoDoTask();				// 做任务
@@ -493,10 +493,10 @@ function webPageInit(num){
 			"activity_name": "618活动"
 		};
 		webDataLog("okr_web_page_show", _dateObj);
-		actionInit();
+		actionInit(false);
 	}else{
 		console.log("刷新页面");
-		updateMainPage();
+		updateMainPage(false);
 	}
 }
 //我的奖品
