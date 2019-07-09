@@ -3098,15 +3098,13 @@
         }
 
         //启动传参action 
-        // 包名、版本号、startActivity、action、action名、拓展参数[{key1:"value1"},{key2:"value2"}]
-        CoocaaOSApi.prototype.startParamAction = function(pkname, version, activity, action, param, str, success, error) {
-            console.log("启动传参action")
-            argscheck.checkArgs('ssssssff', 'CoocaaOSApi.startParamAction', arguments);
-            str = JSON.parse(str);
-            startapp.start([
-                ["action", param, pkname], str
-            ], success, error);
-        }
+	    CoocaaOSApi.prototype.startParamAction = function(bywhat, byvalue, sources, success, error) {
+	        console.log(typeof sources);
+	        argscheck.checkArgs('sssff', 'CoocaaOSApi.startParamAction', arguments);
+	        sources = JSON.parse(sources);
+	        console.log(typeof sources);
+	        startapp.start([[bywhat, byvalue], sources], success, error);
+	    }
 
 
         // 拓展参数[{key1:"value1"},{key2:"value2"}]
@@ -3146,10 +3144,7 @@
          */
         CoocaaOSApi.prototype.startHomeCommonList = function(id, success, error) {
             argscheck.checkArgs('sff', 'CoocaaOSApi.startHomeCommonList', arguments);
-            startapp.start([
-                ["action", "coocaa.intent.action.HOME_COMMON_LIST"],
-                [{ 'id': id }]
-            ], success, error);
+            startapp.start([["action", "coocaa.intent.action.HOME_COMMON_LIST"],[{ 'id': id }]], success, error);
         }
 
         /*
@@ -3187,31 +3182,6 @@
             var trackUrl = JSON.parse(url);
             exec(success, error, 'CoocaaOSApi', 'callAdBusiness', [{ 'action': 'submitThirdData' }, { 'scheduleId': scheduleId, 'orderId': orderId, 'adSpaceId': adSpaceId }, { 'trackUrl': trackUrl }]);
         }
-		
-		/*
-		 * 启动小程序
-		 */
-		CoocaaOSApi.prototype.startAppX2 = function(uri, preload, success, error) {
-			argscheck.checkArgs('ssff', 'CoocaaOSApi.startAppX2', arguments);
-			if (preload == "true") {
-				startapp.start([
-					["action", "appx.intent.launcher.Start"],
-					[{
-						'uri': uri,
-						'pre_load': true
-					}]
-				], success, error);
-			}
-			else {
-				startapp.start([
-					["action", "appx.intent.launcher.Start"],
-					[{
-						'uri': uri,
-						'pre_load': false
-					}]
-				], success, error);
-			}
-		}
 
         module.exports = new CoocaaOSApi();
     });
