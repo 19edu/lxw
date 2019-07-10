@@ -10,6 +10,7 @@ var sysTime = 1561535614086;		// 当前的系统时间 毫秒数
 var userKeyId = "0";				// 用户唯一标识,init接口返回
 var lotteryToken = "";				// 抽奖用的token
 var alltasks = new Array();			// 任务数组
+var newAwardInfo = null;			// 奖品信息(破冰之后获得的)
 var ani_status = 1;
 var taskLevel = 5;					// 当前任务是第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...    
 var unlockLevel = 5;				// 当前解锁了第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...
@@ -816,9 +817,10 @@ function strollAround() {
 
 // 点击“砸冰块”
 function icebreak() {
+	//crushIceFunc(null);				// for test
+	//return;
+	
 	console.log("icebreak() ");
-	crushIceFunc(null);
-	return;
 	console.log("allNumber = " + allNumber + ", allUsedNumber = " + allUsedNumber);
 	
 	var hammerNum = allNumber - allUsedNumber;			// 有效锤子数，等于总获得锤子数，减去已用锤子数
@@ -856,6 +858,10 @@ function icebreak() {
 					console.log("该活动已下架");
 				} else if(data.code == 50100) {
 					console.log(urlInterface1 + " 获取数据成功");
+					if (data.data == undefined || data.data == null)
+						newAwardInfo = null;
+					else
+						newAwardInfo = data.data;
 					// 执行破冰动效
 					crushIceFunc(data);
 				}
@@ -1004,16 +1010,16 @@ function showDrawResule(obj) {
 	var title = "";													// 成功文案
 	var imgFileName = "";											// 人物图像文件名
 	
-	////if (just != 0) {
-	////	actionInit(false);
-	////	return;
-	////}
+	if (just != 0) {				// 没有完全解救,则直接回到主页面
+		actionInit(false);
+		return;
+	}
 	
-	if (obj == null || obj == undefined || obj.data == undefined || obj.data == null) {		// 毛奖品都没有
-		awardName = "美女一枚";
+	if (newAwardInfo == undefined || newAwardInfo == null) {		// 毛奖品都没有
+		awardName = "";
 	} else {
-		if ((obj.data.awardName == undefined || obj.data.awardName == null)) {
-			awardName = obj.data.awardName;
+		if ((newAwardInfo.awardName != undefined && newAwardInfo.awardName != null)) {
+			awardName = newAwardInfo.awardName;
 			haveAward = true;
 		}
 		else 
@@ -1071,7 +1077,30 @@ function findMoreHammer() {
 }
 
 function helpOKBtnClick() {
+	console.log("helpOKBtnClick() ");
 	disappearHelpOKDialog();
+	
+	actionInit(false);
+	
+	if (newAwardInfo != null && newAwardInfo != undefined) { 			//有奖品
+		if(_loginstatus == "false") {
+			startAndSendLog();
+		}
+		else {		// 已经登录的话，直接领取
+			getNewAward();
+		}
+	}
+}
+
+function getNewAward() {
+	if (newAwardInfo != null && newAwardInfo != undefined) {
+		sendPrizes(newAwardInfo.awardId, 
+			newAwardInfo.lotteryAwardRememberId, 
+			newAwardInfo.awardTypeId, 
+			newAwardInfo.userKeyId, 
+			newAwardInfo.activeId, 
+			_qsource);
+	}
 }
 
 // 按Back键的时候,检查主页面的弹窗是否弹出
@@ -1092,6 +1121,11 @@ function checkMainPagePopUpOnBackKey() {
 		disappearHaveGot3Dialog();
 		return true;
 	}
+	if($("#helpOKDialog").css("display") == "block") {				// 解救成功的的弹窗
+		disappearHelpOKDialog();
+		actionInit(false);
+		return true;
+	}
 	
 	return false;
 }
@@ -1099,7 +1133,7 @@ function checkMainPagePopUpOnBackKey() {
 // 所有弹窗消失
 function disappearAllDialog() {
 	$("#dialogPage").css("display", "none");
-	////////////////////////////////////////////////
+	//==================================================
 	$(".secondDialog").css("display", "none");
 }
 
