@@ -146,8 +146,8 @@ img[src='']{
 }
 #showBox{
     position: absolute;
-    top: 190px;
-	left: 820px;
+    top: 200px;
+	left: 790px;
     width: 650px;
     height: 621px;
     background: url(../ice.png);
