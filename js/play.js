@@ -34,7 +34,7 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 	var i;
 	var honorBackgroundId;
 	
-	taskLevel = parseInt(allNumber / 3);				// 当前任务是第几关
+	taskLevel = parseInt(allUsedNumber / 3);			// 当前任务是第几关
 	unlockLevel = parseInt(allUsedNumber / 3);			// 当前解锁了第几关(救出了第几个人物)
 	
 	// 主页背景
@@ -80,6 +80,16 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 		honorBackgroundId = 9;
 	$("#honorBlock").css("background-image", "url(images/honor" + honorBackgroundId + ".png)");
 
+	// 被救人物（冰冻人物）
+	var imgfilename = "images/ice/obj";
+	var id1 = allUsedNumber % 3;
+	imgfilename += unlockLevel;
+	imgfilename += id1;
+	imgfilename += ".png";
+	console.log("cur people = " + imgfilename);
+	$("#peopleimg").attr("src", imgfilename);
+	
+	//
 	disappearAllDialog();
 	
 	// 如果之前是在做任务的页面
@@ -310,7 +320,7 @@ function showTasksPage() {
 		
 function showTasksPageInt() {
 	// 拥有的锤子数，除以3，得到当前需要做第几关的任务
-	var taskLevel = parseInt(allNumber / 3);
+	var taskLevel = parseInt(allUsedNumber / 3);
 	var task0Idx = taskLevel * 3 + 0;
 	var task1Idx = taskLevel * 3 + 1;
 	var task2Idx = taskLevel * 3 + 2;
@@ -399,7 +409,7 @@ function disappearTasksPage() {
 function gotoDoTask(){
 	console.log("gotoDoTask()");
 	// 拥有的锤子数，除以3，得到当前需要做第几关的任务
-	var taskLevel = parseInt(allNumber / 3);
+	var taskLevel = parseInt(allUsedNumber / 3);
 	var task0Idx = taskLevel * 3 + 0;
 	var task1Idx = taskLevel * 3 + 1;
 	var task2Idx = taskLevel * 3 + 2;
@@ -639,10 +649,10 @@ function gotoDoTask(){
 				var timestampms = Date.parse(new Date());
 				var timestamp = parseInt(timestampms / 1000);			// 当前时间戳(秒)
 				var myProblem = {
-					"rightAns": "",
-					"answerA": "",
-					"answerB": "",
-					"question": ""
+					"rightAns": "B",
+					"answerA": "答案选项A",
+					"answerB": "答案选项B",
+					"question": "你选择A还是B"
 				};
 				
 				var serverProblem = JSON.parse(taskinfo.problem);
@@ -897,7 +907,13 @@ function crushIceFunc(obj){
 				});
 				//5.金蛋破碎
 				console.log("金蛋破碎");
-				$("#peopleimg").attr("src", "images/ice/obj02.png");			// TO-DO 这里替换为图片名变量
+				var imgfilename = "images/ice/obj";
+				var id1 = allUsedNumber % 3;
+				imgfilename += unlockLevel;
+				imgfilename += (id1 + 1);
+				imgfilename += ".png";
+				console.log("new people = " + imgfilename);
+				$("#peopleimg").attr("src", imgfilename);
 				$("#icepeople").css({
 					"width":"500px",
 					"height":"500px",
