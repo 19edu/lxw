@@ -157,6 +157,10 @@ function buttonInitBefore() {
 		// 继续寻找锤子 -- 若已完成当前级的所有任务，则显示主界面，未完成的则跳到做任务界面
 		findMoreHammer();
 	});
+	$("#helpOKBtn").unbind("itemClick").bind("itemClick", function() {
+		//救援成功按钮按下
+		helpOKBtnClick();
+	});
 	$("#redHasGetBtn").unbind("itemClick").bind("itemClick", function() {
 		console.log("点击了继续参与");
 		$("#redHasGet").css("display","none");

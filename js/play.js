@@ -941,10 +941,10 @@ function crushIceFunc(obj){
 				console.log("new people = " + imgfilename);
 				$("#peopleimg").attr("src", imgfilename);
 				$("#icepeople").css({
-					"width":"500px",
-					"height":"500px",
-					"left":"768px",
-					"top":"322px",
+					"width":"340px",
+					"height":"340px",
+					"left":"850px",
+					"top":"380px",
 					"-webkit-transform": "rotate(-5deg)",
 					"-moz-transform": "rotate(-5deg)",
 					"-o-transform": "rotate(-5deg)",
@@ -956,10 +956,10 @@ function crushIceFunc(obj){
 				});
 				setTimeout(function(){
 					$("#icepeople").css({
-						"width":"500px",
-						"height":"500px",
-						"left":"768px",
-						"top":"322px",
+						"width":"340px",
+						"height":"340px",
+						"left":"850px",
+						"top":"380px",
 						"-webkit-transform": "rotate(0deg)",
 						"-moz-transform": "rotate(0deg)",
 						"-o-transform": "rotate(0deg)",
@@ -1068,6 +1068,10 @@ function showDrawResule(obj) {
 
 function findMoreHammer() {
 	console.log("findMoreHammer() ");
+}
+
+function helpOKBtnClick() {
+	disappearHelpOKDialog();
 }
 
 // 按Back键的时候,检查主页面的弹窗是否弹出
@@ -1179,7 +1183,12 @@ function showHelpOKDialog(haveAward, awardName, heroHame, title, imgFileName) {
 	map = new coocaakeymap($(".coocaa_btn3"), "#helpOKBtn", "btn-focus", empty0, empty1, empty1);
 }
 
-
+function disappearHelpOKDialog() {
+	$("#helpOKDialog").css("display", "none");
+	$(".secondDialog").css("display", "none");
+	$("#dialogPage").css("display", "none");
+	focusOnMainPage(null);
+}
 
 
 
