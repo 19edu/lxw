@@ -77,9 +77,16 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 	
 	// 勋章背景
 	honorBackgroundId = unlockLevel;
-	if (honorBackgroundId > 9)
-		honorBackgroundId = 9;
-	$("#honorBlock").css("background-image", "url(images/honor" + honorBackgroundId + ".png)");
+	if (honorBackgroundId == 0) {
+		$("#honorBlock").css("display", "none");
+	} else {
+		honorBackgroundId --;
+		if (honorBackgroundId > 9)
+			honorBackgroundId = 9;
+		$("#honorBlock").css("background-image", "url(images/honor" + honorBackgroundId + ".png)");
+		$("#honorBlock").css("display", "block");
+	}
+	
 
 	// 被救人物（冰冻人物）
 	var imgfilename = "images/ice/obj";
