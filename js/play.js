@@ -94,13 +94,20 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 	
 	// 如果之前是在做任务的页面
 	if (resumeFlag) {
-		if(isTasksPageShow()) {
-			if (taskFinished) {
+		if(isTasksPageShow()) {					// 如果之前做任务的页面在显示中
+			if (taskFinished) {					// 当天的任务已经完成，不允许再做任务了
 				disappearTasksPage();
 				focusOnMainPage(null);
 			}
 			else {
-				getUserTaskList();				// 刷新任务列表
+				if (addNumber > 0 || buyNumber > 0) {	// 如果获得了锤子，则做任务的页面消失
+					disappearTasksPage();
+					focusOnMainPage(null);
+				}
+				else {
+					getUserTaskList();				// 刷新任务列表
+					return;
+				}
 			}
 		}
 	}
@@ -969,6 +976,7 @@ function showDrawResule(obj){
 	// TO-DO ： 展示抽奖结果
 	
 	
+	actionInit(false);
 }
 
 function findMoreHammer() {
