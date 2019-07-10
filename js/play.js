@@ -169,12 +169,12 @@ function actionInit(resumeFlag) {
 					overNum = data.data.overNum;
 				if (data.data.allNumber != undefined && data.data.allNumber != null)
 					allNumber = data.data.allNumber;
-				//if (allNumber > 30)
-					//allNumber = 0;
+				if (allNumber > 30)
+					allNumber = 30;
 				if (data.data.allUsedNumber != undefined && data.data.allUsedNumber != null)
 					allUsedNumber = data.data.allUsedNumber;
-				//if (allUsedNumber > 30)
-					//allUsedNumber = 0;
+				if (allUsedNumber > 30)
+					allUsedNumber = 30;
 				if (data.data.entryType != undefined && data.data.entryType != null)
 					entryType = data.data.entryType;
 				if (data.data.startDayNum != undefined && data.data.startDayNum != null)
@@ -185,6 +185,7 @@ function actionInit(resumeFlag) {
 					buyNumber = data.data.buyNumber;
 				if (data.data.taskFinished != undefined && data.data.taskFinished != null)
 					taskFinished = data.data.taskFinished;
+				//taskFinished = false;				// for test
 				if (data.data.sysTime != undefined && data.data.sysTime != null)
 					sysTime = data.data.sysTime;
 				if (data.data.userKeyId != undefined && data.data.userKeyId != null)
@@ -415,35 +416,35 @@ function gotoDoTask(){
 	var taskinfo = alltasks[curIdx];
 	/*
 	{
-		"taskId": 4141,
-		"activeId": 149,
-		"taskName": "跳转参数类视频答题任务",
-		"taskType": "videoAndAsk",
-		"imgUrl": "http://172.20.155.51/uploads/img/20190610/20190610142928639650.png",
-		"maxNumber": 1,
-		"addNumber": 1,
-		"timeType": "allTime",
-		"timeKey": "2019-06-26",
-		"source": "all",
-		"countdown": 15,
-		"jumpBgImgUrl": "http://172.20.155.51/uploads/20190525/20190525151952451944.webp",
-		"jumpImgUrl": "http://172.20.155.51/uploads/img/20190525/20190525152018753766.png",
-		"jumpRemindImgUrl": "http://172.20.155.51/uploads/img/20190525/20190525152039706513.png",
-		"askRightUrl": "http://172.20.155.51/uploads/img/20190522/20190522101452365755.png",
-		"askErrorUrl": "http://172.20.155.51/uploads/img/20190522/20190522101504498439.png",
-		"goBackOnclick": "{\"packageName\":\"com.coocaa.app_browser\",\"versionCode\":\"1\",\"dowhat\":\"startActivity\",\"bywhat\":\"action\",\"byvalue\":\"appx.intent.launcher.Start\",\"params\":{\"uri\":\"appx://com.coocaa.appx.x618/main?activityId=145&isDebug=true\"}}",
-		"remark": "",
-		"state": 0,
-		"param": "{\"packageName\":\"com.coocaa.mall\",\"versionCode\":\"30700012\",\"dowhat\":\"startActivity\",\"bywhat\":\"action\",\"byvalue\":\"coocaa.intent.action.MALL_DETAIL\",\"business\":\"mall\",\"params\":{\"id\":\"14969\"}}",
-		"problem": "{\"problem\":\"《流浪地球》中吴京饰演的刘培强，和吴孟达饰演的韩子昂，是什么关系？\",\"rightAnswer\":\"A\",\"answerA\":\"刘培强是韩子昂女婿\",\"answerB\":\"两人是普通朋友\"}",
-		"videoSource": "onclick",
-		"seq": 0,
-		"createTime": "2019-07-03 15:10:52",
-		"updateTime": "2019-07-03 15:10:52",
-		"version": 0,
-		"remainingNumber": 1
-	};
-	*/
+	"taskId": 4124,
+	"activeId": 149,
+	"taskName": "广告类视频答题任务",
+	"taskType": "videoAndAsk",
+	"imgUrl": "http://172.20.155.51/uploads/img/20190610/20190610142953610849.png",
+	"maxNumber": 1,
+	"addNumber": 1,
+	"timeType": "allTime",
+	"timeKey": "2019-06-11",
+	"source": "all",
+	"countdown": 12,
+	"jumpBgImgUrl": "http://172.20.155.51/uploads/20190522/20190522102148830555.webp",
+	"jumpImgUrl": "http://172.20.155.51/uploads/img/20190522/20190522102155090027.png",
+	"jumpRemindImgUrl": "http://172.20.155.51/uploads/img/20190522/20190522102208290060.png",
+	"askRightUrl": "http://172.20.155.51/uploads/img/20190522/20190522102220534206.png",
+	"askErrorUrl": "http://172.20.155.51/uploads/img/20190522/20190522102226356700.png",
+	"goBackOnclick": "{\"packageName\":\"com.coocaa.app_browser\",\"versionCode\":\"1\",\"dowhat\":\"startActivity\",\"bywhat\":\"action\",\"byvalue\":\"appx.intent.launcher.Start\",\"params\":{\"uri\":\"appx://com.coocaa.appx.x618/main?activityId=145&isDebug=true\"}}",
+	"remark": "",
+	"state": 0,
+	"param": "{\"videoUrl\":\"http://all.vod.17ugo.com/vod/kukai1/U-酷开/优购物/厨具/厨具20180829/544135-韩国原装进口福库电压力饭煲U/u.m3u8\",\"adId\":\"\"}",
+	"problem": "{\"problem\":\"邓伦在《封神演义》中是的角色是？\",\"answerA\":\"杨戬\",\"rightAnswer\":\"B\",\"answerB\":\"狐妖\"}",
+	"videoSource": "adId",
+	"seq": 0,
+	"createTime": "2019-06-25 11:41:24",
+	"updateTime": "2019-06-25 11:41:24",
+	"version": 0,
+	"remainingNumber": 1
+}
+	;*/
 	console.log("task = " + JSON.stringify(taskinfo));
 	
 	var needCheckVersion = true;
@@ -644,15 +645,17 @@ function gotoDoTask(){
 					"question": ""
 				};
 				
-				if (taskinfo.problem != undefined && taskinfo.problem != null) {
-					if (taskinfo.problem.problem != undefined && taskinfo.problem.problem != null)
-						myProblem.question = taskinfo.problem.problem;
-					if (taskinfo.problem.answerA != undefined && taskinfo.problem.answerA != null)
-						myProblem.answerA = taskinfo.problem.answerA;
-					if (taskinfo.problem.answerB != undefined && taskinfo.problem.answerB != null)
-						myProblem.answerB = taskinfo.problem.answerB;
-					if (taskinfo.problem.rightAnswer != undefined && taskinfo.problem.rightAnswer != null)
-						myProblem.rightAns = taskinfo.problem.rightAnswer;
+				var serverProblem = JSON.parse(taskinfo.problem);
+				
+				if (serverProblem != undefined && serverProblem != null) {
+					if (serverProblem.problem != undefined && serverProblem.problem != null)
+						myProblem.question = serverProblem.problem;
+					if (serverProblem.answerA != undefined && serverProblem.answerA != null)
+						myProblem.answerA = serverProblem.answerA;
+					if (serverProblem.answerB != undefined && serverProblem.answerB != null)
+						myProblem.answerB = serverProblem.answerB;
+					if (serverProblem.rightAnswer != undefined && serverProblem.rightAnswer != null)
+						myProblem.rightAns = serverProblem.rightAnswer;
 				}
 				
 				console.log("myProblem = " + JSON.stringify(myProblem));
@@ -675,9 +678,9 @@ function gotoDoTask(){
 				var videoAskParamStr = JSON.stringify(videoAskParams);
 				var taskParamStr = taskinfo.param;
 				
-				appx_url = 'appx://com.coocaa.videoask?taskParams=\"';
-				appx_url += taskParamStr + '\"&videoAskParams=\"';
-				appx_url += videoAskParamStr + '\"';
+				appx_url = 'appx://com.coocaa.videoask?taskParams=';
+				appx_url += taskParamStr + '&videoAskParams=';
+				appx_url += videoAskParamStr;
 				
 				console.log("appx_url = " + appx_url);
 				
