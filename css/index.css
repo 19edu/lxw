@@ -203,10 +203,10 @@ img[src='']{
 }
 #icepeople {
 	position: absolute;
-    width: 500px;
-    height: 500px;
-    left: 768px;
-    top: 322px;
+    width: 340px;
+    height: 340px;
+    left: 850px;
+    top: 380px;
 }
 #peopleimg {
 	position: absolute;
@@ -403,10 +403,10 @@ img[src='']{
 	display: none;
 }
 
-#firstInDialog, #gotHammerDialog, #giveHammerDialog {
+#firstInDialog, #gotHammerDialog, #giveHammerDialog, #helpOKDialog {
 	display: none;
 }
-#FirstInInfo1, #gotHammerInfo1, #giveHammerInfo {
+#FirstInInfo1, #gotHammerInfo1, #giveHammerInfo, #helpOKInfo1 {
 	position: absolute;
 	left: 0px;
 	top: 200px;
@@ -418,7 +418,7 @@ img[src='']{
 	font-weight: bold;
 	color: #ffffff;
 }
-#FirstInFrame1, #gotHammerFrame1, #giveHammerFrame1 {
+#FirstInFrame1, #gotHammerFrame1, #giveHammerFrame1, #helpOKFrame1 {
 	position: absolute;
 	left: 306px;
 	top: 267px;
@@ -432,7 +432,7 @@ img[src='']{
 	width: 251px;
 	height: 251px;
 }
-#FirstInOKBtn, #gotHammerOKBtn{
+#FirstInOKBtn, #gotHammerOKBtn, #helpOKBtn {
 	position: absolute;
 	left: 315px;
 	top: 655px;
@@ -571,6 +571,28 @@ img[src='']{
 	font-size: 38px;
 	font-weight: bold;
 	font-family: 'Courier New', Courier, monospace;
+}
+#helpOKImg1 {					/*救出的人物*/
+	position: absolute;
+	width: 250px;
+	height: 250px;
+	left: 0px;
+	top: 0px;
+}
+#helpOKInfo2 {
+	position: absolute;
+	left: 0px;
+	top: 536px;
+	width: 876px;
+	height: 36px;
+	font-size: 22px;
+	line-height: 22px;
+	text-align: center;
+	font-weight: bold;
+	color: #ffffff;
+}
+.helpOKInfoHeroName {
+	color: #ffff00;
 }
 
 #ADPart1{

@@ -169,7 +169,7 @@ function actionInit(resumeFlag) {
 			"cNickName": _nickName
 		},
 		success: function(data) {
-			console.log(JSON.stringify(data));
+			console.log(JSON.stringify(data));						// 把初始化接口的json对象打印出来
 
 			if(data.code == 50001) {
 				console.log("该活动不存在");
@@ -181,7 +181,7 @@ function actionInit(resumeFlag) {
 				console.log("该活动已下架");
 			} else if(data.code == 50100) {
 				console.log("该活动进行中+获取数据成功");
-				console.log(JSON.stringify(data));
+				
 				if (data.data.overNum != undefined && data.data.overNum != null)
 					overNum = data.data.overNum;
 				if (data.data.allNumber != undefined && data.data.allNumber != null)
@@ -288,6 +288,30 @@ function getUserTaskList() {
 	
 }
 
+function getHeroHame(level) {
+	var name;
+	if (level <= 1) 
+		name = "勇气宝贝";
+	else if (level == 2)
+		name = "科考达人";
+	else if (level == 3)
+		name = "环境卫士";
+	else if (level == 4)
+		name = "破冰宝贝";
+	else if (level == 5)
+		name = "救援队员";
+	else if (level == 6)
+		name = "救援专家";
+	else if (level == 7)
+		name = "机智宝贝";
+	else if (level == 8)
+		name = "救援队长";
+	else if (level == 9)
+		name = "超级探险家";
+	else if (level >= 10)
+		name = "解救佩奇小英雄";
+	return name;
+}
 
 // 游戏规则页面是否在显示
 function isRolePageShow() {
@@ -793,6 +817,8 @@ function strollAround() {
 // 点击“砸冰块”
 function icebreak() {
 	console.log("icebreak() ");
+	crushIceFunc(null);
+	return;
 	console.log("allNumber = " + allNumber + ", allUsedNumber = " + allUsedNumber);
 	
 	var hammerNum = allNumber - allUsedNumber;			// 有效锤子数，等于总获得锤子数，减去已用锤子数
@@ -831,15 +857,7 @@ function icebreak() {
 				} else if(data.code == 50100) {
 					console.log(urlInterface1 + " 获取数据成功");
 					// 执行破冰动效
-						crushIceFunc(data);
-					// 如果没有奖品
-					if (data.data == undefined || data.data == null)
-					{
-						// 执行破冰动效
-						
-						//
-						return;
-					}
+					crushIceFunc(data);
 				}
 			},
 			error: function() {
@@ -857,6 +875,7 @@ function icebreak() {
 		showTasksPage();
 	}
 }
+
 function crushIceFunc(obj){
 	console.log("-------2-------");
 	var ctop = $("#mainpageHammer").position().top - 35;
@@ -970,13 +989,81 @@ function crushIceFunc(obj){
 		},400);
 	});
 }
-function showDrawResule(obj){
-	console.log("展示抽奖结果"+obj);
+
+// 展示抽奖结果
+function showDrawResule(obj) {
+	console.log("showDrawResule()");
 	
-	// TO-DO ： 展示抽奖结果
+	var nowUsedNumber = allUsedNumber + 1;							// 刚用掉了一把锤子，还没有重新从服务器取值，这里手动加上1
+	var gate = parseInt(nowUsedNumber / 3);							// 第几关
+	var just = nowUsedNumber % 3;									// 是否刚好破完所有冰块
 	
+	var haveAward = false;											// 有奖品
+	var awardName = "";												// 奖品名
+	var heroHame = "";												// 英雄称号
+	var title = "";													// 成功文案
+	var imgFileName = "";											// 人物图像文件名
 	
-	actionInit(false);
+	////if (just != 0) {
+	////	actionInit(false);
+	////	return;
+	////}
+	
+	if (obj == null || obj == undefined || obj.data == undefined || obj.data == null) {		// 毛奖品都没有
+		awardName = "美女一枚";
+	} else {
+		if ((obj.data.awardName == undefined || obj.data.awardName == null)) {
+			awardName = obj.data.awardName;
+			haveAward = true;
+		}
+		else 
+			awardName = "";
+	}
+	
+	if (gate <= 1) {
+		title = "跟超级飞侠飞往南极";
+		imgFileName = "images/ice/obj03.png";
+	}
+	else if (gate == 2) {
+		title = "跟汪汪队学习救援知识";
+		imgFileName = "images/ice/obj13.png";
+	}
+	else if (gate == 3) {
+		title = "解救南极海洋动物-获得3天少儿权益卡";
+		imgFileName = "images/ice/obj23.png";
+	}
+	else if (gate == 4) {
+		title = "成功解救猪妈妈！佩奇你在哪里？";
+		imgFileName = "images/ice/obj33.png";
+	}
+	else if (gate == 5) {
+		title = "快看，我们得到了破冰船！！！";
+		imgFileName = "images/ice/obj43.png";
+	}
+	else if (gate == 6) {
+		title = "哇！我们救出来乔治弟弟和恐龙！<br/> -少儿VIP 100元购买特权";
+		imgFileName = "images/ice/obj53.png";
+	}
+	else if (gate == 7) {
+		title = "别着急！加速引擎在这里";
+		imgFileName = "images/ice/obj63.png";
+	}
+	else if (gate == 8) {
+		title = "好重的猪爸爸！你该减肥了！！！";
+		imgFileName = "images/ice/obj73.png";
+	}
+	else if (gate == 9) {
+		title = "营救佩奇的关键！救援百宝箱";
+		imgFileName = "images/ice/obj83.png";
+	}
+	else if (gate >= 10) {
+		title = "你好！小猪佩奇 - 实物奖品" + awardName;
+		imgFileName = "images/ice/obj93.png";
+	}
+	
+	heroHame = getHeroHame(gate);
+	
+	showHelpOKDialog(haveAward, awardName, heroHame, title, imgFileName);
 }
 
 function findMoreHammer() {
@@ -1070,6 +1157,27 @@ function disappearGiveHammerDialog() {
 	focusOnMainPage(null);
 }
 
+function showHelpOKDialog(haveAward, awardName, heroHame, title, imgFileName) {
+	document.getElementById("helpOKInfo1").innerHTML = title;
+	
+	var text2, buttonText;
+	text2 = '恭喜你获得' + '<span class="helpOKInfoHeroName">' + heroHame + '</span>称号';
+	if (haveAward)
+		text2 += '，及' + '<span class="helpOKInfoHeroName">' + awardName + '</span>';
+	document.getElementById("helpOKInfo2").innerHTML = text2;
+	
+	if (haveAward)
+		buttonText = "欣然收下";
+	else
+		buttonText = "继续破冰";
+	document.getElementById("helpOKDialogButtonText").innerHTML = buttonText;
+	
+	$("#helpOKImg1").attr("src", imgFileName);
+	
+	$("#dialogPage").css("display", "block");
+	$("#helpOKDialog").css("display", "block");
+	map = new coocaakeymap($(".coocaa_btn3"), "#helpOKBtn", "btn-focus", empty0, empty1, empty1);
+}
 
 
 
