@@ -37,10 +37,22 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 	
 	taskLevel = parseInt(allUsedNumber / 3);			// 当前任务是第几关
 	unlockLevel = parseInt(allUsedNumber / 3);			// 当前解锁了第几关(救出了第几个人物)
-	
+
 	// 主页背景
 	$(".pagesboxes").css("display","block");
-	
+
+	if (allUsedNumber >= 30) {
+		$("#homePage").css("background-image", "url(images/stageclear.jpg)");
+		$("#bottomBar").css("display", "none");
+		$("#mainpageHammer").css("display", "none");
+		$("#showBox").css("display", "none");
+		$("#icepeople").css("display", "none");
+		$("#mainpageButton1").css("display", "none");
+		$("#mainpageButton2").css("display", "none");
+		focusOnMainPage("#mainpageButton3");
+		return;
+	}
+
 	// 底部的条栏
 	$(".objimg").css("display", "none");
 	$(".objice").css("display", "none");
@@ -149,12 +161,16 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 	*/
    
    focusOnMainPage(null);
-   
-   
+
 }
 
 function focusOnMainPage(button) {
-	map = new coocaakeymap($(".coocaa_btn"), "#mainpageButton2", "btn-focus", empty0, empty1, empty1);
+	var focusButton;
+	if (button == null || button == undefined)
+		focusButton = "#mainpageButton2";
+	else
+		focusButton = button;
+	map = new coocaakeymap($(".coocaa_btn"), focusButton, "btn-focus", empty0, empty1, empty1);
 }
 
 //暑假活动初始化 
@@ -1131,6 +1147,7 @@ function checkMainPagePopUpOnBackKey() {
 	if($("#helpOKDialog").css("display") == "block") {				// 解救成功的的弹窗
 		disappearHelpOKDialog();
 		actionInit(false);
+			
 		return true;
 	}
 	
@@ -1230,9 +1247,6 @@ function disappearHelpOKDialog() {
 	$("#dialogPage").css("display", "none");
 	focusOnMainPage(null);
 }
-
-
-
 
 
 
