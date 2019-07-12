@@ -117,15 +117,13 @@ function buttonInitBefore() {
 		map = new coocaakeymap($(".coocaa_btn2"), "#"+_curFocusId, "btn-focus", function() {}, function(val) {}, function(obj) {});
 	});
 	$("#mainpageButton1").unbind("itemClick").bind("itemClick", function() {
-		showTasksPage();
+		pressGetMoreHammerButton();
 	});
 	$("#mainpageButton2").unbind("itemClick").bind("itemClick", function() {
-		icebreak();
+		pressIceBreakButton();
 	});
 	$("#mainpageButton3").unbind("itemClick").bind("itemClick", function() {
-		//_actionId = getUrlParam("actionid");//主活动的id
-		$("#myawardPage").css("display","block");
-		getMyAwards(_actionId);
+		pressMyAwardsButton();
 	});
 	$("#mainpageButton4").unbind("itemClick").bind("itemClick", function() {
 		showRolePage();

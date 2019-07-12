@@ -15,6 +15,62 @@ var ani_status = 1;
 var taskLevel = 5;					// 当前任务是第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...    
 var unlockLevel = 5;				// 当前解锁了第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...
 
+var logdata1 = {
+	"page_name": "",
+	"page_type": "",
+	"load_duration": "",
+	"activity_type": "",
+	"activity_name": "",
+	"open_id": ""
+};
+var logdata2 = {
+	"page_name": "",
+	"parent_page": "",
+	"prize_type": "",
+	"prize_id": "",
+	"prize_name": "",
+	"page_type": "",
+	"hammer_amount": "",
+	"activity_type": "",
+	"activity_name": "",
+	"open_id": ""
+};
+var logdata3 = {
+	"page_name": "",
+	"button_name": "",
+	"page_type": "",
+	"activity_type": "",
+	"activity_name": "",
+	"open_id": ""
+};
+var logdata4 = {
+	"page_name": "",
+	"button_name": "",
+	"parent_page": "",
+	"prize_type": "",
+	"prize_id": "",
+	"prize_name": "",
+	"page_type": "",
+	"activity_type": "",
+	"activity_name": "",
+	"open_id": ""
+};
+var logdata5 = {
+	"page_name": "",
+	"page_type": "",
+	"activity_type": "",
+	"activity_name": "",
+	"activity_duration": "",
+	"open_id": ""
+};
+var logdata6 = {
+	"page_name": "",
+	"parent_page": "",
+	"page_type": "",
+	"activity_type": "",
+	"activity_name": "",
+	"open_id": ""
+};
 
 function empty0() {}
 function empty1(value) {}
@@ -347,6 +403,14 @@ function isRolePageShow() {
 
 function showRolePage() {
 	$("#gamerole").css("display", "block");
+	
+	autoFillLogData3();
+	if (allUsedNumber >= 30)
+		logdata3.page_type = "活动主页面-全部解救成功";
+	else
+		logdata3.page_type = "活动主页面-进行中";
+	logdata3.button_name = "活动规则";
+	webDataLog("web_button_clicked_new", logdata3);
 }
 
 function disappearRolePage() {
@@ -359,6 +423,14 @@ function isTasksPageShow() {
 		return true;
 	else
 		return false;
+}
+
+function pressGetMoreHammerButton() {
+	showTasksPage();
+	
+	autoFillLogData3();
+	logdata3.button_name = "获得更多锤子";
+	webDataLog("web_button_clicked_new", logdata3);
 }
 
 function showTasksPage() {
@@ -838,6 +910,31 @@ function strollAround() {
 	}, 100);
 }
 
+function pressMyAwardsButton() {
+	//_actionId = getUrlParam("actionid");//主活动的id
+	$("#myawardPage").css("display","block");
+	getMyAwards(_actionId);
+	
+	autoFillLogData3();
+	logdata3.button_name = "我的奖品";
+	if (allUsedNumber >= 30)
+		logdata3.page_type = "活动主页面-全部解救成功";
+	else
+		logdata3.page_type = "活动主页面-进行中";
+	webDataLog("web_button_clicked_new", logdata3);
+}
+
+function pressIceBreakButton() {
+	icebreak();
+	
+	autoFillLogData3();
+	if (allNumber - allUsedNumber > 0)
+		logdata3.button_name = "砸冰块";
+	else
+		logdata3.button_name = "获得破冰锤";
+	webDataLog("web_button_clicked_new", logdata3);
+}
+
 // 点击“砸冰块”
 function icebreak() {
 	//crushIceFunc(null);				// for test
@@ -1103,6 +1200,14 @@ function helpOKBtnClick() {
 	console.log("helpOKBtnClick() ");
 	disappearHelpOKDialog();
 	
+	///////////////////
+	if (newAwardInfo != null && newAwardInfo != undefined) {
+		autoFillLogData3();
+		logdata3.button_name = "欣然收下";
+		webDataLog("web_button_clicked_new", logdata3);
+	}
+	///////////////////
+	
 	actionInit(false);
 	
 	if (newAwardInfo != null && newAwardInfo != undefined) { 			//有奖品
@@ -1228,7 +1333,7 @@ function showHelpOKDialog(haveAward, awardName, heroHame, title, imgFileName) {
 		text2 += '，及' + '<span class="helpOKInfoHeroName">' + awardName + '</span>';
 	document.getElementById("helpOKInfo2").innerHTML = text2;
 	
-	if (haveAward)
+	if (haveAward) 
 		buttonText = "欣然收下";
 	else
 		buttonText = "继续破冰";
@@ -1248,7 +1353,13 @@ function disappearHelpOKDialog() {
 	focusOnMainPage(null);
 }
 
-
+function autoFillLogData3() {
+	logdata3.page_name = "活动主页面";
+	logdata3.page_type = "活动主页面-进行中";
+	logdata3.activity_type = "2019教育暑期活动";
+	logdata3.activity_name = "2019教育暑期活动";
+	logdata3.open_id = _openId;
+}
 
 
 
