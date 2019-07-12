@@ -338,6 +338,14 @@ img[src='']{
 	top: 352px;
 	/*background-color: #DC443D;*/
 }
+.taskFrameL {
+	position: absolute;
+	width: 376px;
+	height: 376px;
+	left: -28px;
+	top: -28px;
+	display: none;
+}
 .taskName {
 	position: absolute;
 	width: 320px;

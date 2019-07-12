@@ -12,8 +12,11 @@ var lotteryToken = "";				// 抽奖用的token
 var alltasks = new Array();			// 任务数组
 var newAwardInfo = null;			// 奖品信息(破冰之后获得的)
 var ani_status = 1;
-var taskLevel = 5;					// 当前任务是第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...    
-var unlockLevel = 5;				// 当前解锁了第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...
+var taskLevel = 0;					// 当前任务是第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...    
+var unlockLevel = 0;				// 当前解锁了第几关，0为都没有解锁，1为第一关已经解锁，2为第二关已经解锁 ...
+var task0Idx = 0;					// 第一个任务的索引ID
+var task1Idx = 0;					// 第二个任务的索引ID
+var task2Idx = 0;					// 第三个任务的索引ID
 
 var logdata1 = {
 	"page_name": "",
@@ -447,14 +450,61 @@ function showTasksPage() {
 		//showTasksPageInt();
 	}
 }
+
+function refreshTaskIndex() {
+	console.log("refreshTaskIndex()");
+	// 拥有的锤子数，除以3，得到当前需要做第几关的任务 
+	taskLevel = parseInt(allUsedNumber / 3);
+	task0Idx = taskLevel * 3 + 0;
+	task1Idx = taskLevel * 3 + 1;
+	task2Idx = taskLevel * 3 + 2;
+	console.log("taskLevel = " + taskLevel + ", task0Idx = " + task0Idx + ", task1Idx = " + task1Idx + ", task2Idx = " + task2Idx);
+	
+	if (alltasks[task0Idx].remainingNumber == 0 &&
+		alltasks[task1Idx].remainingNumber == 0 &&
+		alltasks[task2Idx].remainingNumber == 0 )			// 如果当前关卡的任务都做完了，则取下一关
+	{
+		task0Idx = (taskLevel + 1) * 3 + 0;
+		task1Idx = (taskLevel + 1) * 3 + 1;
+		task2Idx = (taskLevel + 1) * 3 + 2;
+		console.log("refresh next level:  task0Idx = " + task0Idx + ", task1Idx = " + task1Idx + ", task2Idx = " + task2Idx);
+	}
+	
+	if (task0Idx > 29)				// 一共30个任务，不能数组越界
+		task0Idx = 29;
+	if (task1Idx > 29)
+		task1Idx = 29;
+	if (task2Idx > 29)
+		task2Idx = 29;
+}
 		
 function showTasksPageInt() {
-	// 拥有的锤子数，除以3，得到当前需要做第几关的任务
-	var taskLevel = parseInt(allUsedNumber / 3);
-	var task0Idx = taskLevel * 3 + 0;
-	var task1Idx = taskLevel * 3 + 1;
-	var task2Idx = taskLevel * 3 + 2;
-	console.log("taskLevel = " + taskLevel + ", task0Idx = " + task0Idx + ", task1Idx = " + task1Idx + ", task2Idx = " + task2Idx);
+	
+	refreshTaskIndex();
+	
+	var curIdx;
+	if (alltasks[task0Idx].remainingNumber != 0)
+		curIdx = task0Idx;
+	else if (alltasks[task1Idx].remainingNumber != 0)
+		curIdx = task1Idx;
+	else 
+		curIdx = task2Idx;
+	console.log("curIdx = " + curIdx);
+	
+	if (task0Idx == curIdx)
+		$("#taskFrameL0").css("display", "block");
+	else 
+		$("#taskFrameL0").css("display", "none");
+		
+	if (task1Idx == curIdx)
+		$("#taskFrameL1").css("display", "block");
+	else 
+		$("#taskFrameL1").css("display", "none");
+		
+	if (task2Idx == curIdx)
+		$("#taskFrameL2").css("display", "block");
+	else 
+		$("#taskFrameL2").css("display", "none");
 	
 	if (task0Idx < alltasks.length) {
 		document.getElementById("taskName0").innerHTML = alltasks[task0Idx].taskName;
@@ -537,12 +587,10 @@ function disappearTasksPage() {
 
 // 去做任务 
 function gotoDoTask(){
+	
 	console.log("gotoDoTask()");
-	// 拥有的锤子数，除以3，得到当前需要做第几关的任务
-	var taskLevel = parseInt(allUsedNumber / 3);
-	var task0Idx = taskLevel * 3 + 0;
-	var task1Idx = taskLevel * 3 + 1;
-	var task2Idx = taskLevel * 3 + 2;
+	refreshTaskIndex();
+	
 	var curIdx;
 	if (alltasks[task0Idx].remainingNumber != 0)
 		curIdx = task0Idx;
@@ -550,8 +598,7 @@ function gotoDoTask(){
 		curIdx = task1Idx;
 	else 
 		curIdx = task2Idx;
-	console.log("taskLevel = " + taskLevel + ", task0Idx = " + task0Idx + ", task1Idx = " 
-				+ task1Idx + ", task2Idx = " + task2Idx + ", curIdx = " + curIdx);
+	console.log("curIdx = " + curIdx);
 	
 	var taskinfo = alltasks[curIdx];
 	/*
