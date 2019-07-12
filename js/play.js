@@ -187,7 +187,7 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 					focusOnMainPage(null);
 				}
 				else {
-					getUserTaskList();				// 刷新任务列表
+					//getUserTaskList();				// 刷新任务列表  // onresume 又跑会这里了，去
 					return;
 				}
 			}
@@ -622,7 +622,7 @@ function gotoDoTask(){
 	"goBackOnclick": "{\"packageName\":\"com.coocaa.app_browser\",\"versionCode\":\"1\",\"dowhat\":\"startActivity\",\"bywhat\":\"action\",\"byvalue\":\"appx.intent.launcher.Start\",\"params\":{\"uri\":\"appx://com.coocaa.appx.x618/main?activityId=145&isDebug=true\"}}",
 	"remark": "",
 	"state": 0,
-	"param": "{\"videoUrl\":\"http://all.vod.17ugo.com/vod/kukai1/U-酷开/优购物/厨具/厨具20180829/544135-韩国原装进口福库电压力饭煲U/u.m3u8\",\"adId\":\"\"}",
+	"param": "{\"videoUrl\":\"\",\"adId\":\"11\"}",
 	"problem": "{\"problem\":\"邓伦在《封神演义》中是的角色是？\",\"answerA\":\"杨戬\",\"rightAnswer\":\"B\",\"answerB\":\"狐妖\"}",
 	"videoSource": "adId",
 	"seq": 0,
@@ -640,7 +640,7 @@ function gotoDoTask(){
 	var taskType = taskinfo.taskType;					// 任务类型,jump,videoAndAsk,buy,download
 	var problem = taskinfo.problem;						// 问答任务时的问题
 	var goBackOnclick = taskinfo.goBackOnclick;			//
-	var videoSource = taskinfo.videoSource;				// onclick
+	var videoSource = taskinfo.videoSource;				// 视频来源
 
 	var hasversioncode ="";								// 系统存在APP的版本
 	var pkgname = "";
@@ -653,12 +653,17 @@ function gotoDoTask(){
 	var needAddChance = true;
 	var appx_url = "";
 	
-	if (taskType == "jump")								// 跳转任务
+	var videoAskJump = false;							// 是否视频答题采用直接跳转的方式
+	
+	if (taskType == "videoAndAsk" && videoSource == "onclick")
+		videoAskJump = true;
+	
+	if (taskType == "jump" || videoAskJump))  // 跳转任务
 	{
-			pkgname = JSON.parse(param).packagename || JSON.parse(param).packageName;
-			bywhat = JSON.parse(param).bywhat;
-			byvalue = JSON.parse(param).byvalue;
-			needversioncode = JSON.parse(param).versioncode || JSON.parse(param).versionCode;
+		pkgname = JSON.parse(param).packagename || JSON.parse(param).packageName;
+		bywhat = JSON.parse(param).bywhat;
+		byvalue = JSON.parse(param).byvalue;
+		needversioncode = JSON.parse(param).versioncode || JSON.parse(param).versionCode;
 	
 		var pkglist_s = '{ "pkgList": ["' + pkgname + '"] }';
 		
@@ -822,7 +827,26 @@ function gotoDoTask(){
 				return;
 			} else {
 				// am start -d appx://com.coocaa.videoask?taskParams="11"&videoAskParams="222"
-				var taskParamsStr = JSON.stringify(param);				// 任务的参数 
+				var taskParamStr;
+				if (videoSource == "adId") {
+					var paramObj1 = {
+						"activeId": parseInt(_actionId),
+						"taskId": taskinfo.taskId
+					};
+					var paramObj2 = {
+						"videoUrl": "",
+						"adId": JSON.stringify(paramObj1)
+					};
+					taskParamStr = JSON.stringify(paramObj2);
+				}
+				else if (videoSource == "cdnURL") {
+					taskParamStr = param;
+				}
+				else if (videoSource == "onclick") {
+					// 跳转
+				}
+				console.log("taskParamStr = " + taskParamStr);
+				
 				var timestampms = Date.parse(new Date());
 				var timestamp = parseInt(timestampms / 1000);			// 当前时间戳(秒)
 				var myProblem = {
@@ -863,7 +887,6 @@ function gotoDoTask(){
 					"dataerParams" : {}
 				};
 				var videoAskParamStr = JSON.stringify(videoAskParams);
-				var taskParamStr = taskinfo.param;
 				
 				appx_url = 'appx://com.coocaa.videoask?taskParams=';
 				appx_url += taskParamStr + '&videoAskParams=';
