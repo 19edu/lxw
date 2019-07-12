@@ -77,7 +77,12 @@ coocaaApp.ready(function() {
 });
 
 coocaaApp.triggleButton(function() {
+	
+	var aid = getUrlParam("actionid");
+	if (aid != null)
+		_actionId = aid;
     _appversion = accountVersion;
+	
     listenUserChange();
     buttonInitBefore();
     getDeviceInfo();

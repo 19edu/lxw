@@ -105,6 +105,9 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 		$("#icepeople").css("display", "none");
 		$("#mainpageButton1").css("display", "none");
 		$("#mainpageButton2").css("display", "none");
+		$("#people1").css("display", "none");
+		$("#people2").css("display", "none");
+		$("#people3").css("display", "none");
 		focusOnMainPage("#mainpageButton3");
 		return;
 	}
@@ -266,8 +269,8 @@ function actionInit(resumeFlag) {
 					overNum = data.data.overNum;
 				if (data.data.allNumber != undefined && data.data.allNumber != null)
 					allNumber = data.data.allNumber;
-				if (allNumber > 30)
-					allNumber = 30;
+				if (allNumber > 99)
+					allNumber = 99;
 				if (data.data.allUsedNumber != undefined && data.data.allUsedNumber != null)
 					allUsedNumber = data.data.allUsedNumber;
 				if (allUsedNumber > 30)
@@ -1361,7 +1364,18 @@ function autoFillLogData3() {
 	logdata3.open_id = _openId;
 }
 
-
+function autoFillLogData4(page_name, button_name, prize_type, prize_id, prize_name, page_type) {
+	logdata4.page_name = "";
+	logdata4.button_name = "";
+	logdata4.parent_page = "活动主页面";
+	logdata4.prize_type = "";
+	logdata4.prize_id = "";
+	logdata4.prize_name = "";
+	logdata4.page_type = "";
+	logdata4.activity_type = "2019教育暑期活动";
+	logdata4.activity_name = "2019教育暑期活动";
+	logdata4.open_id = _openId;
+}
 
 
 
