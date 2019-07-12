@@ -18,6 +18,9 @@ var task0Idx = 0;					// 第一个任务的索引ID
 var task1Idx = 0;					// 第二个任务的索引ID
 var task2Idx = 0;					// 第三个任务的索引ID
 
+var answerRightUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html";
+var answerErrorUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html";
+
 var logdata1 = {
 	"page_name": "",
 	"page_type": "",
@@ -658,7 +661,7 @@ function gotoDoTask(){
 	if (taskType == "videoAndAsk" && videoSource == "onclick")
 		videoAskJump = true;
 	
-	if (taskType == "jump" || videoAskJump))  // 跳转任务
+	if (taskType == "jump" || videoAskJump)  // 跳转任务
 	{
 		pkgname = JSON.parse(param).packagename || JSON.parse(param).packageName;
 		bywhat = JSON.parse(param).bywhat;
@@ -849,11 +852,35 @@ function gotoDoTask(){
 				
 				var timestampms = Date.parse(new Date());
 				var timestamp = parseInt(timestampms / 1000);			// 当前时间戳(秒)
+				var answerRightOnClick = {
+					"bywhat" : "action",
+					"packageName": "com.coocaa.app_browser",
+					"byvalue": "coocaa.intent.action.browser",
+					"dowhat": "startActivity",
+					"versionCode": "1",
+					"params" : {
+						"url" : answerRightUrl
+					}
+				};
+				var answerErrorOnClick = {
+					"bywhat" : "action",
+					"packageName": "com.coocaa.app_browser",
+					"byvalue": "coocaa.intent.action.browser",
+					"dowhat": "startActivity",
+					"versionCode": "1",
+					"params" : {
+						"url" : answerErrorUrl
+					}
+				};
 				var myProblem = {
 					"rightAns": "B",
 					"answerA": "答案选项A",
 					"answerB": "答案选项B",
-					"question": "你选择A还是B"
+					"question": "你选择A还是B",
+					"answerErrorClickType": "BACK_REPLAY",
+					"answerRightClickType": "CUSTOM",
+					"answerRightOnClick": answerRightOnClick,
+					"answerErrorOnClick": answerErrorOnClick
 				};
 				
 				var serverProblem = JSON.parse(taskinfo.problem);
@@ -1370,6 +1397,14 @@ function disappearHaveGot3Dialog() {
 function showGotHammerDialog() {
 	var text = "x" + addNumber;
 	document.getElementById("hammerNum1").innerHTML = text;
+	
+	var text2;
+	if (answerRightFlag != null)
+		text2 = "好棒！回答正确！恭喜获得";
+	else
+		text2 = "好棒！任务完成！恭喜获得";
+	document.getElementById("gotHammerInfo1").innerHTML = text2;
+	
 	$("#dialogPage").css("display", "block");
 	$("#gotHammerDialog").css("display", "block");
 	map = new coocaakeymap($(".coocaa_btn3"), "#gotHammerOKBtn", "btn-focus", empty0, empty1, empty1);

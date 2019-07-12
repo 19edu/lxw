@@ -34,6 +34,8 @@ var hasAllowanceAward = false; //记录是否有津贴
 var hasCouponAward = false; //记录是否有神券
 var dialogTime = null;
 
+var answerRightFlag = null;		// 视频答题回答正确标志
+
 //var adressIp = "https://restful.skysrt.com";
 //var allowanceUrl = "https://jintie.coocaa.com/api/subsidy/v1/query-userSubsidyInfo-byToken"
 //var allowanceClientId = "YS_RELEASE";
@@ -77,10 +79,7 @@ coocaaApp.ready(function() {
 });
 
 coocaaApp.triggleButton(function() {
-	
-	var aid = getUrlParam("actionid");
-	if (aid != null)
-		_actionId = aid;
+	processUrlParam();
     _appversion = accountVersion;
 	
     listenUserChange();
@@ -489,6 +488,16 @@ function handleBackButtonFunc() {
 	else {
 		navigator.app.exitApp();
 	}
+}
+
+function processUrlParam() {
+	var aid = getUrlParam("actionid");					// 如果URL指定了活动ID，则采用URL中的活动ID
+	if (aid != null)
+		_actionId = aid;
+	/////
+	var answerRight = getUrlParam("answerRight");
+	if (answerRight != null)
+		answerRightFlag = answerRight;
 }
 
 function webPageInit(num){
