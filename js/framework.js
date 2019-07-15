@@ -548,11 +548,6 @@ function webPageInit(num){
 	console.log(num);
 	if(num == 0){
 		console.log("初始化页面");
-		var _dateObj = {
-			"page_name": "我的奖励页面",
-			"activity_name": "618活动"
-		};
-		webDataLog("okr_web_page_show", _dateObj);
 		actionInit(false);
 	}else{
 		console.log("刷新页面");
@@ -1115,5 +1110,11 @@ function getUrlParam(name) {
 function webDataLog(logname, dateObj) {
 	var _dataString = JSON.stringify(dateObj);
 	console.log(logname + "--" + dateObj);
-	//coocaaosapi.notifyJSLogInfo(logname, _dataString, function(message) {console.log(message);}, function(error) {console.log(error);});
+	coocaaosapi.notifyJSLogInfo(logname, _dataString, function(message) {console.log(message);}, function(error) {console.log(error);});
 }
+
+function sentLog(eventid,datalist) {
+    coocaaosapi.notifyJSLogInfo(eventid, datalist, function(message) { console.log(message); }, function(error) { console.log(error); });
+}
+
+
