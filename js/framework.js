@@ -71,7 +71,49 @@ coocaaApp.bindEvents("homebutton", function() {
 
 coocaaApp.bindEvents("resume", function() {
 	console.log("on resume");
-	pageResume();
+	console.log(startLoginFlag);
+	console.log(changeLoginFlag);
+	if(startLoginFlag && changeLoginFlag){
+        console.log("登录成功");
+        startLoginFlag = false;
+        changeLoginFlag = false;
+		if ($("#myAwardPage").css("display") == "block") {
+            console.log(_curHomeBtn);
+            $("#" + _curHomeBtn).trigger("itemClick");
+            if($("#myAwardBox").css("display") == "block"){
+            	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"我的奖品页-有奖品","page_type":"登录成功","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
+        		_czc.push(['_trackEvent', '登录弹窗', '我的奖品页-有奖品', '登录成功', '', '']);
+            }else{
+            	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"我的奖品页-无奖品","page_type":"登录成功","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
+        		_czc.push(['_trackEvent', '登录弹窗', '我的奖品页-无奖品', '登录成功', '', '']);
+            }
+        }else{
+        	//TODO:主页面启登录的结果的日志项提交；
+        	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"解救冰冻物体后有奖弹窗","page_type":"登录成功","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
+        	_czc.push(['_trackEvent', '登录弹窗', '解救冰冻物体后有奖弹窗', '登录成功', '', '']);
+        }
+    }else if (startLoginFlag) {
+        console.log("登录失败");
+        startLoginFlag = false;
+        changeLoginFlag = false;
+        if ($("#myAwardPage").css("display") == "block") {
+            console.log(_curHomeBtn);
+            $("#" + _curHomeBtn).trigger("itemClick");
+            if($("#myAwardBox").css("display") == "block"){
+            	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"我的奖品页-有奖品","page_type":"登录失败","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
+        		_czc.push(['_trackEvent', '登录弹窗', '我的奖品页-有奖品', '登录失败', '', '']);
+            }else{
+            	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"我的奖品页-无奖品","page_type":"登录失败","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
+        		_czc.push(['_trackEvent', '登录弹窗', '我的奖品页-无奖品', '登录失败', '', '']);
+            }
+        }else{
+        	//TODO:主页面启登录的结果的日志项提交；
+        	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"解救冰冻物体后有奖弹窗","page_type":"登录失败","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
+        	_czc.push(['_trackEvent', '登录弹窗', '解救冰冻物体后有奖弹窗', '登录失败', '', '']);
+        }
+    }else{
+    	pageResume();
+    }
 });
 
 coocaaApp.ready(function() {
@@ -127,7 +169,9 @@ function buttonInitBefore() {
 		pressIceBreakButton();
 	});
 	$("#mainpageButton3").unbind("itemClick").bind("itemClick", function() {
-		pressMyAwardsButton();
+		//_actionId = getUrlParam("actionid");//主活动的id
+		$("#myawardPage").css("display","block");
+		getMyAwards(_actionId);
 	});
 	$("#mainpageButton4").unbind("itemClick").bind("itemClick", function() {
 		showRolePage();
@@ -834,13 +878,13 @@ function buttonInitAfter() {
         var _dateObj = {
 			"page_name": "弹窗页面",
 			"parent_page": "我的奖品页",
-			"prize_type": "",
-			"prize_id": _awardId,
-			"prize_name": _awardName,
+			"award_type": "",
+			"award_id": _awardId,
+			"award_name": _awardName,
 			"page_type": "",
 			"activity_type": "2019教育暑期活动",
 			"activity_name": "2019教育暑期活动",
-			"open_id": _openId
+			"OPEN_ID": _openId
 		};
 		var _dateObj2 = {
 			"page_name": "我的奖品页",
@@ -848,9 +892,8 @@ function buttonInitAfter() {
 			"page_type": "我的奖品页",
 			"activity_type": "2019教育暑期活动",
 			"activity_name": "2019教育暑期活动",
-			"open_id": _openId
+			"OPEN_ID": _openId
 		};
-				
         console.log(_loginstatus);
         if (_awardType == 7) {
             var _redNumber = $(this).attr("redNumber");
@@ -864,7 +907,7 @@ function buttonInitAfter() {
                 $("#dialogPage .secondDialog").css("display","none");
                 if (_awardState == 0) {
                     console.log("点击了红包+显示二维码");
-                    _dateObj.prize_type = "微信红包";
+                    _dateObj.award_type = "微信红包";
                     _dateObj.page_type = "领取微信红包";
                     webDataLog("web_page_show_new", _dateObj);
                     _dateObj2.button_name = "待领取-微信红包";
@@ -878,7 +921,7 @@ function buttonInitAfter() {
                 	map = new coocaakeymap($(".coocaa_btn3"), "#redQrcode", "btn-focus", function() {}, function(val) {}, function(obj) {});
                 } else {
                     console.log("点击了红包+显示领取信息");
-                    _dateObj.prize_type = "微信红包";
+                    _dateObj.award_type = "微信红包";
                     _dateObj.page_type = "查看微信红包";
                     webDataLog("web_page_show_new", _dateObj);
                     _dateObj2.button_name = "已领取-微信红包";
@@ -899,7 +942,7 @@ function buttonInitAfter() {
                 $("#dialogPage").css("display", "block");
                 if (_awardState == 0) {
                     console.log("点击了实物奖+显示二维码");
-                    _dateObj.prize_type = "实物奖品";
+                    _dateObj.award_type = "实物奖品";
                     _dateObj.page_type = "领取实体物品";
                     webDataLog("web_page_show_new", _dateObj);
                     _dateObj2.button_name = "待领取-实物奖品";
@@ -910,11 +953,11 @@ function buttonInitAfter() {
                     $("#entityNotGet").css("display", "block");
                     $("#entityQrcode").css("display", "block");
                     map = new coocaakeymap($(".coocaa_btn3"), "#entityQrcode", "btn-focus", function() {}, function(val) {}, function(obj) {});
-                    var enstr = enurl + "activeId=" + _lotteryActiveId + "&rememberId=" + _rememberId + "&userKeyId=" + _userkeyId + "&access_token=" + _accessToken;
+                    var enstr = enurl + "activeId=" + _lotteryActiveId + "&rememberId=" + _rememberId + "&userKeyId=" + _userkeyId + "&open_id=" + _openId;
                     drawQrcode("entityQrcode", enstr, 190);
                 } else {
                     console.log("点击了实物奖+显示领取信息");
-                    _dateObj.prize_type = "实物奖品";
+                    _dateObj.award_type = "实物奖品";
                     _dateObj.page_type = "查看实体物品";
                     webDataLog("web_page_show_new", _dateObj);
                     _dateObj2.button_name = "已领取-实物奖品";
