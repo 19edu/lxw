@@ -47,19 +47,19 @@ var logdata3 = {
 	"page_type": "",
 	"activity_type": "",
 	"activity_name": "",
-	"open_id": ""
+	"OPEN_ID": ""
 };
 var logdata4 = {
 	"page_name": "",
 	"button_name": "",
 	"parent_page": "",
-	"prize_type": "",
-	"prize_id": "",
-	"prize_name": "",
+	"award_type": "",
+	"award_id": "",
+	"award_name": "",
 	"page_type": "",
 	"activity_type": "",
 	"activity_name": "",
-	"open_id": ""
+	"OPEN_ID": ""
 };
 var logdata5 = {
 	"page_name": "",
@@ -1322,12 +1322,110 @@ function helpOKBtnClick() {
 
 function getNewAward() {
 	if (newAwardInfo != null && newAwardInfo != undefined) {
-		sendPrizes(newAwardInfo.awardId, 
+		getAwardAtOnce(
+			newAwardInfo.awardId, 
 			newAwardInfo.lotteryAwardRememberId, 
 			newAwardInfo.awardTypeId, 
 			newAwardInfo.userKeyId, 
 			newAwardInfo.activeId, 
 			_qsource);
+	}
+}
+
+// 立即领取奖品
+function getAwardAtOnce(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsource) {
+	console.log("getAwardAtOnce() ");
+	
+	if(oQsource != "tencent") {
+		oQsource = "iqiyi";
+	}
+	
+	console.log("oType = " + oType + ", oAwardId = " + oAwardId + ", oRememberId = " + oRememberId);
+	if(oType == "7") { // 红包
+		var redNumber = "";
+		if (newAwardInfo != null && newAwardInfo != undefined) {
+			if (newAwardInfo.awardInfo != null && newAwardInfo.awardInfo != undefined)
+				redNumber = newAwardInfo.awardInfo.bonus;
+		}
+		showRedGet2Dialog(oActiveId, oRememberId, oUserKeyId, redNumber);
+	} else if (oType == "2") { // 实物奖品
+		var awardName = "";
+		var awardTime = "";
+		if (newAwardInfo != null && newAwardInfo != undefined) {
+			awardName = newAwardInfo.awardName;
+			awardTime = newAwardInfo.awardTime
+		}
+		showEntityGetDialog2(awardName, awardTime, oActiveId, oRememberId, oUserKeyId, _openId);
+	}
+	else if (oType == "5" || oType == "1") {
+		var ajaxTimeoutFive = $.ajax({
+			type: "GET",
+			async: true,
+			timeout: 5000,
+			dataType: 'jsonp',
+			jsonp: "callback",
+			url: adressIp + "/v4/lottery/verify/receive",
+			data: {
+				"cUDID": oUserKeyId,
+				"activeId": oActiveId,
+				"awardId": oAwardId,
+				"rememberId": oRememberId,
+				"awardTypeId": oType,
+				"userKeyId": oUserKeyId,
+				"MAC": _mac,
+				"cOpenId": _openId,
+				"source": oQsource
+			},
+			success: function(data) {
+				console.log(JSON.stringify(data));
+				if(data.code == "50100") {
+					if (oType == "5") {			// 优惠券
+						var couponDetail = data.data.couponInfo.couponDetail;
+						console.log(couponDetail);
+						if(couponDetail == 1) { //已配置
+							var data_a = data.data.couponInfo.onclickData;
+							var packageName = JSON.parse(data_a).packageName;
+							var byvalue = JSON.parse(data_a).byvalue;
+							var bywhat = JSON.parse(data_a).bywhat;
+							var obj = JSON.parse(data_a).param;
+							var sources = new Array();
+							for(var key in obj) {
+								var px = {};
+								px[key] = obj[key];
+								sources.push(px);
+							}
+							sources = JSON.stringify(sources);
+							console.log(packageName + "--" + byvalue + "--" + bywhat + "--" + sources);
+							console.log("跳转使用页面");
+							coocaaosapi.startParamAction(bywhat, byvalue, sources, function(message) {}, function(error) {
+								console.log(error);
+							});
+						} else {
+							console.log("未配置");
+						}
+					} else if(oType == "1"){		// 影视会员直通车
+						var taskId = "";
+		            	if (_qsource == "tencent") {
+		            		taskId = "103177";
+		            	} else{
+		            		taskId = "103178";
+		            	}
+		            	coocaaosapi.startHomeCommonList(taskId,function(){},function(){});
+					}
+				} else {
+					console.log("领奖失败");
+				}
+			},
+			error: function() {
+				console.log("获取失败");
+			},
+			complete: function(XMLHttpRequest, status) {　　　　
+				console.log("-------------complete------------------" + status);
+				if(status == 'timeout') {　　　　　
+					ajaxTimeoutFive.abort();　　　　
+				}
+			}
+		});
 	}
 }
 
@@ -1352,7 +1450,16 @@ function checkMainPagePopUpOnBackKey() {
 	if($("#helpOKDialog").css("display") == "block") {				// 解救成功的的弹窗
 		disappearHelpOKDialog();
 		actionInit(false);
-			
+		return true;
+	}
+	if($("#redNotGet_2").css("display") == "block") {				// 扫码领取微信红包的弹窗
+		disappearRedGet2Dialog();
+		actionInit(false);
+		return true;
+	}
+	if($("#entityGetDialog2").css("display") == "block") {			// 扫码领取实物奖品的弹窗
+		disappearentityGetDialog2();
+		actionInit(false);
 		return true;
 	}
 	
@@ -1461,25 +1568,91 @@ function disappearHelpOKDialog() {
 	focusOnMainPage(null);
 }
 
+function showRedGet2Dialog(lotteryActiveId, rememberId, userkeyId, redNumber) {
+	console.log("showRedGet2Dialog() ");
+	$("#dialogPage").css("display", "block");
+	$("#dialogPage .secondDialog").css("display","none");
+	
+	console.log("点击了红包+显示二维码");
+	////_dateObj.award_type = "微信红包";
+	////_dateObj.page_type = "领取微信红包";
+	////webDataLog("web_page_show_new", _dateObj);
+	////_dateObj2.button_name = "待领取-微信红包";
+	////webDataLog("web_button_clicked_new", _dateObj2);
+	
+	$(".secondDialog").css("display", "none");
+	$("#redNotGet_2").css("display", "block");
+	$("#redContent_2 span").html(redNumber);
+	
+	console.log(lotteryActiveId + "--" + rememberId + "--" + userkeyId);
+	document.getElementById("redQrcode_2").innerHTML = "";
+	// getRedPacketsQrcode(lotteryActiveId, rememberId, userkeyId, "redQrcode_2", 270, 270);
+	
+	var qrcode = new QRCode(document.getElementById("redQrcode_2"), {
+	    width: 270,
+	    height: 270
+	});
+	qrcode.makeCode("http://www.baidu.com");
+	
+	map = new coocaakeymap($(".coocaa_btn3"), "#redQrcode_2", "btn-focus", empty0, empty1, empty1);
+	
+}
+
+function disappearRedGet2Dialog() {
+	$("#redNotGet_2").css("display", "none");
+	$(".secondDialog").css("display", "none");
+	$("#dialogPage").css("display", "none");
+	focusOnMainPage(null);
+}
+
+function showEntityGetDialog2(awardName, awardTime, lotteryActiveId, rememberId, userkeyId, openId) {
+	console.log("showEntityGetDialog2() ");
+	console.log("直接领取实物奖，显示二维码");
+	
+	////_dateObj.award_type = "实物奖品";
+	//_dateObj.page_type = "领取实体物品";
+	//webDataLog("web_page_show_new", _dateObj);
+	//_dateObj2.button_name = "待领取-实物奖品";
+	//webDataLog("web_button_clicked_new", _dateObj2);
+	
+	$("#dialogPage").css("display", "block");
+	$("#entityInfo1_copy").html("奖品名称:&nbsp;&nbsp;" + awardName);
+	$("#entityInfo2_copy").html("发放时间:&nbsp;&nbsp;" + awardTime);
+	$(".secondDialog").css("display", "none");
+	$("#entityGetDialog2").css("display", "block");
+	$("#entityQrcode2").css("display", "block");
+	map = new coocaakeymap($(".coocaa_btn3"), "#entityQrcode2", "btn-focus", empty0, empty1, empty1);
+	var enstr = enurl + "activeId=" + lotteryActiveId + "&rememberId=" + rememberId 
+				+ "&userKeyId=" + userkeyId + "&open_id=" + openId;
+	drawQrcode("entityQrcode2", enstr, 190);
+}
+
+function disappearentityGetDialog2() {
+	$("#entityGetDialog2").css("display", "none");
+	$(".secondDialog").css("display", "none");
+	$("#dialogPage").css("display", "none");
+	focusOnMainPage(null);
+}
+
 function autoFillLogData3() {
 	logdata3.page_name = "活动主页面";
 	logdata3.page_type = "活动主页面-进行中";
 	logdata3.activity_type = "2019教育暑期活动";
 	logdata3.activity_name = "2019教育暑期活动";
-	logdata3.open_id = _openId;
+	logdata3.OPEN_ID = _openId;
 }
 
-function autoFillLogData4(page_name, button_name, prize_type, prize_id, prize_name, page_type) {
-	logdata4.page_name = "";
+function autoFillLogData4() {
+	logdata4.page_name = "弹窗页面";
 	logdata4.button_name = "";
 	logdata4.parent_page = "活动主页面";
-	logdata4.prize_type = "";
-	logdata4.prize_id = "";
-	logdata4.prize_name = "";
+	logdata4.award_type = "";
+	logdata4.award_id = "";
+	logdata4.award_name = "";
 	logdata4.page_type = "";
 	logdata4.activity_type = "2019教育暑期活动";
 	logdata4.activity_name = "2019教育暑期活动";
-	logdata4.open_id = _openId;
+	logdata4.OPEN_ID = _openId;
 }
 
 

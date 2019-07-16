@@ -511,7 +511,7 @@ img[src='']{
 	width: 252px;
 	height: 98px;
 	font-size: 26px;
-	line-height: 90px;
+	line-height: 98px;
 	font-weight: 600;
 	color: #E95A7F;
 	text-align: center;
@@ -2277,7 +2277,7 @@ img[src=''] {
 .secondDialog{
 	display: none;
 }
-#entityQrcode{
+#entityQrcode, #entityQrcode2{
 	position: absolute;
     top: 315px;
     left: 485px;
@@ -2286,7 +2286,7 @@ img[src=''] {
     border: 5px solid white;
 }
 
-#entityInfo1,#hasGotInfo1,#entityInfo2,#hasGotInfo2{
+#entityInfo1,#hasGotInfo1,#entityInfo2,#hasGotInfo2, #entityInfo1_copy, #entityInfo2_copy {
     position: absolute;
     height: 40px;
     width: 580px;
@@ -2296,7 +2296,7 @@ img[src=''] {
     line-height: 40px;
     color: #ffffff;
 }
-#entityInfo2,#hasGotInfo2{
+#entityInfo2,#hasGotInfo2,#entityInfo2_copy {
     top: 250px;
     font-size: 30px;
 }
@@ -2311,7 +2311,7 @@ img[src=''] {
     overflow: hidden;
     border-bottom: 2px solid #964c00;
 }
-#entityInfo3{
+#entityInfo3, #entityInfo3_copy{
 	position: absolute;
     top: 367px;
     left: 183px;
@@ -2397,7 +2397,7 @@ img[src=''] {
     background-size: 100%;
 }
 
-#redInfo1{
+#redInfo1, #redInfo1_2{
     position: absolute;
     height: 46px;
     line-height: 46px;
@@ -2410,7 +2410,7 @@ img[src=''] {
     font-weight: 900;
     letter-spacing: 1px;
 }
-#redStrongPart{
+#redStrongPart, #redStrongPart_2{
     display: inline-block;
     width: 207px;
     height: 40px;
@@ -2420,7 +2420,7 @@ img[src=''] {
     background-color: #FFFAAF;
     margin: 0 3px;
 }
-#redContent{
+#redContent, #redContent_2{
     position: absolute;
     height: 90px;
     width: 344px;
@@ -2433,7 +2433,7 @@ img[src=''] {
     color: #FDFAA8;
     font-weight: 900;
 }
-#redInfo2{
+#redInfo2, #redInfo2_2{
     position: absolute;
     height: 36px;
     width: 330px;
@@ -2445,7 +2445,7 @@ img[src=''] {
     color: #ffffff;
     text-align: center;
 }
-#redQrcode{
+#redQrcode, #redQrcode_2{
     position: absolute;
     height: 270px;
     width: 270px;

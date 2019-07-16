@@ -26,7 +26,7 @@ var _accessToken = null;
 var needQQ = false;
 var _tencentWay = "";
 
-var _actionId = 149;	//主活动的id
+var _actionId = 150;	//主活动的id
 var _curFocusId = null;
 var startLoginFlag = false;
 var changeLoginFlag = false;
