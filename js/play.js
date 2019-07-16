@@ -18,6 +18,8 @@ var task0Idx = 0;					// 第一个任务的索引ID
 var task1Idx = 0;					// 第二个任务的索引ID
 var task2Idx = 0;					// 第三个任务的索引ID
 
+var activityStartTime = 0;			// 
+
 var answerRightUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html";
 var answerErrorUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html";
 
@@ -66,7 +68,7 @@ var logdata5 = {
 	"activity_type": "",
 	"activity_name": "",
 	"activity_duration": "",
-	"open_id": ""
+	"OPEN_ID": ""
 };
 var logdata6 = {
 	"page_name": "",
@@ -74,7 +76,7 @@ var logdata6 = {
 	"page_type": "",
 	"activity_type": "",
 	"activity_name": "",
-	"open_id": ""
+	"OPEN_ID": ""
 };
 
 function empty0() {}
@@ -1786,7 +1788,20 @@ function autoFillLogData4() {
 	logdata4.OPEN_ID = _openId;
 }
 
-
+function autoFillLogData5() {
+	var activity_duration, nowTime;
+	logdata5.page_name = "活动主页面";
+	if (allUsedNumber >= 30)
+		logdata5.page_type = "全部解救成功";		//活动主页面取值：预热、活动正式期、全部解救成功、活动已结束
+	else
+		logdata5.page_type = "活动正式期";
+	logdata5.activity_type = "2019教育暑期活动";
+	logdata5.activity_name = "2019教育暑期活动";
+	nowTime = new Date().getTime();
+	activity_duration = nowTime - activityStartTime;
+	logdata5.activity_duration = "" + activity_duration;
+	logdata5.OPEN_ID = _openId;
+}
 
 
 

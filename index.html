@@ -482,6 +482,7 @@
 		<script type="text/javascript" src="js/framework.js"></script>		
 		<script type="text/javascript" src="js/play.js"></script>
 		<script type="text/javascript">
+			activityStartTime = new Date().getTime();
 			setTimeout(pageInit,100);
 			function pageInit(){
 				$("#people1").css("background-image", "url(images/people1.png)");
@@ -498,9 +499,22 @@
 				*/
 			}
 
-			//临时注释掉
 			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
             document.write(unescape("%3Cspan  style='display:none' id='cnzz_stat_icon_1274864418'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274864418' type='text/javascript'%3E%3C/script%3E"));
+
+			var loadTime1 = 0;
+			window.onload = function () {
+			    loadTime1 = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
+				var _dateObj = {
+					"page_name": "活动主页面",
+					"page_state": "活动正式期",
+					"load_duration": loadTime1,
+					"activity_type": "2019教育暑期活动",
+					"activity_name": "2019教育暑期活动",
+					"OPEN_ID" : _openId
+				};
+				webDataLog("web_page_show_new", _dateObj);
+			}
 
 			$(document).keydown(function(event){
 				if(event.keyCode == 66){	// 键盘的B键 (模拟Back返回键)
