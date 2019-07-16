@@ -91,6 +91,8 @@ coocaaApp.bindEvents("resume", function() {
         	//TODO:主页面启登录的结果的日志项提交；
         	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"解救冰冻物体后有奖弹窗","page_type":"登录成功","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
         	_czc.push(['_trackEvent', '登录弹窗', '解救冰冻物体后有奖弹窗', '登录成功', '', '']);
+			
+			pageResume();
         }
     }else if (startLoginFlag) {
         console.log("登录失败");
@@ -110,10 +112,17 @@ coocaaApp.bindEvents("resume", function() {
         	//TODO:主页面启登录的结果的日志项提交；
         	sentLog("result_event_new", '{"page_name":"登录弹窗","parent_page":"解救冰冻物体后有奖弹窗","page_type":"登录失败","activity_type":"2019教育暑期活动","activity_name":"2019教育暑期活动","OPEN_ID":"'+_openId+'"}');
         	_czc.push(['_trackEvent', '登录弹窗', '解救冰冻物体后有奖弹窗', '登录失败', '', '']);
+			
+			pageResume();
         }
     }else{
     	pageResume();
     }
+});
+
+coocaaApp.bindEvents("pause", function() {
+	autoFillLogData5();
+	webDataLog("result_event_new", logdata5);
 });
 
 coocaaApp.ready(function() {
