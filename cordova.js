@@ -2681,8 +2681,9 @@
         CoocaaOSApi.prototype.startCommonNormalAction = function(param1, param2, param3, param4, param5, str, success, error) {
             console.log("启动传参action")
             argscheck.checkArgs('ssssssff', 'CoocaaOSApi.startCommonNormalAction', arguments);
-            startapp.start([["action", "android.intent.action.VIEW", "", "", "wit://cn.cheerz.icw/MainActivity"],[{"subpage":"1"},{"type":"3"}]], success, error);
-        }
+            str = JSON.parse(str);
+            startapp.start([[param1, param2, param3, param4, param5],str], success, error);
+		}
         /*web页面判断是否放开上下键需求*/
         CoocaaOSApi.prototype.setSpecialMachine = function(machineList, success, error) {
             argscheck.checkArgs('sff', 'CoocaaOSApi.setSpecialMachine', arguments);
