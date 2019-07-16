@@ -169,16 +169,13 @@ function buttonInitBefore() {
 		pressIceBreakButton();
 	});
 	$("#mainpageButton3").unbind("itemClick").bind("itemClick", function() {
-		//_actionId = getUrlParam("actionid");//主活动的id
-		$("#myawardPage").css("display","block");
-		getMyAwards(_actionId);
+		pressMyAwardsButton();
 	});
 	$("#mainpageButton4").unbind("itemClick").bind("itemClick", function() {
 		showRolePage();
 	});
 	$("#FirstInOKBtn").unbind("itemClick").bind("itemClick", function() {
-		entryType = 0;
-		updateMainPage(false);
+		pressFirstInOKBtn();
 	});
 	$("#taskEnter").unbind("itemClick").bind("itemClick", function() {
 		gotoDoTask();				// 做任务

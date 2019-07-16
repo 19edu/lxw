@@ -637,6 +637,11 @@ function gotoDoTask(){
 	;*/
 	console.log("task = " + JSON.stringify(taskinfo));
 	
+	autoFillLogData4();
+	logdata4.button_name = "正在做" + taskinfo.taskName;
+	logdata4.page_type = "任务弹窗";
+	webDataLog("web_button_clicked_new", logdata4);
+	
 	var needCheckVersion = true;
 	
 	var param = taskinfo.param;							// 启动任务的json参数字符串
@@ -990,6 +995,11 @@ function gotoBuyPackage() {
 		coocaaosapi.startCommonNormalAction(param1, param2, param3, "", "", 
 				str, function() { }, function() {});
 	}, 100);
+	
+	autoFillLogData4();
+	logdata4.button_name = "获得更多锤子";
+	logdata4.page_type = "当天做任务获得3把锤子后继续做任务提醒弹窗";
+	webDataLog("web_button_clicked_new", logdata4);
 }
 
 // 随便逛逛
@@ -1008,6 +1018,11 @@ function strollAround() {
 		coocaaosapi.startCommonNormalAction(param1, param2, param3, "", "", 
 				str, function() { }, function() {});
 	}, 100);
+	
+	autoFillLogData4();
+	logdata4.button_name = "随便逛逛";
+	logdata4.page_type = "当天做任务获得3把锤子后继续做任务提醒弹窗";
+	webDataLog("web_button_clicked_new", logdata4);
 }
 
 function pressMyAwardsButton() {
@@ -1022,6 +1037,16 @@ function pressMyAwardsButton() {
 	else
 		logdata3.page_type = "活动主页面-进行中";
 	webDataLog("web_button_clicked_new", logdata3);
+}
+
+function pressFirstInOKBtn(){
+	entryType = 0;
+	updateMainPage(false);
+	
+	autoFillLogData4();
+	logdata4.button_name = "开始营救";
+	logdata4.page_type = "首次进活动";
+	webDataLog("web_button_clicked_new", logdata4);
 }
 
 function pressIceBreakButton() {
@@ -1294,6 +1319,32 @@ function showDrawResule(obj) {
 
 function findMoreHammer() {
 	console.log("findMoreHammer() ");
+	
+	$("#giveHammerDialog").css("display", "none");
+	$(".secondDialog").css("display", "none");
+	$("#dialogPage").css("display", "none");
+	
+	// 继续寻找锤子 -- 若已完成当前级的所有任务，则显示主界面，未完成的则跳到做任务界面
+	if (alltasks == null || alltasks == undefined) {
+		//actionInit();
+	}
+	else  {
+		refreshTaskIndex();
+		if (alltasks[task0Idx].remainingNumber == 0 && 
+			alltasks[task0Idx].remainingNumber == 0 && 
+			alltasks[task0Idx].remainingNumber == 0 ) {			// 如果当前关卡的任务都做完了
+			////
+		}
+		else {
+			getUserTaskList();
+		}
+	}
+
+	// 继续寻找锤子按钮
+	autoFillLogData4();
+	logdata4.button_name = "继续寻找锤子";
+	logdata4.page_type = "购买产品包给锤子";
+	webDataLog("web_button_clicked_new", logdata4);
 }
 
 function helpOKBtnClick() {
@@ -1305,6 +1356,24 @@ function helpOKBtnClick() {
 		autoFillLogData3();
 		logdata3.button_name = "欣然收下";
 		webDataLog("web_button_clicked_new", logdata3);
+		//
+		autoFillLogData4();
+		logdata4.button_name = "欣然收下";
+		logdata4.page_type = "解救冰冻物体后有奖";
+		logdata4.award_type = newAwardInfo.awardTypeId;
+		logdata4.award_id = "" + newAwardInfo.awardId;
+		logdata4.award_name = newAwardInfo.awardName;
+		if (allUsedNumber + 1 >= 30)
+			logdata4.page_type = "最后一关";
+		webDataLog("web_button_clicked_new", logdata4);
+	}
+	else {
+		autoFillLogData4();
+		logdata4.button_name = "继续破冰";
+		logdata4.page_type = "解救冰冻物体后无奖";
+		if (allUsedNumber + 1 >= 30)
+			logdata4.page_type = "最后一关";
+		webDataLog("web_button_clicked_new", logdata4);
 	}
 	///////////////////
 	
@@ -1317,6 +1386,9 @@ function helpOKBtnClick() {
 		else {		// 已经登录的话，直接领取
 			getNewAward();
 		}
+	}
+	else {
+		actionInit(false);
 	}
 }
 
@@ -1522,6 +1594,12 @@ function disappearGotHammerDialog() {
 	$(".secondDialog").css("display", "none");
 	$("#dialogPage").css("display", "none");
 	focusOnMainPage(null);
+	
+	// 继续破冰按钮
+	autoFillLogData4();
+	logdata4.button_name = "继续破冰";
+	logdata4.page_type = "完成任务给锤子";
+	webDataLog("web_button_clicked_new", logdata4);
 }
 
 function showGiveHammerDialog() {
@@ -1537,6 +1615,12 @@ function disappearGiveHammerDialog() {
 	$(".secondDialog").css("display", "none");
 	$("#dialogPage").css("display", "none");
 	focusOnMainPage(null);
+	
+	// 去破冰按钮
+	autoFillLogData4();
+	logdata4.button_name = "去破冰";
+	logdata4.page_type = "购买产品包给锤子";
+	webDataLog("web_button_clicked_new", logdata4);
 }
 
 function showHelpOKDialog(haveAward, awardName, heroHame, title, imgFileName) {
