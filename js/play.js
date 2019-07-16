@@ -23,23 +23,22 @@ var answerErrorUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html";
 
 var logdata1 = {
 	"page_name": "",
-	"page_type": "",
+	"page_state": "",
 	"load_duration": "",
 	"activity_type": "",
 	"activity_name": "",
-	"open_id": ""
+	"OPEN_ID": ""
 };
 var logdata2 = {
 	"page_name": "",
 	"parent_page": "",
-	"prize_type": "",
-	"prize_id": "",
-	"prize_name": "",
-	"page_type": "",
-	"hammer_amount": "",
+	"award_type": "",
+	"award_id": "",
+	"award_name": "",
+	"page_state": "",
 	"activity_type": "",
 	"activity_name": "",
-	"open_id": ""
+	"OPEN_ID": ""
 };
 var logdata3 = {
 	"page_name": "",
@@ -582,6 +581,10 @@ function showTasksPageInt() {
 	$("#tasksPage").css("display", "block");
 	
 	map = new coocaakeymap($(".coocaa_btn3"), "#taskEnter", "btn-focus", empty0, empty1, empty1);
+	
+	autoFillLogData2();
+	logdata2.page_state = "任务弹窗";
+	webDataLog("web_button_clicked_new", logdata2);
 }
 
 function disappearTasksPage() {
@@ -1550,6 +1553,10 @@ function showFirstInDialog() {
 	$("#dialogPage").css("display", "block");
 	$("#firstInDialog").css("display", "block");
 	map = new coocaakeymap($(".coocaa_btn3"), "#FirstInOKBtn", "btn-focus", empty0, empty1, empty1);
+	
+	autoFillLogData2();
+	logdata2.page_state = "首次进活动";
+	webDataLog("web_button_clicked_new", logdata2);
 }
 
 // 
@@ -1564,6 +1571,10 @@ function showHaveGot3Dialog() {
 	$("#dialogPage").css("display", "block");
 	$("#haveGot3HammerDialog").css("display", "block");
 	map = new coocaakeymap($(".coocaa_btn3"), "#haveGot3HammerBtn2", "btn-focus", empty0, empty1, empty1);
+	
+	autoFillLogData2();
+	logdata2.page_state = "当天做任务获得3把锤子后继续做任务提醒弹窗";
+	webDataLog("web_button_clicked_new", logdata2);
 }
 
 function disappearHaveGot3Dialog() {
@@ -1587,6 +1598,10 @@ function showGotHammerDialog() {
 	$("#dialogPage").css("display", "block");
 	$("#gotHammerDialog").css("display", "block");
 	map = new coocaakeymap($(".coocaa_btn3"), "#gotHammerOKBtn", "btn-focus", empty0, empty1, empty1);
+	
+	autoFillLogData2();
+	logdata2.page_state = "完成任务给锤子";
+	webDataLog("web_button_clicked_new", logdata2);
 }
 
 function disappearGotHammerDialog() {
@@ -1608,6 +1623,10 @@ function showGiveHammerDialog() {
 	$("#dialogPage").css("display", "block");
 	$("#giveHammerDialog").css("display", "block");
 	map = new coocaakeymap($(".coocaa_btn3"), "#giveHammerBtn1", "btn-focus", empty0, empty1, empty1);
+	
+	autoFillLogData2();
+	logdata2.page_state = "购买产品包给锤子";
+	webDataLog("web_button_clicked_new", logdata2);
 }
 
 function disappearGiveHammerDialog() {
@@ -1643,6 +1662,13 @@ function showHelpOKDialog(haveAward, awardName, heroHame, title, imgFileName) {
 	$("#dialogPage").css("display", "block");
 	$("#helpOKDialog").css("display", "block");
 	map = new coocaakeymap($(".coocaa_btn3"), "#helpOKBtn", "btn-focus", empty0, empty1, empty1);
+	
+	autoFillLogData2();
+	if (haveAward) 
+		logdata2.page_state = "解救冰冻物体后有奖";
+	else
+		logdata2.page_state = "解救冰冻物体后无奖"
+	webDataLog("web_button_clicked_new", logdata2);
 }
 
 function disappearHelpOKDialog() {
@@ -1716,6 +1742,27 @@ function disappearentityGetDialog2() {
 	$(".secondDialog").css("display", "none");
 	$("#dialogPage").css("display", "none");
 	focusOnMainPage(null);
+}
+
+function autoFillLogData1() {
+	logdata1.page_name = "";
+	logdata1.page_state = "";
+	logdata1.load_duration = "";
+	logdata1.activity_type = "2019教育暑期活动";
+	logdata1.activity_name = "2019教育暑期活动";
+	logdata1.OPEN_ID = _openId;
+}
+
+function autoFillLogData2 (){
+	logdata2.page_name = "弹窗页面";
+	logdata2.parent_page = "活动主页面";
+	logdata2.award_type = "";
+	logdata2.award_id = "";
+	logdata2.award_name = "";
+	logdata2.page_state = "";
+	logdata2.activity_type = "2019教育暑期活动";
+	logdata2.activity_name = "2019教育暑期活动";
+	logdata2.OPEN_ID = _openId;
 }
 
 function autoFillLogData3() {
