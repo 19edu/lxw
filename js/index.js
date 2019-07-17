@@ -2564,7 +2564,7 @@ function helpOKBtnClick() {
 		autoFillLogData4();
 		logdata4.button_name = "欣然收下";
 		logdata4.page_type = "解救冰冻物体后有奖";
-		logdata4.award_type = newAwardInfo.awardTypeId;
+		logdata4.award_type = awardTypeNmaeStr(newAwardInfo.awardTypeId);
 		logdata4.award_id = "" + newAwardInfo.awardId;
 		logdata4.award_name = newAwardInfo.awardName;
 		if (allUsedNumber + 1 >= 30)
@@ -2962,6 +2962,19 @@ function disappearAppVerLowDialog() {
 	$(".secondDialog").css("display", "none");
 	$("#dialogPage").css("display", "none");
 	map = new coocaakeymap($(".coocaa_btn3"), "#taskEnter", "btn-focus", empty0, empty1, empty1);
+}
+
+function awardTypeNmaeStr(id) {
+	if (id == "1")
+		return "影视会员直通车";
+	else if (id == "2")
+		return "实物奖";
+	else if (id == "5")
+		return "优惠券";
+	else if (id == "7")
+		return "微信红包";
+	else
+		return "";
 }
 
 function autoFillLogData1() {
