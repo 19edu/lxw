@@ -1166,8 +1166,8 @@ var task2Idx = 0;					// 第三个任务的索引ID
 
 var activityStartTime = 0;			// 
 
-var answerRightUrl = "http://beta.webapp.skysrt.com/lqq/y19edu_2/index.html?answerRight=1";
-var answerErrorUrl = "http://beta.webapp.skysrt.com/lqq/y19edu_2/index.html";
+var answerRightUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html?answerRight=1";
+var answerErrorUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html";
 
 var logdata1 = {
 	"page_name": "",
@@ -1755,7 +1755,7 @@ function gotoDoTask(){
 		curIdx = task2Idx;
 	console.log("curIdx = " + curIdx);
 	
-	var taskinfo = //alltasks[curIdx];
+	var taskinfo = alltasks[curIdx];
 	/*
 	{
 	"taskId": 4124,
@@ -1787,7 +1787,7 @@ function gotoDoTask(){
 	"remainingNumber": 1
 }
 	;*/
-	
+	/*
 		{
 		"taskId": 4124,
 		"activeId": 149,
@@ -1817,7 +1817,7 @@ function gotoDoTask(){
 		"version": 0,
 		"remainingNumber": 1
 	};
-	
+	*/
 	console.log("task = " + JSON.stringify(taskinfo));
 	
 	autoFillLogData4();
