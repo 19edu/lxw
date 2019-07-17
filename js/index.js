@@ -1301,16 +1301,10 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 	
 	// 勋章背景
 	honorBackgroundId = unlockLevel;
-	if (honorBackgroundId == 0) {
-		$("#honorBlock").css("display", "none");
-	} else {
-		honorBackgroundId --;
-		if (honorBackgroundId > 9)
-			honorBackgroundId = 9;
-		$("#honorBlock").css("background-image", "url(images/honor" + honorBackgroundId + ".png)");
-		$("#honorBlock").css("display", "block");
-	}
-	
+	if (honorBackgroundId > 9)
+		honorBackgroundId = 9;
+	$("#honorBlock").css("background-image", "url(images/honor" + honorBackgroundId + ".png)");
+	$("#honorBlock").css("display", "block");
 
 	// 被救人物（冰冻人物）
 	var imgfilename = "images/ice/obj";
@@ -1527,25 +1521,25 @@ function getUserTaskList() {
 
 function getHeroHame(level) {
 	var name;
-	if (level <= 1) 
+	if (level == 0) 
 		name = "勇气宝贝";
-	else if (level == 2)
+	else if (level == 1)
 		name = "科考达人";
-	else if (level == 3)
+	else if (level == 2)
 		name = "环境卫士";
-	else if (level == 4)
+	else if (level == 3)
 		name = "破冰宝贝";
-	else if (level == 5)
+	else if (level == 4)
 		name = "救援队员";
-	else if (level == 6)
+	else if (level == 5)
 		name = "救援专家";
-	else if (level == 7)
+	else if (level == 6)
 		name = "机智宝贝";
-	else if (level == 8)
+	else if (level == 7)
 		name = "救援队长";
-	else if (level == 9)
+	else if (level == 8)
 		name = "超级探险家";
-	else if (level >= 10)
+	else if (level >= 9)
 		name = "解救佩奇小英雄";
 	return name;
 }
@@ -2086,6 +2080,12 @@ function gotoDoTask(){
 				
 				console.log("myProblem = " + JSON.stringify(myProblem));
 				
+				var dataerParams = {
+					"parent_page_name": "任务弹窗",
+					"activity_type" : "2019教育暑期活动",
+					"activity_name" : "2019教育暑期活动"
+				};
+				
 				var videoAskParams = {
 					"countDownTime" : taskinfo.countdown,
 					"verify_key" : timestamp,
@@ -2099,7 +2099,7 @@ function gotoDoTask(){
 					"userKeyId" : userKeyId,
 					"needExitDialog" : "true",
 					"problem" : myProblem,
-					"dataerParams" : {}
+					"dataerParams" : dataerParams
 				};
 				var videoAskParamStr = JSON.stringify(videoAskParams);
 				console.log("videoAskParamStr = " + videoAskParamStr);
