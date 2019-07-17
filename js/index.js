@@ -2240,7 +2240,20 @@ function pressFirstInOKBtn(){
 	webDataLog("web_button_clicked_new", logdata4);
 }
 
+var icebreakLastTime = 0;
+
 function pressIceBreakButton() {
+
+	var nowTime = new Date().getTime();
+	console.log("" + icebreakLastTime + ", " + nowTime);
+	if (nowTime - icebreakLastTime < 3000) {				// 禁止频繁按这个按钮 
+		console.log("限制频繁按破冰块按钮");
+		return;
+	} else {
+		icebreakLastTime = new Date().getTime();
+		console.log("允许按破冰块按钮");
+	}
+
 	icebreak();
 	
 	autoFillLogData3();
