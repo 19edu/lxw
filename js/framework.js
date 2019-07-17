@@ -121,6 +121,7 @@ coocaaApp.bindEvents("resume", function() {
 });
 
 coocaaApp.bindEvents("pause", function() {
+	console.log("on pause");
 	autoFillLogData5();
 	webDataLog("result_event_new", logdata5);
 });
@@ -130,8 +131,8 @@ coocaaApp.ready(function() {
 });
 
 coocaaApp.triggleButton(function() {
-	processUrlParam();
     _appversion = accountVersion;
+	processUrlParam();
 	
     listenUserChange();
     buttonInitBefore();
@@ -541,13 +542,20 @@ function handleBackButtonFunc() {
 }
 
 function processUrlParam() {
+	console.log("processUrlParam() ");
+	
 	var aid = getUrlParam("actionid");					// 如果URL指定了活动ID，则采用URL中的活动ID
 	if (aid != null)
 		_actionId = aid;
 	/////
 	var answerRight = getUrlParam("answerRight");
-	if (answerRight != null)
+	if (answerRight != null) {
 		answerRightFlag = answerRight;
+		console.log("answerRight not null");
+	}
+	else {
+		console.log("answerRight == null");
+	}
 }
 
 function webPageInit(num){
@@ -1115,7 +1123,7 @@ function getUrlParam(name) {
 
 function webDataLog(logname, dateObj) {
 	var _dataString = JSON.stringify(dateObj);
-	console.log(logname + "--" + dateObj);
+	console.log(logname + "--" + _dataString);
 	coocaaosapi.notifyJSLogInfo(logname, _dataString, function(message) {console.log(message);}, function(error) {console.log(error);});
 }
 
@@ -1158,8 +1166,8 @@ var task2Idx = 0;					// 第三个任务的索引ID
 
 var activityStartTime = 0;			// 
 
-var answerRightUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html";
-var answerErrorUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html";
+var answerRightUrl = "http://beta.webapp.skysrt.com/lqq/y19edu_2/index.html?answerRight=1";
+var answerErrorUrl = "http://beta.webapp.skysrt.com/lqq/y19edu_2/index.html";
 
 var logdata1 = {
 	"page_name": "",
@@ -1380,6 +1388,7 @@ function focusOnMainPage(button) {
 //暑假活动初始化 
 function actionInit(resumeFlag) {
 	console.log("actionInit()");
+	
 	var ajaxTimeoutOne = $.ajax({
 		type: "POST",
 		async: true,
@@ -1746,7 +1755,7 @@ function gotoDoTask(){
 		curIdx = task2Idx;
 	console.log("curIdx = " + curIdx);
 	
-	var taskinfo = alltasks[curIdx];
+	var taskinfo = //alltasks[curIdx];
 	/*
 	{
 	"taskId": 4124,
@@ -1778,6 +1787,37 @@ function gotoDoTask(){
 	"remainingNumber": 1
 }
 	;*/
+	
+		{
+		"taskId": 4124,
+		"activeId": 149,
+		"taskName": "广告类视频答题任务",
+		"taskType": "videoAndAsk",
+		"imgUrl": "http://172.20.155.51/uploads/img/20190610/20190610142953610849.png",
+		"maxNumber": 1,
+		"addNumber": 1,
+		"timeType": "allTime",
+		"timeKey": "2019-06-11",
+		"source": "all",
+		"countdown": 12,
+		"jumpBgImgUrl": "http://172.20.155.51/uploads/20190522/20190522102148830555.webp",
+		"jumpImgUrl": "http://172.20.155.51/uploads/img/20190522/20190522102155090027.png",
+		"jumpRemindImgUrl": "http://172.20.155.51/uploads/img/20190522/20190522102208290060.png",
+		"askRightUrl": "http://172.20.155.51/uploads/img/20190522/20190522102220534206.png",
+		"askErrorUrl": "http://172.20.155.51/uploads/img/20190522/20190522102226356700.png",
+		"goBackOnclick": "{\"packageName\":\"com.coocaa.app_browser\",\"versionCode\":\"1\",\"dowhat\":\"startActivity\",\"bywhat\":\"action\",\"byvalue\":\"appx.intent.launcher.Start\",\"params\":{\"uri\":\"appx://com.coocaa.appx.x618/main?activityId=145&isDebug=true\"}}",
+		"remark": "",
+		"state": 0,
+		"param": "{\"videoUrl\":\"http://v-play.coocaatv.com/0915/dongwushijie.mp4\",\"adId\":\"\"}",
+		"problem": "{\"problem\":\"邓伦在《封神演义》中是的角色是？\",\"answerA\":\"杨戬\",\"rightAnswer\":\"B\",\"answerB\":\"狐妖\"}",
+		"videoSource": "cdnURL",
+		"seq": 0,
+		"createTime": "2019-06-25 11:41:24",
+		"updateTime": "2019-06-25 11:41:24",
+		"version": 0,
+		"remainingNumber": 1
+	};
+	
 	console.log("task = " + JSON.stringify(taskinfo));
 	
 	autoFillLogData4();
@@ -2062,10 +2102,11 @@ function gotoDoTask(){
 					"dataerParams" : {}
 				};
 				var videoAskParamStr = JSON.stringify(videoAskParams);
+				console.log("videoAskParamStr = " + videoAskParamStr);
 				
 				appx_url = 'appx://com.coocaa.videoask?taskParams=';
-				appx_url += taskParamStr + '&videoAskParams=';
-				appx_url += videoAskParamStr;
+				appx_url += encodeURIComponent(taskParamStr) + '&videoAskParams=';
+				appx_url += encodeURIComponent(videoAskParamStr);
 				
 				console.log("appx_url = " + appx_url);
 				
@@ -2077,7 +2118,12 @@ function gotoDoTask(){
 				
 				setTimeout(function () {
 					coocaaosapi.startAppX2(appx_url, "false", function(){}, function(){});
-				}, 100);
+				}, 1);
+				
+				setTimeout(function () {
+					console.log("视频答题，退掉自己");
+					navigator.app.exitApp();
+				}, 1000);
 			}
 		}, function(error) {
 			console.log("getAppInfo error: " + JSON.stringify(error));
