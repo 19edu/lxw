@@ -437,8 +437,11 @@ img[src='']{
 	background-size: 100%;
 }
 #FirstInImg1 {
-	width: 251px;
-	height: 251px;
+	position: absolute;
+	width: 177px;
+	height: 201px;
+	left: 36px;
+	top: 25px;
 }
 #FirstInOKBtn, #gotHammerOKBtn, #helpOKBtn {
 	position: absolute;
@@ -587,7 +590,7 @@ img[src='']{
 	left: 0px;
 	top: 0px;
 }
-#helpOKInfo2 {
+#helpOKInfo2, #FirstInInfo2 {
 	position: absolute;
 	left: 0px;
 	top: 536px;
