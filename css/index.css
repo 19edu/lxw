@@ -443,7 +443,7 @@ img[src='']{
 	left: 36px;
 	top: 25px;
 }
-#FirstInOKBtn, #gotHammerOKBtn, #helpOKBtn {
+#FirstInOKBtn, #gotHammerOKBtn, #helpOKBtn, #appVerLowBtn {
 	position: absolute;
 	left: 315px;
 	top: 655px;
@@ -533,7 +533,7 @@ img[src='']{
 	width: 252px;
 	height: 98px;
 }
-#quitDialogText1 {
+#quitDialogText1, #appVerLowText1 {
 	position: absolute;
 	left: 0px;
 	top: 302px;
@@ -545,7 +545,7 @@ img[src='']{
 	font-weight: bold;
 	color: #ffffff;
 }
-#quitDialogText2 {
+#quitDialogText2, #appVerLowText2 {
 	position: absolute;
 	left: 0px;
 	top: 376px;

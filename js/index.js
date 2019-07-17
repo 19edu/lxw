@@ -547,7 +547,7 @@ function processUrlParam() {
 	var aid = getUrlParam("actionid");					// 如果URL指定了活动ID，则采用URL中的活动ID
 	if (aid != null)
 		_actionId = aid;
-	/////
+	//====
 	var answerRight = getUrlParam("answerRight");
 	if (answerRight != null) {
 		answerRightFlag = answerRight;
@@ -1366,6 +1366,8 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 	);
 	*/
    
+   
+   
    focusOnMainPage(null);
 
 }
@@ -1728,6 +1730,7 @@ function showTasksPageInt() {
 	autoFillLogData2();
 	logdata2.page_state = "任务弹窗";
 	webDataLog("web_button_clicked_new", logdata2);
+	
 }
 
 function disappearTasksPage() {
@@ -1877,11 +1880,10 @@ function gotoDoTask(){
 				
 				if (hasversioncode < needversioncode) {
 					if (pkgname == "com.tianci.movieplatform") {
-						////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/movieupdate.png",3000,"","");
+						showAppVerLowDialog("影视");
 						return;
-					
 					}  else if (pkgname == "com.coocaa.mall") {
-						////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/mallupdate.png",3000,"","");
+						showAppVerLowDialog("优选购物");
 						return;
 					}
 					console.log("当前版本过低，请前往应用圈搜索进行升级");
@@ -1902,7 +1904,7 @@ function gotoDoTask(){
 							console.log("===activityCenterVersion=="+activityCenterVersion+"===browserVersion=="+browserVersion+"==mallVersion=="+mallVersion+"==cAppVersion=="+cAppVersion);
 							if((activityCenterVersion < 103015) || (browserVersion < 200000)) {
 								console.log("活动中心或浏览器版本太低，需要后台升级，显示弹窗");
-								////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/newmokuaijiazai.png",3000);
+								showAppVerLowDialog("活动浏览器");
 								return;
 							} else {//版本满足需求，才真正执行按键判断:
 								console.log("剩余可完成次数: " + taskinfo.remainingNumber);
@@ -2008,7 +2010,7 @@ function gotoDoTask(){
 			var browserVersion = appmsg[pkgname].versionCode;
 			if (browserVersion < 200000) {
 				console.log("活动中心或浏览器版本太低，需要后台升级，显示弹窗");
-				////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/newmokuaijiazai.png",3000);
+				showAppVerLowDialog("活动浏览器");
 				return;
 			} else {
 				// am start -d appx://com.coocaa.videoask?taskParams="11"&videoAskParams="222"
@@ -2522,7 +2524,7 @@ function findMoreHammer() {
 		if (alltasks[task0Idx].remainingNumber == 0 && 
 			alltasks[task0Idx].remainingNumber == 0 && 
 			alltasks[task0Idx].remainingNumber == 0 ) {			// 如果当前关卡的任务都做完了
-			////
+			//==
 		}
 		else {
 			getUserTaskList();
@@ -2540,7 +2542,7 @@ function helpOKBtnClick() {
 	console.log("helpOKBtnClick() ");
 	disappearHelpOKDialog();
 	
-	///////////////////
+	//====================
 	if (newAwardInfo != null && newAwardInfo != undefined) {
 		autoFillLogData3();
 		logdata3.button_name = "欣然收下";
@@ -2564,7 +2566,7 @@ function helpOKBtnClick() {
 			logdata4.page_type = "最后一关";
 		webDataLog("web_button_clicked_new", logdata4);
 	}
-	///////////////////
+	//======================
 	
 	actionInit(false);
 	
@@ -2719,7 +2721,7 @@ function checkMainPagePopUpOnBackKey() {
 		return true;
 	}
 	if($("#entityGetDialog2").css("display") == "block") {			// 扫码领取实物奖品的弹窗
-		disappearentityGetDialog2();
+		disappearEntityGetDialog2();
 		actionInit(false);
 		return true;
 	}
@@ -2923,11 +2925,30 @@ function showEntityGetDialog2(awardName, awardTime, lotteryActiveId, rememberId,
 	drawQrcode("entityQrcode2", enstr, 190);
 }
 
-function disappearentityGetDialog2() {
+function disappearEntityGetDialog2() {
 	$("#entityGetDialog2").css("display", "none");
 	$(".secondDialog").css("display", "none");
 	$("#dialogPage").css("display", "none");
 	focusOnMainPage(null);
+}
+
+function showAppVerLowDialog(appName) {
+	console.log("showAppVerLowDialog() ");
+	$("#dialogPage").css("display", "block");
+	document.getElementById("appVerLowText1").innerHTML = "\"" + appName + "\"应用的版本过低";
+	document.getElementById("appVerLowText2").innerHTML = "请在【主页-应用-应用搜索】升级到最新版本";
+	$("#appVerLowDialog").css("display", "block");
+	map = new coocaakeymap($(".coocaa_btn3"), "#appVerLowBtn1", "btn-focus", empty0, empty1, empty1);
+	setTimeout(function () {
+		disappearAppVerLowDialog();
+	}, 2000);
+}
+
+function disappearAppVerLowDialog() {
+	$("#entityGetDialog2").css("display", "none");
+	$(".secondDialog").css("display", "none");
+	$("#dialogPage").css("display", "none");
+	map = new coocaakeymap($(".coocaa_btn3"), "#taskEnter", "btn-focus", empty0, empty1, empty1);
 }
 
 function autoFillLogData1() {
