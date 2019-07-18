@@ -73,6 +73,9 @@ coocaaApp.bindEvents("homebutton", function() {
 
 coocaaApp.bindEvents("resume", function() {
 	console.log("on resume");
+	
+	activityStartTime = new Date().getTime();
+	
 	console.log(startLoginFlag);
 	console.log(changeLoginFlag);
 	if(startLoginFlag && changeLoginFlag){
@@ -472,7 +475,7 @@ function startAndSendLog() {
 	startLogin(needQQ);
 }
 
-function startLogin(needQQ) {
+function startLogin(needQQ) {	
 	console.log("funny+++" + _tencentWay);
 	if(needQQ) {
 		if(accountVersion > 4030000) {
@@ -1165,6 +1168,7 @@ var unlockLevel = 0;				// 当前解锁了第几关，0为都没有解锁，1为
 var task0Idx = 0;					// 第一个任务的索引ID
 var task1Idx = 0;					// 第二个任务的索引ID
 var task2Idx = 0;					// 第三个任务的索引ID
+var activityEndFlag = false;		// 活动结束标志
 
 var activityStartTime = 0;			// 
 
@@ -1254,8 +1258,11 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 	// 主页背景
 	$(".pagesboxes").css("display","block");
 
-	if (allUsedNumber >= 30) {
-		$("#homePage").css("background-image", "url(images/stageclear.jpg)");
+	if (allUsedNumber >= 30 || activityEndFlag == true) {
+		if (activityEndFlag == true)
+			$("#homePage").css("background-image", "url(images/stageovertime.jpg)");	//活动结束
+		else
+			$("#homePage").css("background-image", "url(images/stageclear.jpg)");
 		$("#bottomBar").css("display", "none");
 		$("#mainpageHammer").css("display", "none");
 		$("#showBox").css("display", "none");
@@ -1265,7 +1272,12 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 		$("#people1").css("display", "none");
 		$("#people2").css("display", "none");
 		$("#people3").css("display", "none");
-		focusOnMainPage("#mainpageButton3");
+		if (activityEndFlag == true) {
+			$("#mainpageButton3").css("display", "none");
+			$("#mainpageButton4").css("display", "none");
+		}
+		else
+			focusOnMainPage("#mainpageButton3");
 		return;
 	}
 
@@ -1414,8 +1426,12 @@ function actionInit(resumeFlag) {
 				console.log("该活动未开始");
 			} else if(data.code == 50003) {
 				console.log("该活动已结束");
+				activityEndFlag = true;
+				updateMainPage(resumeFlag);
 			} else if(data.code == 50042) {
 				console.log("该活动已下架");
+				activityEndFlag = true;
+				updateMainPage(resumeFlag);
 			} else if(data.code == 50100) {
 				console.log("该活动进行中+获取数据成功");
 				
@@ -1797,7 +1813,7 @@ function gotoDoTask(){
 }
 	;*/
 	/*
-		{
+	{
 		"taskId": 4124,
 		"activeId": 149,
 		"taskName": "广告类视频答题任务",
@@ -1829,7 +1845,7 @@ function gotoDoTask(){
 	*/
    /*
 	{
-	"taskId": 4162,
+	"taskId": 4168,
 	"activeId": 150,
 	"taskName": "150广告类视频答题任务1",
 	"taskType": "videoAndAsk",
@@ -1852,12 +1868,12 @@ function gotoDoTask(){
 	"problem": "{\"problem\":\"邓伦在《封神演义》中是的角色是？\",\"answerA\":\"杨戬\",\"rightAnswer\":\"B\",\"answerB\":\"狐妖\"}",
 	"videoSource": "adId",
 	"seq": 0,
-	"createTime": "2019-07-18 14:33:52",
-	"updateTime": "2019-07-18 14:33:52",
+	"createTime": "2019-07-18 18:11:00",
+	"updateTime": "2019-07-18 18:11:00",
 	"version": 0,
 	"remainingNumber": 1
-	}
-	*/
+};*/
+	
 	console.log("task = " + JSON.stringify(taskinfo));
 	
 	autoFillLogData4();
@@ -3084,7 +3100,9 @@ function autoFillLogData4() {
 function autoFillLogData5() {
 	var activity_duration, nowTime;
 	logdata5.page_name = "活动主页面";
-	if (allUsedNumber >= 30)
+	if (activityEndFlag == true)
+		logdata5.page_type = "活动已结束";
+	else if (allUsedNumber >= 30)
 		logdata5.page_type = "全部解救成功";		//活动主页面取值：预热、活动正式期、全部解救成功、活动已结束
 	else
 		logdata5.page_type = "活动正式期";
