@@ -1166,8 +1166,11 @@ var task2Idx = 0;					// 第三个任务的索引ID
 
 var activityStartTime = 0;			// 
 
-var answerRightUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html?answerRight=1";
-var answerErrorUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/index.html";
+var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
+var answerRightUrl = thisBaseUrl + "index.html?answerRight=1";
+var answerErrorUrl = thisBaseUrl + "index.html";
+var answerRightImgUrl = thisBaseUrl + "images/dialog/answerRight.png";
+var answerErrorImgUrl = thisBaseUrl + "images/dialog/answerError.png";
 
 var logdata1 = {
 	"page_name": "",
@@ -1504,7 +1507,7 @@ function getUserTaskList() {
 					//-------如果服务器返回来的任务少于30个，则用最后一个任务填充完整个30个
 					while (taskidx < 30) {
 						alltasks[taskidx] = data.data.tasks[data.data.tasks.length - 1];
-						console.log("填充任务");
+						console.log("" + taskidx + ". 填充旧任务,塞满30个");
 						taskidx++;
 					}
 				}
@@ -1823,6 +1826,37 @@ function gotoDoTask(){
 		"remainingNumber": 1
 	};
 	*/
+   /*
+	{
+	"taskId": 4162,
+	"activeId": 150,
+	"taskName": "150广告类视频答题任务1",
+	"taskType": "videoAndAsk",
+	"imgUrl": "http://172.20.155.51/uploads/img/20190610/20190610142953610849.png",
+	"maxNumber": 1,
+	"addNumber": 1,
+	"timeType": "allTime",
+	"timeKey": "2019-06-11",
+	"source": "all",
+	"countdown": 12,
+	"jumpBgImgUrl": "http://172.20.155.51/uploads/20190522/20190522102148830555.webp",
+	"jumpImgUrl": "http://172.20.155.51/uploads/img/20190522/20190522102155090027.png",
+	"jumpRemindImgUrl": "http://172.20.155.51/uploads/img/20190522/20190522102208290060.png",
+	"askRightUrl": "http://172.20.155.51/uploads/img/20190522/20190522102220534206.png",
+	"askErrorUrl": "http://172.20.155.51/uploads/img/20190522/20190522102226356700.png",
+	"goBackOnclick": "{\"packageName\":\"com.coocaa.app_browser\",\"versionCode\":\"1\",\"dowhat\":\"startActivity\",\"bywhat\":\"action\",\"byvalue\":\"appx.intent.launcher.Start\",\"params\":{\"uri\":\"appx://com.coocaa.appx.x618/main?activityId=145&isDebug=true\"}}",
+	"remark": "",
+	"state": 0,
+	"param": "{\"videoUrl\":\"\",\"adId\":\"11\"}",
+	"problem": "{\"problem\":\"邓伦在《封神演义》中是的角色是？\",\"answerA\":\"杨戬\",\"rightAnswer\":\"B\",\"answerB\":\"狐妖\"}",
+	"videoSource": "adId",
+	"seq": 0,
+	"createTime": "2019-07-18 14:33:52",
+	"updateTime": "2019-07-18 14:33:52",
+	"version": 0,
+	"remainingNumber": 1
+	}
+	*/
 	console.log("task = " + JSON.stringify(taskinfo));
 	
 	autoFillLogData4();
@@ -2075,7 +2109,9 @@ function gotoDoTask(){
 					"answerErrorClickType": "BACK_REPLAY",
 					"answerRightClickType": "CUSTOM",
 					"answerRightOnClick": answerRightOnClick,
-					"answerErrorOnClick": answerErrorOnClick
+					"answerErrorOnClick": answerErrorOnClick,
+					"answerRightUrl": answerRightImgUrl,
+					"answerErrorUrl": answerErrorImgUrl
 				};
 				
 				var serverProblem = JSON.parse(taskinfo.problem);
