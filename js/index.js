@@ -2034,6 +2034,9 @@ function gotoDoTask(){
 				}
 				console.log("taskParamStr = " + taskParamStr);
 				
+				var answerRightUrlPlus = answerRightUrl + "&actionid=" + _actionId;
+				var answerErrorUrlPlus = answerErrorUrl + "?actionid=" + _actionId;
+				
 				var timestampms = Date.parse(new Date());
 				var timestamp = parseInt(timestampms / 1000);			// 当前时间戳(秒)
 				var answerRightOnClick = {
@@ -2043,7 +2046,7 @@ function gotoDoTask(){
 					"dowhat": "startActivity",
 					"versionCode": "1",
 					"params" : {
-						"url" : answerRightUrl
+						"url" : answerRightUrlPlus
 					}
 				};
 				var answerErrorOnClick = {
@@ -2053,7 +2056,7 @@ function gotoDoTask(){
 					"dowhat": "startActivity",
 					"versionCode": "1",
 					"params" : {
-						"url" : answerErrorUrl
+						"url" : answerErrorUrlPlus
 					}
 				};
 				var myProblem = {
