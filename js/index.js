@@ -46,6 +46,8 @@ var answerRightFlag = null;		// 视频答题回答正确标志
 
 var adressIp = "http://beta.restful.lottery.coocaatv.com";
 var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
+var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
+var runmode = "debug";			// release
 
 var dataObj = {};//我的奖励数据
 var _arr1 = new Array(); //红包
@@ -1166,7 +1168,6 @@ var task2Idx = 0;					// 第三个任务的索引ID
 
 var activityStartTime = 0;			// 
 
-var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
 var answerRightUrl = thisBaseUrl + "index.html?answerRight=1";
 var answerErrorUrl = thisBaseUrl + "index.html";
 var answerRightImgUrl = thisBaseUrl + "images/dialog/answerRight.png";
@@ -2156,6 +2157,10 @@ function gotoDoTask(){
 				appx_url = 'appx://com.coocaa.videoask?taskParams=';
 				appx_url += encodeURIComponent(taskParamStr) + '&videoAskParams=';
 				appx_url += encodeURIComponent(videoAskParamStr);
+				if (runmode == "debug")
+					appx_url += "&isDebug=true";
+				else
+					appx_url += "&isDebug=false";
 				
 				console.log("appx_url = " + appx_url);
 				
