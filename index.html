@@ -516,7 +516,7 @@
 			var loadTime1 = 0;
 			window.onload = function () {
 			    loadTime1 = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart;
-				var _dateObj = {
+				var _dateobj1 = {
 					"page_name": "活动主页面",
 					"page_state": "活动正式期",
 					"load_duration": loadTime1,
@@ -524,9 +524,9 @@
 					"activity_name": "2019教育暑期活动",
 					"OPEN_ID" : _openId
 				};
-				webDataLog("web_page_show_new", _dateObj);
+				webDataLog("web_page_show_new", _dateobj1);			// data1
 			}
-
+			
 			$(document).keydown(function(event){
 				if(event.keyCode == 66){	// 键盘的B键 (模拟Back返回键)
 					handleBackButtonFunc();

@@ -1589,6 +1589,11 @@ function showRolePage() {
 		logdata3.page_type = "活动主页面-进行中";
 	logdata3.button_name = "活动规则";
 	webDataLog("web_button_clicked_new", logdata3);
+	
+	autoFillLogData1();
+	logdata1.page_name = "活动详细规则";
+	logdata1.load_duration = "0";
+	webDataLog("web_page_show_new", logdata1);
 }
 
 function disappearRolePage() {
@@ -1604,6 +1609,11 @@ function isTasksPageShow() {
 }
 
 function pressGetMoreHammerButton() {
+	
+	if ($("#myAwardPage").css("display") == "block") {	// fix bug
+		$("#myawardPage").css("display","none");
+	}
+	
 	showTasksPage();
 	
 	autoFillLogData3();
@@ -2311,6 +2321,10 @@ function pressFirstInOKBtn(){
 var icebreakLastTime = 0;
 
 function pressIceBreakButton() {
+
+	if ($("#myAwardPage").css("display") == "block") {	// fix bug
+		$("#myawardPage").css("display","none");
+	}
 
 	var nowTime = new Date().getTime();
 	console.log("" + icebreakLastTime + ", " + nowTime);
@@ -3057,7 +3071,12 @@ function awardTypeNmaeStr(id) {
 
 function autoFillLogData1() {
 	logdata1.page_name = "";
-	logdata1.page_state = "";
+	if (activityEndFlag == true)
+		logdata5.page_type = "活动已结束";
+	else if (allUsedNumber >= 30)
+		logdata5.page_type = "全部解救成功";		//活动主页面取值：预热、活动正式期、全部解救成功、活动已结束
+	else
+		logdata5.page_type = "活动正式期";
 	logdata1.load_duration = "";
 	logdata1.activity_type = "2019教育暑期活动";
 	logdata1.activity_name = "2019教育暑期活动";
