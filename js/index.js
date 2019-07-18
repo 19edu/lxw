@@ -1501,7 +1501,12 @@ function getUserTaskList() {
 						alltasks[taskidx] = data.data.tasks[taskidx];
 						console.log("task" + taskidx + ": " + JSON.stringify(alltasks[taskidx]));
 					}
-					
+					//-------如果服务器返回来的任务少于30个，则用最后一个任务填充完整个30个
+					while (taskidx < 30) {
+						alltasks[taskidx] = data.data.tasks[data.data.tasks.length - 1];
+						console.log("填充任务");
+						taskidx++;
+					}
 				}
 				
 				showTasksPageInt();
@@ -1602,21 +1607,24 @@ function refreshTaskIndex() {
 	console.log("refreshTaskIndex()");
 	// 拥有的锤子数，除以3，得到当前需要做第几关的任务 
 	taskLevel = parseInt(allUsedNumber / 3);
-	task0Idx = taskLevel * 3 + 0;
-	task1Idx = taskLevel * 3 + 1;
-	task2Idx = taskLevel * 3 + 2;
-	console.log("taskLevel = " + taskLevel + ", task0Idx = " + task0Idx + ", task1Idx = " + task1Idx + ", task2Idx = " + task2Idx);
 	
-	if (alltasks[task0Idx].remainingNumber == 0 &&
-		alltasks[task1Idx].remainingNumber == 0 &&
-		alltasks[task2Idx].remainingNumber == 0 )			// 如果当前关卡的任务都做完了，则取下一关
-	{
-		task0Idx = (taskLevel + 1) * 3 + 0;
-		task1Idx = (taskLevel + 1) * 3 + 1;
-		task2Idx = (taskLevel + 1) * 3 + 2;
-		console.log("refresh next level:  task0Idx = " + task0Idx + ", task1Idx = " + task1Idx + ", task2Idx = " + task2Idx);
+	var i = taskLevel * 3;
+	while (i < 30) {
+		if (alltasks[i].remainingNumber > 0)	// 找到最近的一个未完成的任务
+			break;
+		i++;
 	}
+	if (i >= 30)
+		i = 29;
+		
+	var nl = parseInt(i / 3);
+
+	task0Idx = nl * 3 + 0;
+	task1Idx = nl * 3 + 1;
+	task2Idx = nl * 3 + 2;
 	
+	console.log("taskLevel = " + taskLevel + ", task0Idx = " + task0Idx + ", task1Idx = " + task1Idx + ", task2Idx = " + task2Idx);
+
 	if (task0Idx > 29)				// 一共30个任务，不能数组越界
 		task0Idx = 29;
 	if (task1Idx > 29)
@@ -2515,13 +2523,13 @@ function showDrawResule(obj) {
 		imgFileName = "images/ice/obj83.png";
 	}
 	else if (gate >= 10) {
-		title = "你好！小猪佩奇 - 实物奖品" + awardName;
+		title = "你好！小猪佩奇，快去找你的爸爸妈妈吧！";
 		imgFileName = "images/ice/obj93.png";
 	}
 	
 	heroHame = getHeroHame(gate);
 	
-	showHelpOKDialog(haveAward, awardName, heroHame, title, imgFileName);
+	showHelpOKDialog(gate, haveAward, awardName, heroHame, title, imgFileName);
 }
 
 function findMoreHammer() {
@@ -2578,8 +2586,10 @@ function helpOKBtnClick() {
 		autoFillLogData4();
 		logdata4.button_name = "继续破冰";
 		logdata4.page_type = "解救冰冻物体后无奖";
-		if (allUsedNumber + 1 >= 30)
+		if (allUsedNumber + 1 >= 30) {
 			logdata4.page_type = "最后一关";
+			logdata4.button_name = "返回活动";
+		}
 		webDataLog("web_button_clicked_new", logdata4);
 	}
 	//======================
@@ -2846,7 +2856,7 @@ function disappearGiveHammerDialog() {
 	webDataLog("web_button_clicked_new", logdata4);
 }
 
-function showHelpOKDialog(haveAward, awardName, heroHame, title, imgFileName) {
+function showHelpOKDialog(gate, haveAward, awardName, heroHame, title, imgFileName) {
 	document.getElementById("helpOKInfo1").innerHTML = title;
 	
 	var text2, buttonText;
@@ -2857,8 +2867,12 @@ function showHelpOKDialog(haveAward, awardName, heroHame, title, imgFileName) {
 	
 	if (haveAward) 
 		buttonText = "欣然收下";
-	else
-		buttonText = "继续破冰";
+	else {
+		if (gate >= 10) 	// 最后一关
+			buttonText = "返回活动";
+		else
+			buttonText = "继续破冰";
+	}
 	document.getElementById("helpOKDialogButtonText").innerHTML = buttonText;
 	
 	$("#helpOKImg1").attr("src", imgFileName);
@@ -2868,10 +2882,14 @@ function showHelpOKDialog(haveAward, awardName, heroHame, title, imgFileName) {
 	map = new coocaakeymap($(".coocaa_btn3"), "#helpOKBtn", "btn-focus", empty0, empty1, empty1);
 	
 	autoFillLogData2();
-	if (haveAward) 
-		logdata2.page_state = "解救冰冻物体后有奖";
-	else
-		logdata2.page_state = "解救冰冻物体后无奖"
+	if (gate >= 10)
+		logdata2.page_state = "最后一关"; 
+	else {
+		if (haveAward) 
+			logdata2.page_state = "解救冰冻物体后有奖";
+		else
+			logdata2.page_state = "解救冰冻物体后无奖";
+	}
 	webDataLog("web_button_clicked_new", logdata2);
 }
 
