@@ -115,8 +115,16 @@
 			<div id="tasksPage">
 				<div id="tasksBackground">
 					<div id="taskHint">小朋友，快来做任务获得破冰锤子吧！</div>
+					<div id="taskFrameL0" class="coocaa_btn4">
+						<img src="" class="taskFrameImg">
+					</div>
+					<div id="taskFrameL1" class="coocaa_btn4">
+						<img src="" class="taskFrameImg">
+					</div>
+					<div id="taskFrameL2" class="coocaa_btn4">
+						<img src="" class="taskFrameImg">
+					</div>
 					<div id="taskFrame0">
-						<div id="taskFrameL0" class="taskFrameL"></div>
 						<img id="taskimg0" src="" />
 						<div id="taskName0" class="taskName"></div>
 						<img id="taskgo0" src="">
@@ -127,7 +135,6 @@
 						<div id="taskGotText0">已赠送您1把锤子</div>
 					</div>
 					<div id="taskFrame1">
-						<div id="taskFrameL1" class="taskFrameL"></div>
 						<img id="taskimg1" src="" />
 						<div id="taskName1" class="taskName"></div>
 						<img id="taskgo1" src="">
@@ -138,7 +145,6 @@
 						<div id="taskGotText1">已赠送您1把锤子</div>
 					</div>
 					<div id="taskFrame2">
-						<div id="taskFrameL2" class="taskFrameL"></div>
 						<img id="taskimg2" src="" />
 						<div id="taskName2" class="taskName"></div>
 						<img id="taskgo2" src="">
@@ -148,7 +154,6 @@
 						<img id="taskHammerLock2" src="">
 						<div id="taskGotText2">已赠送您1把锤子</div>
 					</div>
-					<div id="taskEnter" class="coocaa_btn3"></div>
 				</div>
 			</div>
 			
@@ -502,7 +507,6 @@
 				$("#tasksBackground").css("background-image", "url(images/task/taskBg.png)");
 				$("#mainpageHammer").css("background-image","url(images/hammer.png)");
 				$("#gamerole").css("background-image","url(images/rule.jpg)");
-				$(".taskFrameL").css("background-image","url(images/task/taskL.png)");
 				
 				// 底下的人物
 				$("#objimg0").attr("src", "images/object0.png");
@@ -539,6 +543,7 @@
 				$("#taskdone2").attr("src", "images/task/done.png");
 				$("#taskHammer2").attr("src", "images/task/hammer.png");
 				$("#taskHammerLock2").attr("src", "images/task/hammerLock.png");
+				$(".taskFrameImg").attr("src", "images/task/taskL.png");
 				
 				// 对话框
 				// 首次进入的弹窗

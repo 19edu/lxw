@@ -193,8 +193,14 @@ function buttonInitBefore() {
 	$("#FirstInOKBtn").unbind("itemClick").bind("itemClick", function() {
 		pressFirstInOKBtn();
 	});
-	$("#taskEnter").unbind("itemClick").bind("itemClick", function() {
-		gotoDoTask();				// 做任务
+	$("#taskFrameL0").unbind("itemClick").bind("itemClick", function() {
+		gotoDoTask(0);				// 做任务
+	});
+	$("#taskFrameL1").unbind("itemClick").bind("itemClick", function() {
+		gotoDoTask(1);				// 做任务
+	});
+	$("#taskFrameL2").unbind("itemClick").bind("itemClick", function() {
+		gotoDoTask(2);				// 做任务
 	});
 	$("#haveGot3HammerBtn1").unbind("itemClick").bind("itemClick", function() {
 		// 获取更多锤子
@@ -1247,6 +1253,7 @@ function refreshActionData() {
 }
 
 function updateMainPageBeforeInit() {
+	console.log("updateMainPageBeforeInit");
 	// 主页背景
 	$(".pagesboxes").css("display","block");
 	// 底部的条栏
@@ -1328,8 +1335,8 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 	
 	// 勋章背景
 	honorBackgroundId = unlockLevel;
-	if (honorBackgroundId > 9)
-		honorBackgroundId = 9;
+	if (honorBackgroundId > 10)
+		honorBackgroundId = 10;
 	$("#honorBlock").css("background-image", "url(images/honor" + honorBackgroundId + ".png)");
 	$("#honorBlock").css("display", "block");
 
@@ -1557,7 +1564,7 @@ function getUserTaskList() {
 	
 }
 
-function getHeroHame(level) {
+function getHeroName(level) {
 	var name;
 	if (level == 0) 
 		name = "勇气宝贝";
@@ -1577,8 +1584,10 @@ function getHeroHame(level) {
 		name = "救援队长";
 	else if (level == 8)
 		name = "超级探险家";
-	else if (level >= 9)
+	else if (level == 9)
 		name = "解救佩奇小英雄";
+	else if (level >= 10)
+		name = "最强冒险王";
 	return name;
 }
 
@@ -1679,28 +1688,21 @@ function showTasksPageInt() {
 	refreshTaskIndex();
 	
 	var curIdx;
-	if (alltasks[task0Idx].remainingNumber != 0)
+	var LButton;
+	if (alltasks[task0Idx].remainingNumber != 0) {
 		curIdx = task0Idx;
-	else if (alltasks[task1Idx].remainingNumber != 0)
+		LButton = "#taskFrameL0";
+	}
+	else if (alltasks[task1Idx].remainingNumber != 0) {
 		curIdx = task1Idx;
-	else 
+		LButton = "#taskFrameL1";
+	}
+	else {
 		curIdx = task2Idx;
-	console.log("curIdx = " + curIdx);
+		LButton = "#taskFrameL2";
+	}
 	
-	if (task0Idx == curIdx)
-		$("#taskFrameL0").css("display", "block");
-	else 
-		$("#taskFrameL0").css("display", "none");
-		
-	if (task1Idx == curIdx)
-		$("#taskFrameL1").css("display", "block");
-	else 
-		$("#taskFrameL1").css("display", "none");
-		
-	if (task2Idx == curIdx)
-		$("#taskFrameL2").css("display", "block");
-	else 
-		$("#taskFrameL2").css("display", "none");
+	console.log("curIdx = " + curIdx);
 	
 	if (task0Idx < alltasks.length) {
 		document.getElementById("taskName0").innerHTML = alltasks[task0Idx].taskName;
@@ -1774,7 +1776,7 @@ function showTasksPageInt() {
 	
 	$("#tasksPage").css("display", "block");
 	
-	map = new coocaakeymap($(".coocaa_btn3"), "#taskEnter", "btn-focus", empty0, empty1, empty1);
+	map = new coocaakeymap($(".coocaa_btn4"), LButton, "btn-focus", empty0, empty1, empty1);
 	
 	autoFillLogData2();
 	logdata2.page_state = "任务弹窗";
@@ -1787,18 +1789,12 @@ function disappearTasksPage() {
 }
 
 // 去做任务 
-function gotoDoTask(){
+function gotoDoTask(idxValue){
 	
-	console.log("gotoDoTask()");
+	console.log("gotoDoTask(" + idxValue + ")");
 	refreshTaskIndex();
 	
-	var curIdx;
-	if (alltasks[task0Idx].remainingNumber != 0)
-		curIdx = task0Idx;
-	else if (alltasks[task1Idx].remainingNumber != 0)
-		curIdx = task1Idx;
-	else 
-		curIdx = task2Idx;
+	var curIdx = task0Idx + idxValue;
 	console.log("curIdx = " + curIdx);
 	
 	var taskinfo = alltasks[curIdx];
@@ -2536,7 +2532,7 @@ function crushIceFunc(obj){
 				}
 				setTimeout(function(){
 					$("#showBox").css("display","none");
-					showDrawResule(obj);
+					showDrawResult(obj);
 				}, 750);
 			},400);
 		},400);
@@ -2544,8 +2540,8 @@ function crushIceFunc(obj){
 }
 
 // 展示抽奖结果
-function showDrawResule(obj) {
-	console.log("showDrawResule()");
+function showDrawResult(obj) {
+	console.log("showDrawResult()");
 	
 	var nowUsedNumber = allUsedNumber + 1;							// 刚用掉了一把锤子，还没有重新从服务器取值，这里手动加上1
 	var gate = parseInt(nowUsedNumber / 3);							// 第几关
@@ -2614,7 +2610,7 @@ function showDrawResule(obj) {
 		imgFileName = "images/ice/obj93.png";
 	}
 	
-	heroHame = getHeroHame(gate);
+	heroHame = getHeroName(gate);
 	
 	showHelpOKDialog(gate, haveAward, awardName, heroHame, title, imgFileName);
 }
@@ -3071,7 +3067,17 @@ function disappearAppVerLowDialog() {
 	$("#entityGetDialog2").css("display", "none");
 	$(".secondDialog").css("display", "none");
 	$("#dialogPage").css("display", "none");
-	map = new coocaakeymap($(".coocaa_btn3"), "#taskEnter", "btn-focus", empty0, empty1, empty1);
+	var LButton;
+	if (alltasks[task0Idx].remainingNumber != 0) {
+		LButton = "#taskFrameL0";
+	}
+	else if (alltasks[task1Idx].remainingNumber != 0) {
+		LButton = "#taskFrameL1";
+	}
+	else {
+		LButton = "#taskFrameL2";
+	}
+	map = new coocaakeymap($(".coocaa_btn4"), LButton, "btn-focus", empty0, empty1, empty1);
 }
 
 function awardTypeNmaeStr(id) {

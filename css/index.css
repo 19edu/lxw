@@ -319,7 +319,6 @@ img[src='']{
 	height: 728px;
 	left: 400px;
 	top: 352px;
-	/*background-color: #DC443D;*/
 }
 #taskFrame1 {
 	position: absolute;
@@ -327,7 +326,6 @@ img[src='']{
 	height: 728px;
 	left: 800px;
 	top: 352px;
-	/*background-color: #DC443D;*/
 }
 #taskFrame2 {
 	position: absolute;
@@ -335,15 +333,35 @@ img[src='']{
 	height: 728px;
 	left: 1200px;
 	top: 352px;
-	/*background-color: #DC443D;*/
 }
-.taskFrameL {
+.taskFrameImg {
+	width: 376px;
+	height: 376px;
+	display: none;
+}
+#taskFrameL0 {
 	position: absolute;
 	width: 376px;
 	height: 376px;
-	left: -28px;
-	top: -28px;
-	display: none;
+	left: 372px;
+	top: 324px;
+}
+#taskFrameL1 {
+	position: absolute;
+	width: 376px;
+	height: 376px;
+	left: 772px;
+	top: 324px;
+}
+#taskFrameL2 {
+	position: absolute;
+	width: 376px;
+	height: 376px;
+	left: 1172px;
+	top: 324px;
+}
+.btn-focus .taskFrameImg {
+	display: block;
 }
 .taskName {
 	position: absolute;
