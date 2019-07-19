@@ -2111,7 +2111,7 @@ function gotoDoTask(){
 				var answerRightOnClick = {
 					"bywhat" : "action",
 					"packageName": "com.coocaa.app_browser",
-					"byvalue": "coocaa.intent.action.browser",
+					"byvalue": "coocaa.intent.action.browser.no_trans.no_route",
 					"dowhat": "startActivity",
 					"versionCode": "1",
 					"params" : {
@@ -2121,7 +2121,7 @@ function gotoDoTask(){
 				var answerErrorOnClick = {
 					"bywhat" : "action",
 					"packageName": "com.coocaa.app_browser",
-					"byvalue": "coocaa.intent.action.browser",
+					"byvalue": "coocaa.intent.action.browser.no_trans.no_route",
 					"dowhat": "startActivity",
 					"versionCode": "1",
 					"params" : {
@@ -2200,10 +2200,10 @@ function gotoDoTask(){
 					coocaaosapi.startAppX2(appx_url, "false", function(){}, function(){});
 				}, 1);
 				
-				setTimeout(function () {
-					console.log("视频答题，退掉自己");
-					navigator.app.exitApp();
-				}, 1000);
+				//setTimeout(function () {
+				//	console.log("视频答题，退掉自己");
+				//	navigator.app.exitApp();
+				//}, 1000);
 			}
 		}, function(error) {
 			console.log("getAppInfo error: " + JSON.stringify(error));
@@ -2893,6 +2893,7 @@ function disappearGotHammerDialog() {
 	$("#gotHammerDialog").css("display", "none");
 	$(".secondDialog").css("display", "none");
 	$("#dialogPage").css("display", "none");
+	addNumber = 0;
 	focusOnMainPage(null);
 	
 	// 继续破冰按钮
@@ -2918,6 +2919,7 @@ function disappearGiveHammerDialog() {
 	$("#giveHammerDialog").css("display", "none");
 	$(".secondDialog").css("display", "none");
 	$("#dialogPage").css("display", "none");
+	buyNumber = 0;
 	focusOnMainPage(null);
 	
 	// 去破冰按钮

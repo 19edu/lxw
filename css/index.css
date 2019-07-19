@@ -150,7 +150,6 @@ img[src='']{
 	left: 820px;
     width: 650px;
     height: 621px;
-    background: url(../ice.png);
     z-index: 10;
 	display: none;
 }
@@ -432,7 +431,6 @@ img[src='']{
 	top: 267px;
 	width: 251px;
 	height: 251px;
-	background-image: url(../images/dialog/dialogAward.png);
 	background-repeat: no-repeat;
 	background-size: 100%;
 }
@@ -767,7 +765,6 @@ img[src='']{
     left: 695px;
     height: 99px;
     width: 227px;
-    background-image: url(../images/house.gif);
     background-repeat: no-repeat;
     background-size: 100%;
     display: none;
@@ -869,7 +866,6 @@ img[src='']{
     height: 156px;
     width: 152px;
     margin: 16px 15px;
-    background-image: url(../images/packboxitem.png);
     background-repeat: no-repeat;
     background-size: 100%;
     overflow: hidden;
@@ -885,7 +881,6 @@ img[src='']{
     left: 827px;
     height: 105px;
     width: 481px;
-    background-image: url(../images/toast.png);
     background-size: 100%;
     background-repeat: no-repeat;
     display: none;
@@ -1248,18 +1243,7 @@ img[src='']{
 	background-repeat: no-repeat;
 	background-size: 100%;
 }
-.santanbg{
-	background-image: url(../images/dialog/santan.png);
-}
-.milubg{
-	background-image: url(../images/dialog/milu.png);
-}
-.koibg{
-	background-image: url(../images/dialog/goodKoi.png);
-}
-.koi2bg{
-	background-image: url(../images/dialog/superKoi.png);
-}
+
 
 #hasEndBtn{
 	position: absolute;
@@ -1537,7 +1521,7 @@ img[src='']{
 	background-size: 100%;
 }
 #getDrawEnBG{
-	background-image: url(../images/dialog/entityQrcode.png);
+	
 }
 #getDrawEnQrcode{
 	position: absolute;
@@ -1586,7 +1570,6 @@ img[src='']{
     left: 711px;
     height: 531px;
     width: 509px;
-    background-image: url(../images/dialog/packisover.png);
     background-size: 100%;
     background-repeat: no-repeat;
 }
@@ -1618,7 +1601,6 @@ img[src='']{
 	left: 484px;
 	height: 927px;
 	width: 952px;
-	background-image: url(../images/dialog/koi2Info.png);
 	background-size: 100%;
 	background-repeat: no-repeat;
 }
@@ -1642,36 +1624,7 @@ img[src='']{
     height: 239px;
     overflow: hidden;
 }
-.slot1{
-	background-image: url(../images/award/1.jpg);
-}
-.slot2{
-	background-image: url(../images/award/2.jpg);
-}
-.slot3{
-	background-image: url(../images/award/3.jpg);
-}
-.slot4{
-	background-image: url(../images/award/4.jpg);
-}
-.slot5{
-	background-image: url(../images/award/5.jpg);
-}
-.slot6{
-	background-image: url(../images/award/6.jpg);
-}
-.slot7{
-	background-image: url(../images/award/7.jpg);
-}
-.slot8{
-	background-image: url(../images/award/8.jpg);
-}
-.slot9{
-	background-image: url(../images/award/9.jpg);
-}
-.slot10{
-	background-image: url(../images/award/10.jpg);
-}
+
 
 .machineContainer{
 	position: absolute;
@@ -1704,7 +1657,6 @@ img[src='']{
     left:0;
     width: 1920px;
     height:1080px;
-    background: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/finalbuyzonebg123.jpg");
     overflow: hidden;
     display: none;
 }
@@ -1739,7 +1691,6 @@ img[src='']{
     left:10px;
     right: 0;
     margin: auto;
-    background: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/mayliketitle.png");
 }
 #_jrrecommendword{
     width: 760px;
@@ -1749,7 +1700,6 @@ img[src='']{
     left:10px;
     right: 0;
     margin: auto;
-    background: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/superPrice.png");
 }
 #_jrpackbox,#_jrrecommendbox{
     width: 1768px;
@@ -1770,26 +1720,22 @@ img[src='']{
 ._jrborder{
     height: 404px;
     width: 374px;
-    background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/focus.png");
     position: absolute;
     top:0;
     left:0;
     display: none;
 }
 ._jrborder.special{
-    background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/morefocus.png");
 }
 ._jrgoods{
     height: 318px;
     width: 318px;
     margin-left: 15px;
     margin-top: 40px;
-    background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/packbg.jpg");
     background-size: 100%;
     background-repeat: no-repeat;
 }
 .special._jrgoods{
-    background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/more.png");
 }
 .couponword{
     width: 291px;
@@ -1846,15 +1792,6 @@ img[src='']{
     right: 0;
     margin: auto;
 }
-#_jrrecommendbox ._jrgoodsbox:nth-child(2) ._jrgoods{background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/newedugoods.jpg");}
-#_jrrecommendbox ._jrgoodsbox:nth-child(3) ._jrgoods{background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/goods1.jpg");}
-#_jrrecommendbox ._jrgoodsbox:nth-child(4) ._jrgoods{background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/goods2.jpg");}
-#_jrrecommendbox ._jrgoodsbox:nth-child(5) ._jrgoods{background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/goods3.jpg");}
-#_jrrecommendbox ._jrgoodsbox:nth-child(6) ._jrgoods{background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/goods4.jpg");}
-#_jrrecommendbox ._jrgoodsbox:nth-child(7) ._jrgoods{background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/goods5.jpg");}
-#_jrrecommendbox ._jrgoodsbox:nth-child(8) ._jrgoods{background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/goods6.jpg");}
-#_jrrecommendbox ._jrgoodsbox:nth-child(9) ._jrgoods{background-image: url("http://sky.fs.skysrt.com/statics/webvip/webapp/christmas/buyzone/goods7.jpg");}
-
 /*打包商品页*/
 .goodsContainerClass {
 	position: absolute;
@@ -1903,16 +1840,8 @@ img[src='']{
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-image: url(../images/packlist/goods-placeholder.png);
 	background-repeat: no-repeat;
 	background-size: 100%;
-}
-
-#packGoodsList .goodsItemClass[class~=btn-focus] {
-	background-image: url(../images/packlist/focus.png);
-}
-#moregoodsList .goodsItemClass[class~=btn-focus] {
-	background-image: url(../images/packlist/focus.png);
 }
 
 .packGoodsItemPic {
@@ -2056,9 +1985,7 @@ img[src=''] {
 	background-repeat: no-repeat;
 	background-size: 100%;
 }
-#myawardPage{
-	background-image: url(../images/award/bg.jpg);
-}
+
 #myAwardBox {
 	position: absolute;
     top: 230px;
@@ -2084,18 +2011,6 @@ img[src=''] {
 	height: 256px;
 	background-repeat: no-repeat;
 	background-size: 100%;
-}
-#couponTitle {
-	background-image: url(../images/award/coupon.png);
-}
-#redTitle {
-	background-image: url(../images/award/red.png);
-}
-#entityTitle{
-	background-image: url(../images/award/entity.png);
-}
-#cardTitle{
-	background-image: url(../images/award/vip.png);
 }
 #errorInfo{
 	position: fixed;
@@ -2130,7 +2045,6 @@ img[src=''] {
     margin-right: 15px;
 	width: 260px;
 	height: 264px;
-	background-image: url(../images/award/boxbg.png);
 	background-repeat: no-repeat;
 	background-size: 100%;
 }
@@ -2224,7 +2138,6 @@ img[src=''] {
     left: 680px;
     height: 104px;
     width: 560px;
-    background-image: url(../images/award/noaward.png);
     background-size: 100%;
     background-repeat: no-repeat;
 }
@@ -2267,7 +2180,6 @@ img[src=''] {
 #dialogPage{
 	background-color: rgba(0,0,0,0.6);
 	display: none;
-	/*background-image:url(../images/award/dialogbg1.png);*/
 }
 .awardbg{
 	position: absolute;
@@ -2275,7 +2187,6 @@ img[src=''] {
     left: 555px;
 	height: 637px;
 	width: 876px;
-	background-image:url(../images/award/dialogbg.png);
 }
 .secondDialog{
 	display: none;
@@ -2395,7 +2306,6 @@ img[src=''] {
     left: 300px;
     height: 98px;
     width: 252px;
-    background-image: url(../images/award/dialogbtn2.png);
     background-repeat: no-repeat;
     background-size: 100%;
 }
