@@ -136,6 +136,7 @@ coocaaApp.ready(function() {
 });
 
 coocaaApp.triggleButton(function() {
+	setTimeout(updateMainPageBeforeInit, 1);
     _appversion = accountVersion;
 	processUrlParam();
 	
@@ -1245,6 +1246,16 @@ function refreshActionData() {
 	curLevel = parseInt(allUsedNumber / 3);
 }
 
+function updateMainPageBeforeInit() {
+	// 主页背景
+	$(".pagesboxes").css("display","block");
+	// 底部的条栏
+	$(".objimg").css("display", "none");
+	$(".objice").css("display", "none");
+	for (i = 0; i < 10; i++)
+		$("#objice" + i).css("display", "block");
+}
+
 function updateMainPage(resumeFlag)						// 刷新主界面 
 {
 	console.log("updateMainPage() " + resumeFlag);
@@ -1898,6 +1909,11 @@ function gotoDoTask(){
 	var problem = taskinfo.problem;						// 问答任务时的问题
 	var goBackOnclick = taskinfo.goBackOnclick;			//
 	var videoSource = taskinfo.videoSource;				// 视频来源
+	var isFinishFlag;
+	if (taskinfo.remainingNumber == 0)
+		isFinishFlag = false;
+	else
+		isFinishFlag = true;
 
 	var hasversioncode ="";								// 系统存在APP的版本
 	var pkgname = "";
@@ -2165,7 +2181,7 @@ function gotoDoTask(){
 				var videoAskParams = {
 					"countDownTime" : taskinfo.countdown,
 					"verify_key" : timestamp,
-					"isFinish" : false,
+					"isFinish" : isFinishFlag,
 					"serverUrl" : adressIp + "/building/v2/app/",
 					"id" : taskinfo.activeId,
 					"jumpImgUrl" : taskinfo.jumpImgUrl,
