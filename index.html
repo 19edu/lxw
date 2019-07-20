@@ -88,23 +88,23 @@
 				</div>
 
 				<div id="mainpageButton1" class="homeBtns coocaa_btn" downTarget="#mainpageButton2" rightTarget="#mainpageButton3">
-					<img class="imgBlur" src="images/button.png"/>
-					<img class="imgFocus" src="images/buttonLight.png"/>
+					<img class="imgBlur" id="imgBlur1" src="images/button.png"/>
+					<img class="imgFocus" id="imgFocus1" src="images/buttonLight.png"/>
 					<div id="mainbutton1">获得更多锤子</div>
 				</div>
 				<div id="mainpageButton2" class="homeBtns coocaa_btn" upTarget="#mainpageButton3">
-					<img class="imgBlur" src="images/button.png"/>
-					<img class="imgFocus" src="images/buttonLight.png"/>
+					<img class="imgBlur" id="imgBlur2" src="images/button.png"/>
+					<img class="imgFocus" id="imgFocus2" src="images/buttonLight.png"/>
 					<div id="mainbutton2">砸冰块</div>
 				</div>
 				<div id="mainpageButton3" class="homeBtns coocaa_btn" downTarget="#mainpageButton2" leftTarget="#mainpageButton1">
-					<img class="imgBlur" src="images/button.png"/>
-					<img class="imgFocus" src="images/buttonLight.png"/>
+					<img class="imgBlur" id="imgBlur3" src="images/button.png"/>
+					<img class="imgFocus" id="imgFocus3" src="images/buttonLight.png"/>
 					<div id="mainbutton3">我的奖品</div>
 				</div>
 				<div id="mainpageButton4" class="homeBtns coocaa_btn" downTarget="#mainpageButton2">
-					<img class="imgBlur" src="images/button.png"/>
-					<img class="imgFocus" src="images/buttonLight.png"/>
+					<img class="imgBlur" id="imgBlur4" src="images/button.png"/>
+					<img class="imgFocus" id="imgFocus4" src="images/buttonLight.png"/>
 					<div id="mainbutton4">活动规则</div>
 				</div>				
 			</div>
@@ -591,6 +591,8 @@
 					handleBackButtonFunc();
 				}
 			});
+			
+			setInterval(buttonMoving, 300);
 
 		</script>
 	</body>

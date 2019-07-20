@@ -1415,6 +1415,53 @@ function focusOnMainPage(button) {
 	map = new coocaakeymap($(".coocaa_btn"), focusButton, "btn-focus", empty0, empty1, empty1);
 }
 
+var buttonMovingCounter = 0;
+var doingIceBreakFlag = false;					// 是否正在做破冰的动效（标志）
+
+function buttonMoving() {
+	buttonMovingCounter ++;
+	if($("#dialogPage").css("display") != "none") 
+		return;
+	if($("#tasksPage").css("display") != "none") 
+		return;
+	if($("#myawardPage").css("display") != "none") 
+		return;
+	
+	var frame1 = buttonMovingCounter % 4;
+	if($("#imgFocus2").css("display") == "none") {		// 如果没有落焦到button2
+		$("#mainpageButton2").css("margin-top", "0px");
+		$("#mainpageButton2").css("margin-left", "0px");
+		if (doingIceBreakFlag == false) {
+			$("#mainpageHammer").css("margin-top", "0px");
+			$("#mainpageHammer").css("margin-left", "0px");
+		}
+	}
+	else {
+		if (allNumber - allUsedNumber > 0) {
+			if (doingIceBreakFlag == false) {		// 没有做破冰动效的时候，锤子才能微动
+				if (frame1 == 0) {
+					$("#mainpageHammer").css("margin-top", "10px");
+					$("#mainpageHammer").css("margin-left", "-10px");
+				}
+				else {
+					$("#mainpageHammer").css("margin-top", "0px");
+					$("#mainpageHammer").css("margin-left", "0px");
+				}
+			}
+		}
+		else {
+			if (frame1 == 0) {
+				$("#mainpageButton2").css("margin-top", "5px");
+				$("#mainpageButton2").css("margin-left", "3px");
+			}
+			else {
+				$("#mainpageButton2").css("margin-top", "0px");
+				$("#mainpageButton2").css("margin-left", "0px");
+			}
+		}
+	}
+}
+
 //暑假活动初始化 
 function actionInit(resumeFlag) {
 	console.log("actionInit()");
@@ -2428,6 +2475,11 @@ function icebreak() {
 
 function crushIceFunc(obj){
 	console.log("-------2-------");
+	
+	doingIceBreakFlag = true;							// 正在做破冰动效的标志设置为true
+	$("#mainpageHammer").css("margin-top", "0px");
+	$("#mainpageHammer").css("margin-left", "0px");
+	
 	var ctop = $("#mainpageHammer").position().top - 35;
 	var cleft = $("#mainpageHammer").position().left + 50;
 	//1.锤子抬起的动作
@@ -2533,6 +2585,7 @@ function crushIceFunc(obj){
 				}
 				setTimeout(function(){
 					$("#showBox").css("display","none");
+					doingIceBreakFlag = false;
 					showDrawResult(obj);
 				}, 750);
 			},400);

@@ -225,6 +225,8 @@ img[src='']{
 	top: 35px;
 }
 #mainpageButton2 {
+	margin-top: 0px;
+	margin-left: 0px;
 	left: 1280px;
 	top: 590px;
 }
