@@ -1600,6 +1600,7 @@ function isRolePageShow() {
 }
 
 function showRolePage() {
+	$("#gamerole").css("background-image","url(images/rule.jpg)");
 	$("#gamerole").css("display", "block");
 	
 	autoFillLogData3();
