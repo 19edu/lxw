@@ -2847,6 +2847,7 @@ function getAwardAtOnce(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQs
 					}
 				} else {
 					console.log("领奖失败");
+					actionInit(false);
 				}
 			},
 			error: function() {
@@ -3060,7 +3061,7 @@ function showRedGet2Dialog(lotteryActiveId, rememberId, userkeyId, redNumber) {
 	
 	$(".secondDialog").css("display", "none");
 	$("#redNotGet_2").css("display", "block");
-	$("#redContent_2 span").html(redNumber);
+	document.getElementById("jine2").innerHTML = "" + redNumber;
 	
 	console.log(lotteryActiveId + "--" + rememberId + "--" + userkeyId);
 	document.getElementById("redQrcode_2").innerHTML = "";
