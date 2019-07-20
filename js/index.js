@@ -226,6 +226,9 @@ function buttonInitBefore() {
 		//救援成功按钮按下
 		helpOKBtnClick();
 	});
+	$("#redQrcode_2").unbind("itemClick").bind("itemClick", function() {
+	});
+	//========================
 	$("#redHasGetBtn").unbind("itemClick").bind("itemClick", function() {
 		console.log("点击了继续参与");
 		$("#redHasGet").css("display","none");
@@ -2441,10 +2444,14 @@ function icebreak() {
 				console.log(JSON.stringify(data));
 				if(data.code == 50001) {
 					console.log("该活动不存在");
+					
 				} else if(data.code == 50002) {
 					console.log("该活动未开始");
 				} else if(data.code == 50003) {
 					console.log("该活动已结束");
+				} else if(data.code == 50004) {
+					console.log("没有抽奖次数");
+					actionInit(false);
 				} else if(data.code == 50042) {
 					console.log("该活动已下架");
 				} else if(data.code == 50100) {
@@ -2455,6 +2462,9 @@ function icebreak() {
 						newAwardInfo = data.data;
 					// 执行破冰动效
 					crushIceFunc(data);
+				}
+				else {
+					actionInit(false);
 				}
 			},
 			error: function() {
@@ -2729,9 +2739,6 @@ function helpOKBtnClick() {
 		}
 		webDataLog("web_button_clicked_new", logdata4);
 	}
-	//======================
-	
-	actionInit(false);
 	
 	if (newAwardInfo != null && newAwardInfo != undefined) { 			//有奖品
 		if(_loginstatus == "false") {
@@ -3057,13 +3064,13 @@ function showRedGet2Dialog(lotteryActiveId, rememberId, userkeyId, redNumber) {
 	
 	console.log(lotteryActiveId + "--" + rememberId + "--" + userkeyId);
 	document.getElementById("redQrcode_2").innerHTML = "";
-	// getRedPacketsQrcode(lotteryActiveId, rememberId, userkeyId, "redQrcode_2", 270, 270);
+	getRedPacketsQrcode(lotteryActiveId, rememberId, userkeyId, "redQrcode_2", 270, 270);
 	
-	var qrcode = new QRCode(document.getElementById("redQrcode_2"), {
-	    width: 270,
-	    height: 270
-	});
-	qrcode.makeCode("http://www.baidu.com");
+	//var qrcode = new QRCode(document.getElementById("redQrcode_2"), {
+	//    width: 270,
+	//    height: 270
+	//});
+	//qrcode.makeCode("http://www.baidu.com");
 	
 	map = new coocaakeymap($(".coocaa_btn3"), "#redQrcode_2", "btn-focus", empty0, empty1, empty1);
 	
