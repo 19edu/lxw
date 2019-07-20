@@ -1955,9 +1955,9 @@ function gotoDoTask(idxValue){
 	var videoSource = taskinfo.videoSource;				// 视频来源
 	var isFinishFlag;
 	if (taskinfo.remainingNumber == 0)
-		isFinishFlag = false;
-	else
 		isFinishFlag = true;
+	else
+		isFinishFlag = false;
 
 	var hasversioncode ="";								// 系统存在APP的版本
 	var pkgname = "";
