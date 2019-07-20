@@ -2067,6 +2067,7 @@ img[src=''] {
 	height: 264px;
 	background-repeat: no-repeat;
 	background-size: 100%;
+	background-image: url(../images/award/boxbg.png);
 }
 .myawardsBorder,.myawardsBtn{
 	position: absolute;
@@ -2207,6 +2208,7 @@ img[src=''] {
     left: 555px;
 	height: 637px;
 	width: 876px;
+	background-image: url(../images/award/dialogbg.png);
 }
 .secondDialog{
 	display: none;
