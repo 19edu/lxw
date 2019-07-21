@@ -2778,7 +2778,7 @@ function getAwardAtOnce(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQs
 		var redNumber = "";
 		if (newAwardInfo != null && newAwardInfo != undefined) {
 			if (newAwardInfo.awardInfo != null && newAwardInfo.awardInfo != undefined)
-				redNumber = newAwardInfo.awardInfo.bonus;
+				redNumber = JSON.parse(newAwardInfo.awardInfo).bonus;
 		}
 		showRedGet2Dialog(oActiveId, oRememberId, oUserKeyId, redNumber);
 	} else if (oType == "2") { // 实物奖品
