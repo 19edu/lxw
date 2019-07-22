@@ -1373,6 +1373,13 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 				}
 			}
 		}
+		
+		if($("#myawardPage").css("display") != "none"){// 我的奖品页还在显示 
+			$("#myawardPage").css("display","block");
+			getMyAwards(_actionId);
+			return;
+		}
+			
 	}
 	
 	if (entryType == 1)				// 如果是用户第一次进入该活动,则弹出提示框，然后退出
