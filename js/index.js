@@ -1369,6 +1369,7 @@ function updateMainPage(resumeFlag)						// 刷新主界面
 				}
 				else {
 					//getUserTaskList();				// 刷新任务列表  // onresume 又跑会这里了，去
+					$("#myawardPage").css("display","none");		// 防止任务界面显示礼物弹窗
 					return;
 				}
 			}
@@ -2395,7 +2396,10 @@ var icebreakLastTime = 0;
 
 function pressIceBreakButton() {
 
-	if ($("#myAwardPage").css("display") == "block") {	// fix bug
+	if(isTasksPageShow()) {								// 如果我的任务还在显示
+		disappearTasksPage();
+	}
+	if ($("#myAwardPage").css("display") != "none") {	// fix bug
 		$("#myawardPage").css("display","none");
 	}
 
@@ -2499,6 +2503,13 @@ function crushIceFunc(obj){
 	doingIceBreakFlag = true;							// 正在做破冰动效的标志设置为true
 	$("#mainpageHammer").css("margin-top", "0px");
 	$("#mainpageHammer").css("margin-left", "0px");
+	
+	if(isTasksPageShow()) {								// 如果我的任务还在显示
+		disappearTasksPage();
+	}
+	if($("#myawardPage").css("display") != "none") {	// 如果我的奖品页还在显示 
+		$("#myawardPage").css("display","none");
+	}
 	
 	var ctop = $("#mainpageHammer").position().top - 35;
 	var cleft = $("#mainpageHammer").position().left + 50;
@@ -2954,6 +2965,13 @@ function disappearHaveGot3Dialog() {
 }
 
 function showGotHammerDialog() {
+	if(isTasksPageShow()) {								// 如果我的任务还在显示
+		disappearTasksPage();
+	}
+	if($("#myawardPage").css("display") != "none") {	// 如果我的奖品页还在显示 
+		$("#myawardPage").css("display","none");
+	}
+	
 	var text = "x" + addNumber;
 	document.getElementById("hammerNum1").innerHTML = text;
 	
@@ -2988,6 +3006,13 @@ function disappearGotHammerDialog() {
 }
 
 function showGiveHammerDialog() {
+	if(isTasksPageShow()) {								// 如果我的任务还在显示
+		disappearTasksPage();
+	}
+	if($("#myawardPage").css("display") != "none") {	// 如果我的奖品页还在显示 
+		$("#myawardPage").css("display","none");
+	}
+	
 	var text = "x" + buyNumber;
 	document.getElementById("hammerNum2").innerHTML = text;
 	$("#dialogPage").css("display", "block");
