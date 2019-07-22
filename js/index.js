@@ -76,8 +76,8 @@ coocaaApp.bindEvents("resume", function() {
 	
 	activityStartTime = new Date().getTime();
 	
-	console.log(startLoginFlag);
-	console.log(changeLoginFlag);
+	console.log("resume startLoginFlag = " + startLoginFlag + ", changeLoginFlag = " + changeLoginFlag);
+	
 	if(startLoginFlag && changeLoginFlag){
         console.log("登录成功");
         startLoginFlag = false;
@@ -1945,7 +1945,10 @@ function gotoDoTask(idxValue){
 	console.log("task = " + JSON.stringify(taskinfo));
 	
 	autoFillLogData4();
-	logdata4.button_name = "正在做" + taskinfo.taskName;
+	if (taskinfo.remainingNumber == 0)
+		logdata4.button_name = "已完成的" + taskinfo.taskName;
+	else
+		logdata4.button_name = "正在做" + taskinfo.taskName;
 	logdata4.page_type = "任务弹窗";
 	webDataLog("web_button_clicked_new", logdata4);
 	
