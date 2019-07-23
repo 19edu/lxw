@@ -31,6 +31,7 @@
 				width: 1920px;
 				height: 1080px;
 				overflow: hidden;
+				background-color: rgba(0,0,0,0.8);
 			}
 			#background1 {
 				position: absolute;
@@ -65,7 +66,7 @@
 			
 			$(document).keydown(function(event){
 				console.log("keycode = " + event.keyCode);
-				if(event.keyCode == 13){	// 确定键,
+				if(event.keyCode == 13 || event.keyCode == 39)	{	// 确定键,右键
 					window.location.href = thisBaseUrl + "index.html";
 				}
 				//if(event.keyCode == 66){	// 键盘的B键 (模拟Back返回键)
