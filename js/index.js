@@ -849,6 +849,9 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
 				}
 			} else {
 				console.log("优惠券/体验券激活失败,需要给出激活失败的提示.");
+				if($("#myawardPage").css("display") == "none"){
+					actionInit(false);
+				}
 			}
 		},
 		error: function() {
@@ -2486,6 +2489,7 @@ function icebreak() {
 			},
 			error: function() {
 				console.log(urlInterface1 + " 获取数据失败");
+				actionInit(false);
 			},
 			complete: function(XMLHttpRequest, status) {　　　　
 				console.log(urlInterface1 + " complete, status = " + status);
@@ -2879,6 +2883,7 @@ function getAwardAtOnce(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQs
 			},
 			error: function() {
 				console.log("获取失败");
+				actionInit(false);
 			},
 			complete: function(XMLHttpRequest, status) {　　　　
 				console.log("-------------complete------------------" + status);
