@@ -1,16 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="format-detection" content="telephone=no">
+		<meta charset="UTF-8">
+		<meta http-equiv="expires" content="0">
+		<meta http-equiv="pragma" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>Skyworth</title>
+		<script>
+			var adjust = function() {
+				if(/Android (\d+\.\d+)/.test(navigator.userAgent)) {
+					var version = parseFloat(RegExp.$1);
+					if(version > 2.3) {
+						var phoneScale = parseInt(window.screen.width) / 1920;
+						document.write('<meta name="viewport" content="width=1920, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+					} else {
+						document.write('<meta name="viewport" content="width=1920, target-densitydpi=device-dpi">');
+					}
+				} else {
+					document.write('<meta name="viewport" content="width=1920, user-scalable=no, target-densitydpi=device-dpi">');
+				}
+			}
+			adjust();
+		</script>
+		<style>
+			#deviceready {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 1920px;
+				height: 1080px;
+				overflow: hidden;
+			}
+			#background1 {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 1920px;
+				height: 1080px;
+			}
+			#button1 {
+				position: absolute;
+				width: 232px;
+				height: 73px;
+				left: 845px;
+				top: 610px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="deviceready">
+			<img id="background1" src="images/dialog/homepage_popup.png">
+			<img id="button1" src="images/dialog/homepage_popup_button.png">
+		</div>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript">
+			activityStartTime = new Date().getTime();
+			setTimeout(pageInit,100);
+			function pageInit(){
+			}
+
+			var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
+			
+			$(document).keydown(function(event){
+				console.log("keycode = " + event.keyCode);
+				if(event.keyCode == 13){	// 确定键,
+					window.location.href = thisBaseUrl + "index.html";
+				}
+				//if(event.keyCode == 66){	// 键盘的B键 (模拟Back返回键)
+				//	;
+				//}
+			});
+			
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		</script>
+	</body>
+</html>
