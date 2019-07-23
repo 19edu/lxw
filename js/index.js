@@ -26,7 +26,6 @@ var _accessToken = null;
 var needQQ = false;
 var _tencentWay = "";
 
-var _actionId = 150;	//主活动的id
 var _curFocusId = null;
 var startLoginFlag = false;
 var changeLoginFlag = false;
@@ -36,18 +35,18 @@ var dialogTime = null;
 
 var answerRightFlag = null;		// 视频答题回答正确标志
 
-//var adressIp = "https://restful.skysrt.com";
-//var allowanceUrl = "https://jintie.coocaa.com/api/subsidy/v1/query-userSubsidyInfo-byToken"
-//var allowanceClientId = "YS_RELEASE";
-//var enurl = "https://webapp.skysrt.com/activity618/Address/index.html?";
-//var freePageUrl = "https://webapp.skysrt.com/activity618/Relate/free.html?";
-//var screenUrl = "https://webapp.skysrt.com/screen/index.html?";
-//var mangguoTv = "https://club.mgtv.com/tvos/xcm/index.html";
-
 var adressIp = "http://beta.restful.lottery.coocaatv.com";
 var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
 var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
-var runmode = "debug";			// release
+var runmode = "debug";
+var _actionId = 150;	//主活动的id
+
+//var adressIp = "https://restful.skysrt.com";
+//var enurl = "https://webapp.skysrt.com/activity618/Address/index.html?";
+//var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
+//var runmode = "release";
+//var _actionId = 150;	//主活动的id
+
 
 var dataObj = {};//我的奖励数据
 var _arr1 = new Array(); //红包
@@ -2185,7 +2184,7 @@ function gotoDoTask(idxValue){
 				var answerRightOnClick = {
 					"bywhat" : "action",
 					"packageName": "com.coocaa.app_browser",
-					"byvalue": "coocaa.intent.action.browser.no_trans.no_route",
+					"byvalue": "coocaa.intent.action.browser",
 					"dowhat": "startActivity",
 					"versionCode": "1",
 					"params" : {
@@ -2195,7 +2194,7 @@ function gotoDoTask(idxValue){
 				var answerErrorOnClick = {
 					"bywhat" : "action",
 					"packageName": "com.coocaa.app_browser",
-					"byvalue": "coocaa.intent.action.browser.no_trans.no_route",
+					"byvalue": "coocaa.intent.action.browser",
 					"dowhat": "startActivity",
 					"versionCode": "1",
 					"params" : {
@@ -2208,7 +2207,7 @@ function gotoDoTask(idxValue){
 					"answerB": "答案选项B",
 					"question": "你选择A还是B",
 					"answerErrorClickType": "BACK_REPLAY",
-					"answerRightClickType": "CUSTOM",
+					"answerRightClickType": "CLOSE",
 					"answerRightOnClick": answerRightOnClick,
 					"answerErrorOnClick": answerErrorOnClick,
 					"answerRightUrl": answerRightImgUrl,
@@ -2537,8 +2536,8 @@ function crushIceFunc(obj){
 			$("#mainpageHammer").css({
 				"width":"190px",
 				"height":"207px",
-				"left":"1180px",
-				"top":"340px",
+				"left":"1140px",
+				"top":"370px",
 				"-webkit-transform": "rotate(-20deg)",
 				"-moz-transform": "rotate(-20deg)",
 				"-o-transform": "rotate(-20deg)",
@@ -2553,7 +2552,7 @@ function crushIceFunc(obj){
 				$("#mainpageHammer").css({
 					"width":"190px",
 					"height":"207px",
-					"left":"1230px",
+					"left":"1220px",
 					"top":"360px",
 					"-webkit-transform": "rotate(0deg)",
 					"-moz-transform": "rotate(0deg)",
