@@ -35,17 +35,17 @@ var dialogTime = null;
 
 var answerRightFlag = null;		// 视频答题回答正确标志
 
-//var adressIp = "http://beta.restful.lottery.coocaatv.com";
-//var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
-//var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
-//var runmode = "debug";
-//var _actionId = 150;	//主活动的id
+var adressIp = "http://beta.restful.lottery.coocaatv.com";
+var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
+var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
+var runmode = "debug";
+var _actionId = 150;	//主活动的id
 
-var adressIp = "https://restful.skysrt.com";
-var enurl = "https://webapp.skysrt.com/edu/Address/index.html?";
-var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
-var runmode = "release";
-var _actionId = 166;	//主活动的id
+//var adressIp = "https://restful.skysrt.com";
+//var enurl = "https://webapp.skysrt.com/edu/Address/index.html?";
+//var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
+//var runmode = "release";
+//var _actionId = 166;	//主活动的id
 
 
 var dataObj = {};//我的奖励数据
@@ -2753,7 +2753,7 @@ function helpOKBtnClick() {
 		autoFillLogData4();
 		logdata4.button_name = "欣然收下";
 		logdata4.page_type = "解救冰冻物体后有奖";
-		logdata4.award_type = awardTypeNmaeStr(newAwardInfo.awardTypeId);
+		logdata4.award_type = awardTypeNameStr(newAwardInfo.awardTypeId);
 		logdata4.award_id = "" + newAwardInfo.awardId;
 		logdata4.award_name = newAwardInfo.awardName;
 		if (allUsedNumber + 1 >= 30)
@@ -3024,7 +3024,11 @@ function showGiveHammerDialog() {
 		$("#myawardPage").css("display","none");
 	}
 	
-	var text = "x" + buyNumber;
+	var text;
+	text = getHeroName(parseInt(allUsedNumber / 3));
+	document.getElementById("giveHammerInfoName").innerHTML = text;
+	
+	text = "x" + buyNumber;
 	document.getElementById("hammerNum2").innerHTML = text;
 	$("#dialogPage").css("display", "block");
 	$("#giveHammerDialog").css("display", "block");
@@ -3188,13 +3192,13 @@ function disappearAppVerLowDialog() {
 	map = new coocaakeymap($(".coocaa_btn4"), LButton, "btn-focus", empty0, empty1, empty1);
 }
 
-function awardTypeNmaeStr(id) {
+function awardTypeNameStr(id) {
 	if (id == "1")
-		return "影视会员直通车";
+		return "会员权益";
 	else if (id == "2")
-		return "实物奖";
+		return "实物奖品";
 	else if (id == "5")
-		return "优惠券";
+		return "平台优惠券";
 	else if (id == "7")
 		return "微信红包";
 	else
