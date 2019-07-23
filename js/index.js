@@ -1540,6 +1540,10 @@ function actionInit(resumeFlag) {
 				
 				updateMainPage(resumeFlag);				// 显示主页面 
 			}
+			else {
+				updateMainPage(resumeFlag);
+				console.log("data.code = " + data.code);
+			}
 		},
 		error: function() {
 			console.log("获取失败");
