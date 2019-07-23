@@ -2708,7 +2708,10 @@ function findMoreHammer() {
 	
 	// 继续寻找锤子 -- 若已完成当前级的所有任务，则显示主界面，未完成的则跳到做任务界面
 	if (alltasks == null || alltasks == undefined) {
-		//actionInit();
+		getUserTaskList();
+	}
+	else if (alltasks.length == 0) {
+		getUserTaskList();
 	}
 	else  {
 		refreshTaskIndex();
