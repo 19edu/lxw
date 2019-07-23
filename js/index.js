@@ -1746,6 +1746,25 @@ function refreshTaskIndex() {
 		task1Idx = 29;
 	if (task2Idx > 29)
 		task2Idx = 29;
+		
+	if (task0Idx == 27) {			// 最后一关 （如果最后一关的所有任务都做完了，之前还有任务，则变换为之前的任务）
+		if (alltasks[task0Idx].remainingNumber == 0 && alltasks[task1Idx].remainingNumber == 0 && alltasks[task2Idx].remainingNumber == 0) {
+			var i = 0;
+			while (i < 30) {
+				if (alltasks[i].remainingNumber > 0)	// 找到最近的一个未完成的任务
+					break;
+				i++;
+			}
+			if (i >= 30)
+				i = 29;
+			nl = parseInt(i / 3);
+			task0Idx = nl * 3 + 0;
+			task1Idx = nl * 3 + 1;
+			task2Idx = nl * 3 + 2;
+			console.log("another taskLevel = " + taskLevel + ", task0Idx = " + task0Idx + ", task1Idx = " + task1Idx + ", task2Idx = " + task2Idx);
+		}
+	}
+		
 }
 		
 function showTasksPageInt() {
