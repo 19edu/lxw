@@ -35,17 +35,17 @@ var dialogTime = null;
 
 var answerRightFlag = null;		// 视频答题回答正确标志
 
-var adressIp = "http://beta.restful.lottery.coocaatv.com";
-var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
-var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
-var runmode = "debug";
-var _actionId = 150;	//主活动的id
-
-//var adressIp = "https://restful.skysrt.com";
-//var enurl = "https://webapp.skysrt.com/activity618/Address/index.html?";
-//var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
-//var runmode = "release";
+//var adressIp = "http://beta.restful.lottery.coocaatv.com";
+//var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
+//var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
+//var runmode = "debug";
 //var _actionId = 150;	//主活动的id
+
+var adressIp = "https://restful.skysrt.com";
+var enurl = "https://webapp.skysrt.com/edu/Address/index.html?";
+var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
+var runmode = "release";
+var _actionId = 166;	//主活动的id
 
 
 var dataObj = {};//我的奖励数据
