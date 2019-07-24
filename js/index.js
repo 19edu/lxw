@@ -2070,7 +2070,7 @@ function gotoDoTask(idxValue){
 							mallVersion = apkVersion[2];
 							cAppVersion = apkVersion[3];
 							console.log("===activityCenterVersion=="+activityCenterVersion+"===browserVersion=="+browserVersion+"==mallVersion=="+mallVersion+"==cAppVersion=="+cAppVersion);
-							if((activityCenterVersion < 103015) || (browserVersion < 200000)) {
+							if((activityCenterVersion < 103015) || (browserVersion < 100000)) {
 								console.log("活动中心或浏览器版本太低，需要后台升级，显示弹窗");
 								showAppVerLowDialog("活动浏览器");
 								return;
