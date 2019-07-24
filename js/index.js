@@ -35,17 +35,17 @@ var dialogTime = null;
 
 var answerRightFlag = null;		// 视频答题回答正确标志
 
-//var adressIp = "http://beta.restful.lottery.coocaatv.com";
-//var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
-//var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
-//var runmode = "debug";
-//var _actionId = 150;	//主活动的id
+var adressIp = "http://beta.restful.lottery.coocaatv.com";
+var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
+var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
+var runmode = "debug";
+var _actionId = 150;	//主活动的id
 
-var adressIp = "https://restful.skysrt.com";
-var enurl = "https://webapp.skysrt.com/edu/Address/index.html?";
-var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
-var runmode = "release";
-var _actionId = 166;	//主活动的id
+//var adressIp = "https://restful.skysrt.com";
+//var enurl = "https://webapp.skysrt.com/edu/Address/index.html?";
+//var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
+//var runmode = "release";
+//var _actionId = 166;	//主活动的id
 
 
 var dataObj = {};//我的奖励数据
@@ -2732,19 +2732,31 @@ function findMoreHammer() {
 	$("#giveHammerDialog").css("display", "none");
 	$(".secondDialog").css("display", "none");
 	$("#dialogPage").css("display", "none");
+	buyNumber = 0;
+	focusOnMainPage(null);
+	
+	if (taskFinished) {
+		console.log("当天已经获得了3把锤子");    // 直接退回主界面
+		//showHaveGot3Dialog();
+		return;
+	}
 	
 	// 继续寻找锤子 -- 若已完成当前级的所有任务，则显示主界面，未完成的则跳到做任务界面
 	if (alltasks == null || alltasks == undefined) {
+		console("alltasks == null");
 		getUserTaskList();
 	}
 	else if (alltasks.length == 0) {
+		console("alltasks.length == 0");
 		getUserTaskList();
 	}
 	else  {
-		refreshTaskIndex();
-		if (alltasks[task0Idx].remainingNumber == 0 && 
-			alltasks[task0Idx].remainingNumber == 0 && 
-			alltasks[task0Idx].remainingNumber == 0 ) {			// 如果当前关卡的任务都做完了
+		var gate = parseInt(allUsedNumber / 3);
+		if (gate >= 10)
+			gate = 9;
+		if (alltasks[gate * 3 + 0].remainingNumber == 0 && 
+			alltasks[gate * 3 + 1].remainingNumber == 0 && 
+			alltasks[gate * 3 + 2].remainingNumber == 0 ) {			// 如果当前关卡的任务都做完了
 			//==
 		}
 		else {
