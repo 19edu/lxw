@@ -1944,37 +1944,7 @@ function gotoDoTask(idxValue){
 		"remainingNumber": 1
 	};
 	*/
-   /*
-	{
-	"taskId": 4168,
-	"activeId": 150,
-	"taskName": "150广告类视频答题任务1",
-	"taskType": "videoAndAsk",
-	"imgUrl": "http://172.20.155.51/uploads/img/20190610/20190610142953610849.png",
-	"maxNumber": 1,
-	"addNumber": 1,
-	"timeType": "allTime",
-	"timeKey": "2019-06-11",
-	"source": "all",
-	"countdown": 12,
-	"jumpBgImgUrl": "http://172.20.155.51/uploads/20190522/20190522102148830555.webp",
-	"jumpImgUrl": "http://172.20.155.51/uploads/img/20190522/20190522102155090027.png",
-	"jumpRemindImgUrl": "http://172.20.155.51/uploads/img/20190522/20190522102208290060.png",
-	"askRightUrl": "http://172.20.155.51/uploads/img/20190522/20190522102220534206.png",
-	"askErrorUrl": "http://172.20.155.51/uploads/img/20190522/20190522102226356700.png",
-	"goBackOnclick": "{\"packageName\":\"com.coocaa.app_browser\",\"versionCode\":\"1\",\"dowhat\":\"startActivity\",\"bywhat\":\"action\",\"byvalue\":\"appx.intent.launcher.Start\",\"params\":{\"uri\":\"appx://com.coocaa.appx.x618/main?activityId=145&isDebug=true\"}}",
-	"remark": "",
-	"state": 0,
-	"param": "{\"videoUrl\":\"\",\"adId\":\"11\"}",
-	"problem": "{\"problem\":\"邓伦在《封神演义》中是的角色是？\",\"answerA\":\"杨戬\",\"rightAnswer\":\"B\",\"answerB\":\"狐妖\"}",
-	"videoSource": "adId",
-	"seq": 0,
-	"createTime": "2019-07-18 18:11:00",
-	"updateTime": "2019-07-18 18:11:00",
-	"version": 0,
-	"remainingNumber": 1
-};*/
-	
+   
 	console.log("task = " + JSON.stringify(taskinfo));
 	
 	autoFillLogData4();
@@ -1992,6 +1962,9 @@ function gotoDoTask(idxValue){
 	var problem = taskinfo.problem;						// 问答任务时的问题
 	var goBackOnclick = taskinfo.goBackOnclick;			//
 	var videoSource = taskinfo.videoSource;				// 视频来源
+	var curCountDown = taskinfo.countdown;
+	if (curCountDown == 0 || curCountDown == undefined)	// 倒计时为0会有问题
+		curCountDown = 1;
 	var isFinishFlag;
 	if (taskinfo.remainingNumber == 0)
 		isFinishFlag = true;
@@ -2136,7 +2109,7 @@ function gotoDoTask(idxValue){
 										"taskId": taskinfo.taskId,
 										"id": taskinfo.activeId,
 										"userKeyId": userKeyId, 
-										"countDownTime": taskinfo.countdown, 
+										"countDownTime": curCountDown, 
 										"verify_key": new Date().getTime(), 
 										"subTask": "0",
 										"isFinish": isFinish,
@@ -2228,10 +2201,33 @@ function gotoDoTask(idxValue){
 					}
 				};
 				
+				var dataerParams = {
+					"parent_page_name": "任务弹窗",
+					"activity_type" : "2019教育暑期活动",
+					"activity_name" : "2019教育暑期活动"
+				};
+				
 				var myProblem;
-				if (taskType == "video") {
+				var videoAskParams;
+				
+				if (taskType == "video") {			// 只播放视频 不用答题的情况
 					myProblem = {};
 					console.log("taskType == video, so myProblem == {}");
+					
+					videoAskParams = {
+						"countDownTime" : curCountDown,
+						"verify_key" : timestamp,
+						"isFinish" : isFinishFlag,
+						"serverUrl" : adressIp + "/building/v2/app/",
+						"id" : taskinfo.activeId,
+						"jumpImgUrl" : taskinfo.jumpImgUrl,
+						"jumpBgImgUrl" : taskinfo.jumpBgImgUrl,
+						"taskId" : taskinfo.taskId,
+						"jumpRemindImgUrl" : taskinfo.jumpRemindImgUrl,
+						"userKeyId" : userKeyId,
+						"needExitDialog" : "true",
+						"dataerParams" : dataerParams
+					};
 				}
 				else {
 					myProblem = {
@@ -2261,29 +2257,24 @@ function gotoDoTask(idxValue){
 					}
 					
 					console.log("myProblem = " + JSON.stringify(myProblem));
+					
+					videoAskParams = {
+						"countDownTime" : curCountDown,
+						"verify_key" : timestamp,
+						"isFinish" : isFinishFlag,
+						"serverUrl" : adressIp + "/building/v2/app/",
+						"id" : taskinfo.activeId,
+						"jumpImgUrl" : taskinfo.jumpImgUrl,
+						"jumpBgImgUrl" : taskinfo.jumpBgImgUrl,
+						"taskId" : taskinfo.taskId,
+						"jumpRemindImgUrl" : taskinfo.jumpRemindImgUrl,
+						"userKeyId" : userKeyId,
+						"needExitDialog" : "true",
+						"problem" : myProblem,
+						"dataerParams" : dataerParams
+					};
 				}
 
-				var dataerParams = {
-					"parent_page_name": "任务弹窗",
-					"activity_type" : "2019教育暑期活动",
-					"activity_name" : "2019教育暑期活动"
-				};
-				
-				var videoAskParams = {
-					"countDownTime" : taskinfo.countdown,
-					"verify_key" : timestamp,
-					"isFinish" : isFinishFlag,
-					"serverUrl" : adressIp + "/building/v2/app/",
-					"id" : taskinfo.activeId,
-					"jumpImgUrl" : taskinfo.jumpImgUrl,
-					"jumpBgImgUrl" : taskinfo.jumpBgImgUrl,
-					"taskId" : taskinfo.taskId,
-					"jumpRemindImgUrl" : taskinfo.jumpRemindImgUrl,
-					"userKeyId" : userKeyId,
-					"needExitDialog" : "true",
-					"problem" : myProblem,
-					"dataerParams" : dataerParams
-				};
 				var videoAskParamStr = JSON.stringify(videoAskParams);
 				console.log("videoAskParamStr = " + videoAskParamStr);
 				
