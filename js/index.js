@@ -35,17 +35,17 @@ var dialogTime = null;
 
 var answerRightFlag = null;		// 视频答题回答正确标志
 
-//var adressIp = "http://beta.restful.lottery.coocaatv.com";
-//var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
-//var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
-//var runmode = "debug";
-//var _actionId = 150;	//主活动的id
+var adressIp = "http://beta.restful.lottery.coocaatv.com";
+var enurl = "http://beta.webapp.skysrt.com/zy/address/index.html?";//实体奖url
+var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
+var runmode = "debug";
+var _actionId = 150;	//主活动的id
 
-var adressIp = "https://restful.skysrt.com";
-var enurl = "https://webapp.skysrt.com/edu/Address/index.html?";
-var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
-var runmode = "release";
-var _actionId = 166;	//主活动的id
+//var adressIp = "https://restful.skysrt.com";
+//var enurl = "https://webapp.skysrt.com/edu/Address/index.html?";
+//var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
+//var runmode = "release";
+//var _actionId = 166;	//主活动的id
 
 
 var dataObj = {};//我的奖励数据
@@ -2011,7 +2011,7 @@ function gotoDoTask(idxValue){
 	
 	var videoAskJump = false;							// 是否视频答题采用直接跳转的方式
 	
-	if (taskType == "videoAndAsk" && videoSource == "onclick")
+	if ((taskType == "videoAndAsk" || taskType == "video") && videoSource == "onclick")
 		videoAskJump = true;
 	
 	if (taskType == "jump" || videoAskJump)  // 跳转任务
@@ -2169,7 +2169,7 @@ function gotoDoTask(idxValue){
 			coocaaosapi.startAppStoreDetail(pkgname, function() {}, function() {});
 		});
 	}
-	else if (taskType == "videoAndAsk")					// 视频答题任务
+	else if (taskType == "videoAndAsk" || taskType == "video")			// 视频答题任务
 	{
 		pkgname = "com.coocaa.app_browser";		
 		var pkglist_s = '{ "pkgList": ["' + pkgname + '"] }';
@@ -2227,34 +2227,42 @@ function gotoDoTask(idxValue){
 						"url" : answerErrorUrlPlus
 					}
 				};
-				var myProblem = {
-					"rightAns": "B",
-					"answerA": "答案选项A",
-					"answerB": "答案选项B",
-					"question": "你选择A还是B",
-					"answerErrorClickType": "BACK_REPLAY",
-					"answerRightClickType": "CLOSE",
-					"answerRightOnClick": answerRightOnClick,
-					"answerErrorOnClick": answerErrorOnClick,
-					"answerRightUrl": answerRightImgUrl,
-					"answerErrorUrl": answerErrorImgUrl
-				};
 				
-				var serverProblem = JSON.parse(taskinfo.problem);
-				
-				if (serverProblem != undefined && serverProblem != null) {
-					if (serverProblem.problem != undefined && serverProblem.problem != null)
-						myProblem.question = serverProblem.problem;
-					if (serverProblem.answerA != undefined && serverProblem.answerA != null)
-						myProblem.answerA = serverProblem.answerA;
-					if (serverProblem.answerB != undefined && serverProblem.answerB != null)
-						myProblem.answerB = serverProblem.answerB;
-					if (serverProblem.rightAnswer != undefined && serverProblem.rightAnswer != null)
-						myProblem.rightAns = serverProblem.rightAnswer;
+				var myProblem;
+				if (taskType == "video") {
+					myProblem = {};
+					console.log("taskType == video, so myProblem == {}");
 				}
-				
-				console.log("myProblem = " + JSON.stringify(myProblem));
-				
+				else {
+					myProblem = {
+						"rightAns": "B",
+						"answerA": "答案选项A",
+						"answerB": "答案选项B",
+						"question": "你选择A还是B",
+						"answerErrorClickType": "BACK_REPLAY",
+						"answerRightClickType": "CLOSE",
+						"answerRightOnClick": answerRightOnClick,
+						"answerErrorOnClick": answerErrorOnClick,
+						"answerRightUrl": answerRightImgUrl,
+						"answerErrorUrl": answerErrorImgUrl
+					};
+					
+					var serverProblem = JSON.parse(taskinfo.problem);
+					
+					if (serverProblem != undefined && serverProblem != null) {
+						if (serverProblem.problem != undefined && serverProblem.problem != null)
+							myProblem.question = serverProblem.problem;
+						if (serverProblem.answerA != undefined && serverProblem.answerA != null)
+							myProblem.answerA = serverProblem.answerA;
+						if (serverProblem.answerB != undefined && serverProblem.answerB != null)
+							myProblem.answerB = serverProblem.answerB;
+						if (serverProblem.rightAnswer != undefined && serverProblem.rightAnswer != null)
+							myProblem.rightAns = serverProblem.rightAnswer;
+					}
+					
+					console.log("myProblem = " + JSON.stringify(myProblem));
+				}
+
 				var dataerParams = {
 					"parent_page_name": "任务弹窗",
 					"activity_type" : "2019教育暑期活动",
