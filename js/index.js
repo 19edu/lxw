@@ -2202,9 +2202,11 @@ function gotoDoTask(idxValue){
 				};
 				
 				var dataerParams = {
+					"page_name":"视频答题页面",
 					"parent_page_name": "任务弹窗",
 					"activity_type" : "2019教育暑期活动",
-					"activity_name" : "2019教育暑期活动"
+					"activity_name" : "2019教育暑期活动",
+					"button_name": "正在做" + taskinfo.taskName
 				};
 				
 				var myProblem;
@@ -2215,6 +2217,7 @@ function gotoDoTask(idxValue){
 					console.log("taskType == video, so myProblem == {}");
 					
 					videoAskParams = {
+						"openId" : _openId,
 						"countDownTime" : curCountDown,
 						"verify_key" : timestamp,
 						"isFinish" : isFinishFlag,
@@ -2259,6 +2262,7 @@ function gotoDoTask(idxValue){
 					console.log("myProblem = " + JSON.stringify(myProblem));
 					
 					videoAskParams = {
+						"openId" : _openId,
 						"countDownTime" : curCountDown,
 						"verify_key" : timestamp,
 						"isFinish" : isFinishFlag,
