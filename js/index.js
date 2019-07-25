@@ -2989,6 +2989,20 @@ function showFirstInDialog() {
 	logdata2.page_state = "首次进活动";
 	logdata2.page_type = "首次进活动";
 	webDataLog("web_page_show_new", logdata2);
+	
+	// 
+	/*
+	var param1 = "action";
+	var param2 = "coocaa.intent.action.browser";
+	var param3 = "com.coocaa.app_browser";
+	var param4 = "";
+	var param5 = "";
+	var str = "";
+	var str = "[{\"business_type\":\"1\"}, {\"source_id\":\"57\"}]";
+	setTimeout(function () {
+		coocaaosapi.startCommonNormalAction(param1, param2, param3, param4, param5, str, function() { needSentADLog = false; }, function() {});
+	}, 1);
+	*/
 }
 
 // 
