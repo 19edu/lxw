@@ -64,6 +64,11 @@
 			//=======================================================
 			var adressIp = "https://restful.skysrt.com";
 			//var adressIp = "http://beta.restful.lottery.coocaatv.com";
+			
+			//var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
+			var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
+			//var thisBaseUrl = "https://webapp.skysrt.com/edu/pre19/";
+			
 			//===================下面是普通全局变量 ===================
 			var _model = "";
 			var _chip = "";
@@ -230,7 +235,7 @@
 						}
 						_user_flag = 0;
 						_accessToken = "";
-						//webPageInit(0);
+						webPageInit(0);
 					} else {
 						coocaaosapi.getUserInfo(function(message) {
 							console.log(message);
@@ -328,7 +333,7 @@
 									//0-初始化就判断,1-监听到账户发生变化后判断
 									console.log("判断什么时候需要判断是否登录");
 								}
-								//webPageInit(0);
+								webPageInit(0);
 							}, function(error) {
 								console.log(error);
 							})
@@ -349,19 +354,14 @@
 				});
 			}
 			
+			var activityStartTime = new Date().getTime();
 			
-			activityStartTime = new Date().getTime();
-			setTimeout(pageInit,100);
-			function pageInit(){
+			function webPageInit(ccc) {
 				autoFillLogData2();
 				logdata2.page_state = "主页小弹窗";
 				logdata2.OPEN_ID = _openId;
 				webDataLog("web_page_show_new", logdata2);
 			}
-
-			//var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
-			var thisBaseUrl = "https://webapp.skysrt.com/edu/summer2019/";
-			//var thisBaseUrl = "https://webapp.skysrt.com/edu/pre19/";
 			
 			$(document).keydown(function(event){
 				console.log("keycode = " + event.keyCode);
