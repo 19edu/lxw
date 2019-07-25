@@ -2742,6 +2742,13 @@
             argscheck.checkArgs('sssff','CoocaaOSApi.startIntent',arguments);
             startapp.start([["action", "coocaa.intent.action.SMART_DETAIL"],[{'pkg':downloadPkgName,'from':'web'}],['eIntent','action',finishAction,{'uri': uri,'pre_load': false}]], success,error);
         }
+		/*
+		*发送广播
+		*/
+		CoocaaOSApi.prototype.startBroadcast = function(success, error){
+			argscheck.checkArgs('ff','CoocaaOSApi.notifyJSBroadcast', arguments);
+			exec(success,error,'CoocaaOSApi','notifyJSBroadcast',[[{'action':'MOVIESERVICEPAY_SUC'}],[{'key1':'value1','key2':'value2','key3':'value3'}]]);
+		}
         module.exports = new CoocaaOSApi();
     });
     window.cordova = require('cordova');

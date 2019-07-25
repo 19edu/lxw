@@ -846,6 +846,7 @@ function sendPrizes(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQsourc
                 		taskId = "103178";
                 	}
                 	coocaaosapi.startHomeCommonList(taskId,function(){},function(){});
+					coocaaosapi.startBroadcast(function(){}, function(){});
 				}
 			} else {
 				console.log("优惠券/体验券激活失败,需要给出激活失败的提示.");
@@ -1067,6 +1068,7 @@ function buttonInitAfter() {
                 		taskId = "103178";
                 	}
                 	coocaaosapi.startHomeCommonList(taskId,function(){},function(){});
+					coocaaosapi.startBroadcast(function(){}, function(){});
                 }
         	}
         }
@@ -2912,6 +2914,7 @@ function getAwardAtOnce(oAwardId, oRememberId, oType, oUserKeyId, oActiveId, oQs
 		            		taskId = "103178";
 		            	}
 		            	coocaaosapi.startHomeCommonList(taskId,function(){},function(){});
+						coocaaosapi.startBroadcast(function(){}, function(){});
 					}
 				} else {
 					console.log("领奖失败");
