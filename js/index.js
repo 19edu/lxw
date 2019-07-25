@@ -1191,6 +1191,7 @@ var answerErrorImgUrl = thisBaseUrl + "images/dialog/answerError.png";
 
 var logdata1 = {
 	"page_name": "",
+	"page_type": "",
 	"page_state": "",
 	"load_duration": "",
 	"activity_type": "",
@@ -1199,6 +1200,7 @@ var logdata1 = {
 };
 var logdata2 = {
 	"page_name": "",
+	"page_type": "",
 	"parent_page": "",
 	"award_type": "",
 	"award_id": "",
@@ -1864,7 +1866,8 @@ function showTasksPageInt() {
 	
 	autoFillLogData2();
 	logdata2.page_state = "任务弹窗";
-	webDataLog("web_button_clicked_new", logdata2);
+	logdata2.page_type = "任务弹窗";
+	webDataLog("web_page_show_new", logdata2);
 	
 }
 
@@ -2704,7 +2707,7 @@ function showDrawResult(obj) {
 		imgFileName = "images/ice/obj43.png";
 	}
 	else if (gate == 6) {
-		title = "哇！我们救出来乔治弟弟和恐龙！<br/> -少儿VIP 100元购买特权";
+		title = "哇！我们救出来乔治弟弟和恐龙！<br/> -少儿VIP 50元购买特权";
 		imgFileName = "images/ice/obj53.png";
 	}
 	else if (gate == 7) {
@@ -2981,7 +2984,8 @@ function showFirstInDialog() {
 	
 	autoFillLogData2();
 	logdata2.page_state = "首次进活动";
-	webDataLog("web_button_clicked_new", logdata2);
+	logdata2.page_type = "首次进活动";
+	webDataLog("web_page_show_new", logdata2);
 }
 
 // 
@@ -2999,7 +3003,8 @@ function showHaveGot3Dialog() {
 	
 	autoFillLogData2();
 	logdata2.page_state = "当天做任务获得3把锤子后继续做任务提醒弹窗";
-	webDataLog("web_button_clicked_new", logdata2);
+	logdata2.page_type = "当天做任务获得3把锤子后继续做任务提醒弹窗";
+	webDataLog("web_page_show_new", logdata2);
 }
 
 function disappearHaveGot3Dialog() {
@@ -3033,7 +3038,8 @@ function showGotHammerDialog() {
 	
 	autoFillLogData2();
 	logdata2.page_state = "完成任务给锤子";
-	webDataLog("web_button_clicked_new", logdata2);
+	logdata2.page_type = "完成任务给锤子";
+	webDataLog("web_page_show_new", logdata2);
 }
 
 function disappearGotHammerDialog() {
@@ -3070,7 +3076,8 @@ function showGiveHammerDialog() {
 	
 	autoFillLogData2();
 	logdata2.page_state = "购买产品包给锤子";
-	webDataLog("web_button_clicked_new", logdata2);
+	logdata2.page_type = "购买产品包给锤子";
+	webDataLog("web_page_show_new", logdata2);
 }
 
 function disappearGiveHammerDialog() {
@@ -3113,15 +3120,21 @@ function showHelpOKDialog(gate, haveAward, awardName, heroHame, title, imgFileNa
 	map = new coocaakeymap($(".coocaa_btn3"), "#helpOKBtn", "btn-focus", empty0, empty1, empty1);
 	
 	autoFillLogData2();
-	if (gate >= 10)
+	if (gate >= 10) {
 		logdata2.page_state = "最后一关"; 
-	else {
-		if (haveAward) 
-			logdata2.page_state = "解救冰冻物体后有奖";
-		else
-			logdata2.page_state = "解救冰冻物体后无奖";
+		logdata2.page_type = "最后一关";
 	}
-	webDataLog("web_button_clicked_new", logdata2);
+	else {
+		if (haveAward) {
+			logdata2.page_state = "解救冰冻物体后有奖";
+			logdata2.page_type = "解救冰冻物体后有奖";
+		}
+		else {
+			logdata2.page_state = "解救冰冻物体后无奖";
+			logdata2.page_type = "解救冰冻物体后无奖";
+		}
+	}
+	webDataLog("web_page_show_new", logdata2);
 }
 
 function disappearHelpOKDialog() {
@@ -3137,11 +3150,11 @@ function showRedGet2Dialog(lotteryActiveId, rememberId, userkeyId, redNumber) {
 	$("#dialogPage .secondDialog").css("display","none");
 	
 	console.log("点击了红包+显示二维码");
-	////_dateObj.award_type = "微信红包";
-	////_dateObj.page_type = "领取微信红包";
-	////webDataLog("web_page_show_new", _dateObj);
-	////_dateObj2.button_name = "待领取-微信红包";
-	////webDataLog("web_button_clicked_new", _dateObj2);
+	autoFillLogData2();
+	logdata2.page_state = "领取微信红包";
+	logdata2.page_type = "领取微信红包";
+	logdata2.award_type = "微信红包";
+	webDataLog("web_page_show_new", logdata2);
 	
 	$(".secondDialog").css("display", "none");
 	$("#redNotGet_2").css("display", "block");
@@ -3172,11 +3185,11 @@ function showEntityGetDialog2(awardName, awardTime, lotteryActiveId, rememberId,
 	console.log("showEntityGetDialog2() ");
 	console.log("直接领取实物奖，显示二维码");
 	
-	////_dateObj.award_type = "实物奖品";
-	//_dateObj.page_type = "领取实体物品";
-	//webDataLog("web_page_show_new", _dateObj);
-	//_dateObj2.button_name = "待领取-实物奖品";
-	//webDataLog("web_button_clicked_new", _dateObj2);
+	autoFillLogData2();
+	logdata2.page_state = "领取实体物品";
+	logdata2.page_type = "领取实体物品";
+	logdata2.award_type = "实物奖品";
+	webDataLog("web_page_show_new", logdata2);
 	
 	$("#dialogPage").css("display", "block");
 	$("#entityInfo1_copy").html("奖品名称:&nbsp;&nbsp;" + awardName);
@@ -3241,12 +3254,18 @@ function awardTypeNameStr(id) {
 
 function autoFillLogData1() {
 	logdata1.page_name = "";
-	if (activityEndFlag == true)
-		logdata5.page_type = "活动已结束";
-	else if (allUsedNumber >= 30)
-		logdata5.page_type = "全部解救成功";		//活动主页面取值：预热、活动正式期、全部解救成功、活动已结束
-	else
-		logdata5.page_type = "活动正式期";
+	if (activityEndFlag == true) {
+		logdata1.page_type = "活动已结束";
+		logdata1.page_state = "活动已结束";
+	}
+	else if (allUsedNumber >= 30) {
+		logdata1.page_type = "全部解救成功";		//活动主页面取值：预热、活动正式期、全部解救成功、活动已结束
+		logdata1.page_state = "全部解救成功";
+	}
+	else {
+		logdata1.page_type = "活动正式期";
+		logdata1.page_state = "活动正式期";
+	}
 	logdata1.load_duration = "";
 	logdata1.activity_type = "2019教育暑期活动";
 	logdata1.activity_name = "2019教育暑期活动";
@@ -3260,6 +3279,7 @@ function autoFillLogData2 (){
 	logdata2.award_id = "";
 	logdata2.award_name = "";
 	logdata2.page_state = "";
+	logdata2.page_type = "";
 	logdata2.activity_type = "2019教育暑期活动";
 	logdata2.activity_name = "2019教育暑期活动";
 	logdata2.OPEN_ID = _openId;

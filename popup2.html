@@ -56,10 +56,307 @@
 			<img id="button1" src="images/dialog/homepage_popup2_button.png">
 		</div>
 		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript">
+			//=============下面是 cordova框架要使用的变量 =============
+			var accountVersion = "";
+			var cAppVersion = "";
+			//=======================================================
+			var adressIp = "https://restful.skysrt.com";
+			//var adressIp = "http://beta.restful.lottery.coocaatv.com";
+			//===================下面是普通全局变量 ===================
+			var _model = "";
+			var _chip = "";
+			var _mac = "";
+			var _emmcCID = "";
+			var _udid = "";
+			var _cVersion = "";
+			var _cSize = "";
+			var _cSdk = "";
+			var _cBrand = "";
+			var _cFMode = "Default";
+			var _appversion = "";
+			var _qsource = "yinhe";
+			var _userKeyId0 = "";
+			var _openId = null;
+			var _mobile = null;
+			var _nickName = null;
+			var _loginstatus = false;
+			var _user_flag = null;
+			var _accessToken = null;
+			var needQQ = false;
+			var _tencentWay = "";
+			
+			var logdata2 = {
+				"page_name": "",
+				"page_type" : "",
+				"parent_page": "",
+				"award_type": "",
+				"award_id": "",
+				"award_name": "",
+				"page_state": "",
+				"activity_type": "",
+				"activity_name": "",
+				"OPEN_ID": ""
+			};
+			var logdata4 = {
+				"page_name": "",
+				"button_name": "",
+				"parent_page": "",
+				"award_type": "",
+				"award_id": "",
+				"award_name": "",
+				"page_type": "",
+				"activity_type": "",
+				"activity_name": "",
+				"OPEN_ID": ""
+			};
+			
+			coocaaApp.bindEvents("menubutton", function() {
+			    console.log("this menuButton>>>>>>>>>new>>>>>>>>>")
+			});
+			
+			coocaaApp.bindEvents("backbuttondown", function() {
+			    console.log("this backbuttondown>>>>>>>>>new>>>>>>>>>");
+				navigator.app.exitApp();
+			});
+			
+			coocaaApp.bindEvents("homebutton", function() {
+			    console.log("this homebutton>>>>>>>>>new>>>>>>>>>");
+			    navigator.app.exitApp();
+			});
+			
+			coocaaApp.bindEvents("resume", function() {
+				console.log("on resume");
+			});
+			
+			coocaaApp.bindEvents("pause", function() {
+				console.log("on pause");
+			});
+			
+			coocaaApp.ready(function() {
+			});
+			
+			coocaaApp.triggleButton(function() {
+			    _appversion = accountVersion;
+			    listenUserChange();
+			    buttonInitBefore();
+			    getDeviceInfo();
+			});
+			
+			function buttonInitBefore() {
+			}
+			
+			function getDeviceInfo() {
+				coocaaosapi.getDeviceInfo(function(message) {
+					console.log(JSON.stringify(message));
+					_model = message.model;
+					_chip = message.chip;
+					_mac = message.mac;
+			
+					if(message.emmcid == "" || message.emmcid == null) {
+						_emmcCID = "123456";
+					} else {
+						_emmcCID = message.emmcid;
+					}
+					_udid = message.activeid;
+					_userKeyId0 = _udid;
+					_cVersion = message.version.replace(/\./g, "");
+					_cSize = message.panel;
+					_cSdk = message.androidsdk;
+					_cBrand = message.brand;
+					getTvSource(_mac, _chip, _model, _emmcCID, _udid, _cFMode, _cVersion, _cSize, _appversion, _cSdk, _cBrand);
+				}, function(error) {
+					console.log("获取设备信息出现异常。");
+				});
+			}
+			//获取视频源
+			function getTvSource(smac, schip, smodel, semmcid, sudid, sFMode, sTcVersion, sSize, sAppVersion, sSdk, sBrand) {
+				console.log(smac + "--" + sudid + "--" + sAppVersion + "--" + sSdk);
+				var ajaxTimeout = $.ajax({
+					type: "POST",
+					async: true,
+					timeout: 10000,
+					dataType: 'json',
+					url: adressIp + "/light/active/tv/source",
+					data: {
+						"MAC": smac,
+						"cChip": schip,
+						"cModel": smodel,
+						"cEmmcCID": semmcid,
+						"cUDID": sudid,
+						"cFMode": sFMode,
+						"cTcVersion": sTcVersion,
+						"cSize": sSize,
+						"cAppVersion": sAppVersion,
+						"cBrand": sBrand
+					},
+					success: function(data) {
+						console.log(JSON.stringify(data));
+						if(data.code == 0) {
+							_qsource = data.data.source;
+							if(_qsource == "tencent") {
+								needQQ = true;
+							}
+							console.log(_qsource + "--" + needQQ);
+						}
+					},
+					error: function() {
+						console.log('获取视频源失败');
+						needQQ = true;
+					},
+					complete: function(XMLHttpRequest, status) {
+						console.log("-------------complete------------------" + status);
+						if(status == 'timeout') {　　
+							ajaxTimeout.abort();　　　　
+						}
+						hasLogin(needQQ, 0);
+					}
+				});
+			}
+			//判断是否登录
+			function hasLogin(needQQ, num) {
+				coocaaosapi.hasCoocaaUserLogin(function(message) {
+					console.log("haslogin " + message.haslogin);
+					_loginstatus = message.haslogin;
+					console.log(_loginstatus);
+					if(_loginstatus == "false") {
+						if(needQQ) {
+							if(cAppVersion >= 3190030) {
+								_tencentWay = "both";
+							} else {
+								_tencentWay = "qq";
+							}
+						}
+						_user_flag = 0;
+						_accessToken = "";
+						//webPageInit(0);
+					} else {
+						coocaaosapi.getUserInfo(function(message) {
+							console.log(message);
+							exterInfo = message.external_info;
+							_openId = message.open_id;
+							console.log(_openId);
+							_mobile = message.mobile;
+							_nickName = message.nick_name;
+							coocaaosapi.getUserAccessToken(function(message) {
+								_accessToken = message.accesstoken;
+								console.log(_accessToken);
+								if(exterInfo == "[]") {
+									exterInfo = '[{}]';
+								} else {}
+								_user_flag = 1;
+								if(needQQ) {
+									qqinfo = JSON.parse(exterInfo);
+									if(qqinfo.length == 1) {
+										if(cAppVersion >= 3190030) {
+											if(JSON.stringify(qqinfo[0]) == "{}" || qqinfo[0].external_flag == "jscn") {
+												_tencentWay = "both";
+											} else {
+												_tencentWay = qqinfo[0].external_flag;
+											}
+										} else {
+											_tencentWay = "qq";
+										}
+										if(qqinfo != "" && qqinfo != null && qqinfo[0].login) {
+											_qqtoken = qqinfo[0].external_id;
+											if(qqinfo[0].external_flag == "qq") {
+												_login_type = 1;
+											} else {
+												_login_type = 2;
+												_vuserid = qqinfo[0].vuserid;
+												if(_vuserid == undefined) {
+													_vuserid = JSON.parse(qqinfo[0].refreshToken).vuserid
+												}
+												if(cAppVersion < 3190030) {
+													_loginstatus = "false";
+												}
+											}
+										} else {
+											_tencentWay = "both";
+											_loginstatus = "false";
+										}
+									} else {
+										var needSelectNum = 0;
+										for(var b = 0; b < qqinfo.length; b++) {
+											needSelectNum = needSelectNum + 1;
+											if(qqinfo[b].login && qqinfo[b].external_flag != "jscn") {
+												_qqtoken = qqinfo[b].external_id;
+												if(qqinfo[b].external_flag == "qq") {
+													_login_type = 1;
+												} else {
+													_login_type = 2;
+													_vuserid = qqinfo[b].vuserid;
+													if(_vuserid == undefined) {
+														_vuserid = JSON.parse(qqinfo[b].refreshToken).vuserid
+													}
+													if(cAppVersion < 3190030) {
+														_loginstatus = "false";
+														_tencentWay = "qq";
+													}
+												}
+												break;
+											}
+											if(needSelectNum == qqinfo.length) {
+												_tencentWay = "both";
+												_loginstatus = "false";
+											}
+										}
+									}
+									
+								} else {
+									qqinfo = JSON.parse(exterInfo);
+									for(var b = 0; b < qqinfo.length; b++) {
+										if(qqinfo[b].login) {
+											_qqtoken = qqinfo[b].external_id;
+											if(qqinfo[b].external_flag == "qq") {
+												_login_type = 1;
+											} else if(qqinfo[b].external_flag == "weixin") {
+												_login_type = 2;
+												vuserid = qqinfo[b].vuserid;
+												if(vuserid == undefined) {
+													vuserid = JSON.parse(qqinfo[b].refreshToken).vuserid
+												}
+											}
+											break;
+										} else {
+											_qqtoken = "";
+										}
+									}
+								}
+								if(num == 0) {
+									//0-初始化就判断,1-监听到账户发生变化后判断
+									console.log("判断什么时候需要判断是否登录");
+								}
+								//webPageInit(0);
+							}, function(error) {
+								console.log(error);
+							})
+						}, function(error) {
+							console.log(error);
+						});
+					}
+				}, function(error) {
+					console.log(error);
+				});
+			}
+			//监听账户变化
+			function listenUserChange() {
+				coocaaosapi.addUserChanggedListener(function(message) {
+					console.log("监听到账户发生变化");
+					changeLoginFlag = true;
+					hasLogin(needQQ, 1);
+				});
+			}
+			
+			
 			activityStartTime = new Date().getTime();
 			setTimeout(pageInit,100);
 			function pageInit(){
+				autoFillLogData2();
+				logdata2.page_state = "主页小弹窗";
+				logdata2.OPEN_ID = _openId;
+				webDataLog("web_page_show_new", logdata2);
 			}
 
 			//var thisBaseUrl = "http://beta.webapp.skysrt.com/lqq/y19edu/";
@@ -69,6 +366,11 @@
 			$(document).keydown(function(event){
 				console.log("keycode = " + event.keyCode);
 				if(event.keyCode == 13 || event.keyCode == 39)	{	// 确定键,右键
+					autoFillLogData4();
+					logdata4.button_name = "点击进入";
+					logdata2.OPEN_ID = _openId;
+					webDataLog("web_button_clicked_new", logdata4);
+					
 					window.location.href = thisBaseUrl + "index.html";
 				}
 				//if(event.keyCode == 66){	// 键盘的B键 (模拟Back返回键)
@@ -76,8 +378,37 @@
 				//}
 			});
 			
-
-
+			function autoFillLogData2 (){
+				logdata2.page_name = "弹窗页面";
+				logdata2.page_type = "eduWindow";
+				logdata2.parent_page = "活动主页面";
+				logdata2.award_type = "";
+				logdata2.award_id = "";
+				logdata2.award_name = "";
+				logdata2.page_state = "";
+				logdata2.activity_type = "2019教育暑期活动";
+				logdata2.activity_name = "2019教育暑期活动";
+				logdata2.OPEN_ID = _openId;
+			}
+			
+			function autoFillLogData4() {
+				logdata4.page_name = "弹窗页面";
+				logdata4.button_name = "";
+				logdata4.parent_page = "活动主页面";
+				logdata4.award_type = "";
+				logdata4.award_id = "";
+				logdata4.award_name = "";
+				logdata4.page_type = "eduWindow";
+				logdata4.activity_type = "2019教育暑期活动";
+				logdata4.activity_name = "2019教育暑期活动";
+				logdata4.OPEN_ID = _openId;
+			}
+			
+			function webDataLog(logname, dateObj) {
+				var _dataString = JSON.stringify(dateObj);
+				console.log(logname + "--" + _dataString);
+				coocaaosapi.notifyJSLogInfo(logname, _dataString, function(message) {console.log(message);}, function(error) {console.log(error);});
+			}
 		</script>
 	</body>
 </html>
