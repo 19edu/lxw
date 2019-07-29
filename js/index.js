@@ -2089,9 +2089,6 @@ function gotoDoTask(idxValue){
 									if(needAddChance){
 										addChance("1", taskinfo.taskId, 0);
 										////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/jijiangtiaozhuan.png",3000);
-										needFresh = true;
-										needRememberFocus = true;
-										rememberBtn = ".mission:eq("+$('.mission').index($(obj))+")";
 									}else{
 										////showAndHideToast("http://sky.fs.skysrt.com/statics/webvip/webapp/418/main/newtoast/bujiajihui.png",3000);
 									}
@@ -2327,14 +2324,14 @@ function addChance(taskType, taskId, askResult) {
         type: "post",
         async: true,
         timeout: 10000,
-        url: adressIp+"/building/task/finish-task",
+        url: adressIp+"/building/v2/web/task/finish-task",
         data: {
             taskId:taskId
-            ,activeId:actionId
-            ,userKeyId:userKeyId
+            ,activeId:_actionId
+            ,userKeyId:_userKeyId0
             ,askResult: askResult
-            ,"cOpenId": cOpenId
-            ,"cNickName": nick_name
+            ,"cOpenId": _openId
+            ,"cNickName": _nickName
         },//,chanceSource:2,subTask:0,cOpenId:_openId},
         dataType: "json",
         success: function(data) {
@@ -2342,14 +2339,14 @@ function addChance(taskType, taskId, askResult) {
             if(data.code == 50100){
                 if(taskType == "1"){
                     //刷新页面状态:
-                    getMyTasksList(false);
+                    //getMyTasksList(false);
                 }else if(taskType == "0"){
-                    showPage(false, false);
+                    //showPage(false, false);
                 }
             }else if(data.code == 91009){
                 console.log("任务已过期");
                 if (askResult == 1){ //如果是问答任务，且回答正确，因为任务已过期，所以不显示加机会。
-                    $("#interlucationAnswerToastId .interlucationTitleClass").html("恭喜回答正确!");
+                    //$("#interlucationAnswerToastId .interlucationTitleClass").html("恭喜回答正确!");
                 }
             }
         },
