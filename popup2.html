@@ -367,8 +367,8 @@
 				console.log("keycode = " + event.keyCode);
 				if(event.keyCode == 13 || event.keyCode == 39)	{	// 确定键,右键
 					autoFillLogData4();
-					logdata4.button_name = "点击进入";
-					logdata2.OPEN_ID = _openId;
+					logdata4.button_name = "点击参与";
+					logdata4.OPEN_ID = _openId;
 					webDataLog("web_button_clicked_new", logdata4);
 					
 					window.location.href = thisBaseUrl + "index.html";
@@ -379,7 +379,7 @@
 			});
 			
 			function autoFillLogData2 (){
-				logdata2.page_name = "弹窗页面";
+				logdata2.page_name = "倒计时弹窗页面";
 				logdata2.page_type = "eduWindow";
 				logdata2.parent_page = "活动主页面";
 				logdata2.award_type = "";
@@ -392,7 +392,7 @@
 			}
 			
 			function autoFillLogData4() {
-				logdata4.page_name = "弹窗页面";
+				logdata4.page_name = "倒计时弹窗页面";
 				logdata4.button_name = "";
 				logdata4.parent_page = "活动主页面";
 				logdata4.award_type = "";

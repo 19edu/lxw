@@ -1703,7 +1703,8 @@ function pressGetMoreHammerButton() {
 		$("#myawardPage").css("display","none");
 	}
 	
-	showTasksPage();
+	//showTasksPage();
+	gotoBuyPackage();
 	
 	autoFillLogData3();
 	logdata3.button_name = "获得更多锤子";
